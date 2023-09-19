@@ -1,0 +1,17 @@
+{
+    "name": "com.djm.utilities",
+    "rootNamespace": "DJM.Utilities",
+    "references": [
+        "com.djm.core-services",
+        "DOTween.Modules"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

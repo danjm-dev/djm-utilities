@@ -1,0 +1,20 @@
+{
+    "name": "com.djm.utilities.Tests",
+    "rootNamespace": "DJM.Utilities.Tests",
+    "references": [
+        "GUID:079e14d1d21625a419f93b4449f7f7e7",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

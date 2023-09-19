@@ -1,0 +1,13 @@
+{
+  "name": "com.djm.utilities",
+  "version": "1.0.0",
+  "displayName": "DJM Utilities",
+  "description": "Utilities for Unity Projects",
+  "dependencies": {
+  },
+  "author": {
+    "name": "danjm.dev",
+    "email": "danjm.dev@gmail.com",
+    "url": "https://github.com/danjm-dev"
+  }
+}
