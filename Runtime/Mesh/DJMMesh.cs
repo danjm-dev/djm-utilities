@@ -7,9 +7,10 @@ namespace DJM.Utilities
     {
         public static Mesh Quad(Vector3 centerPosition, float width, float height, Vector3 normal)
         {
-            // find vector not parallel to normal
-            var notParallel = Mathf.Approximately(normal.x, 1f) ? Vector3.up : Vector3.right;
-            
+            // Check if normal is not mostly pointing up/down
+            var notParallel = Mathf.Abs(Vector3.Dot(normal, Vector3.up)) < 0.99f ? Vector3.up : Vector3.right; 
+
+            // Use the notParallel vector to get the halfWidthOffset 
             var halfWidthOffset = Vector3.Normalize(Vector3.Cross(normal, notParallel)) * width * 0.5f;
             var halfHeightOffset = Vector3.Normalize(Vector3.Cross(halfWidthOffset, normal)) * height * 0.5f;
             
