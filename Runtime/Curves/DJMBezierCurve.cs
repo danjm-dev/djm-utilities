@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace DJM.Utilities.Curves
+namespace DJM.Utilities
 {
-    public static class BezierCurve // https://www.youtube.com/watch?v=jvPPXbo87ds
+    public static class DJMBezierCurve // https://www.youtube.com/watch?v=jvPPXbo87ds
     {
         public static Vector3 Quadratic(Vector3 point0, Vector3 point1, Vector3 point2,  float t)
         {
@@ -11,21 +11,8 @@ namespace DJM.Utilities.Curves
             return Vector3.Lerp(q0, q1, t);
         }
         
-        // DeCasteljau
-        public static Vector3 Cubic(Vector3 point0, Vector3 point1, Vector3 point2, Vector3 point3,  float t)
-        {
-            var q0 = Vector3.Lerp(point0, point1, t);
-            var q1 = Vector3.Lerp(point1, point2, t);
-            var q2 = Vector3.Lerp(point2, point3, t);
-            
-            var r0 = Vector3.Lerp(q0, q1, t);
-            var r1 = Vector3.Lerp(q1, q2, t);
-            
-            return Vector3.Lerp(r0, r1, t);
-        }
-        
         // Bernstein
-        public static Vector3 Cubic2(Vector3 point0, Vector3 point1, Vector3 point2, Vector3 point3,  float t)
+        public static Vector3 Cubic(Vector3 point0, Vector3 point1, Vector3 point2, Vector3 point3,  float t)
         {
             var tPow2 = Mathf.Pow(t, 2);
             var tPow3 = Mathf.Pow(t, 3);
@@ -36,15 +23,6 @@ namespace DJM.Utilities.Curves
             var p3 = point3 * tPow3;
 
             return p0 + p1 + p2 + p3;
-        }
-        
-        // polynomial coefficients
-        public static Vector3 Cubic3(Vector3 point0, Vector3 point1, Vector3 point2, Vector3 point3,  float t)
-        {
-            var a = t * (-3 * point0 + 3 * point1);
-            var b = Mathf.Pow(t, 2) * (3 * point0 - 6 * point1 + 3 * point2);
-            var c = Mathf.Pow(t, 3) * (-point0 + 3 * point1 - 3 * point2 + point3);
-            return point0 + a + b + c;
         }
         
         // Bernstein derivative
@@ -59,5 +37,27 @@ namespace DJM.Utilities.Curves
 
             return p0 + p1 + p2 + p3;
         }
+        
+        // // DeCasteljau
+        // public static Vector3 Cubic(Vector3 point0, Vector3 point1, Vector3 point2, Vector3 point3,  float t)
+        // {
+        //     var q0 = Vector3.Lerp(point0, point1, t);
+        //     var q1 = Vector3.Lerp(point1, point2, t);
+        //     var q2 = Vector3.Lerp(point2, point3, t);
+        //     
+        //     var r0 = Vector3.Lerp(q0, q1, t);
+        //     var r1 = Vector3.Lerp(q1, q2, t);
+        //     
+        //     return Vector3.Lerp(r0, r1, t);
+        // }
+        
+        // // polynomial coefficients
+        // public static Vector3 Cubic(Vector3 point0, Vector3 point1, Vector3 point2, Vector3 point3,  float t)
+        // {
+        //     var a = t * (-3 * point0 + 3 * point1);
+        //     var b = Mathf.Pow(t, 2) * (3 * point0 - 6 * point1 + 3 * point2);
+        //     var c = Mathf.Pow(t, 3) * (-point0 + 3 * point1 - 3 * point2 + point3);
+        //     return point0 + a + b + c;
+        // }
     }
 }
