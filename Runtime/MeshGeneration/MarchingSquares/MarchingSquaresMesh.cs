@@ -8,7 +8,7 @@ namespace DJM.Utilities.MeshGeneration
         public static Mesh Create(bool[] grid, int width, int height, float nodeSize, float depth = 0f)
         {
             var marchingSquareConfig = CalculateSquareData(grid, width, height, nodeSize);
-            return MarchingSquaresMeshGenerator.Generate(nodeSize, marchingSquareConfig);
+            return MarchingSquaresMeshGenerator.Generate(nodeSize, depth, marchingSquareConfig);
         }
 
         private static MarchingSquareData[] CalculateSquareData(bool[] grid, int width, int height, float nodeSize)
