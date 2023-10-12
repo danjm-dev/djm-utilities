@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +8,12 @@ namespace DJM.Utilities.MeshGeneration
     {
         public static Mesh Create(bool[] grid, int width, int height, float nodeSize, float depth = 0f)
         {
+            if (grid.Length != width * height) throw new ArgumentException("grid length does not match width * height");
             var marchingSquareConfig = CalculateSquareData(grid, width, height, nodeSize);
             return MarchingSquaresMeshGenerator.Generate(nodeSize, depth, marchingSquareConfig);
         }
 
-        private static MarchingSquareData[] CalculateSquareData(bool[] grid, int width, int height, float nodeSize)
+        private static MarchingSquareData[] CalculateSquareData(IReadOnlyList<bool> grid, int width, int height, float nodeSize)
         {
             var marchingSquareConfig = new List<MarchingSquareData>();
             
