@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace DJM.Utilities.MeshGeneration.Primitives
+namespace DJM.Utilities.MeshGeneration
 {
-    public static class DJMQuadMesh
+    public static class QuadMesh
     {
         public static readonly ushort[] Triangles = { 0, 1, 2, 0, 2, 3 };
         public static readonly Vector2[] Uvs = { new(0, 0), new(0, 1), new(1, 1), new(1, 0) };

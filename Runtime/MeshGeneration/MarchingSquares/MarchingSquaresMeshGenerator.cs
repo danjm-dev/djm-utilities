@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DJM.Utilities.MeshGeneration.MarchingSquares
+namespace DJM.Utilities.MeshGeneration
 {
-    public static class MarchingSquaresMeshGenerator
+    internal static class MarchingSquaresMeshGenerator
     {
         private static Vector3 _bottomLeftOffset;
         private static Vector3 _topLeftOffset;
@@ -14,11 +15,10 @@ namespace DJM.Utilities.MeshGeneration.MarchingSquares
         private static Vector3 _rightOffset;
         private static Vector3 _topOffset;
         private static Vector3 _bottomOffset;
-        
-        public static Mesh GenerateMesh(IReadOnlyList<bool> grid, int width, int height, float nodeSize)
-        {
-            var meshBuilder = new MarchingSquaresMeshBuilder();
 
+
+        public static Mesh Generate(float nodeSize, MarchingSquareData[] gridConfig)
+        {
             _bottomLeftOffset = Vector3.zero;
             _topLeftOffset = Vector3.forward * nodeSize;
             _bottomRightOffset = Vector3.right * nodeSize;
@@ -30,217 +30,173 @@ namespace DJM.Utilities.MeshGeneration.MarchingSquares
             _bottomOffset = _bottomLeftOffset + Vector3.right * nodeSize * .5f;
             
             
-            // -1 on each axis to iterate through squares rather than voxels. i++ on y loop ensures i skips far right col.
-            for (int z = 0, i = 0; z < height - 1; z++, i++)
-            {
-                for (var x = 0; x < width - 1; x++, i++)
-                {
-                    var config = CalculateConfig
-                    (
-                        grid[i],
-                        grid[i + width],
-                        grid[i + width + 1],
-                        grid[i + 1]//.IsOpenSpace
-                    );
-
-                    var gridPositionOffset = new Vector3(x * nodeSize, 0, z * nodeSize);
-                    Triangulate(config, gridPositionOffset, meshBuilder);
-                }
-            }
-
-            var mesh = new Mesh();
-            mesh.vertices = meshBuilder.Vertices;
-            mesh.triangles = meshBuilder.Triangles;
             
+            // get vertices
+            var vertices = new List<Vector3>();
+            var triangulationBuffer = new List<int>();
+
+            for (var i = 0; i < gridConfig.Length; i++)
+            {
+                var square = gridConfig[i];
+                if(square.Config == 0) continue;
+                
+                triangulationBuffer.Add(vertices.Count);
+                vertices.AddRange(GetVertices(square));
+            }
+            triangulationBuffer.Add(vertices.Count);
+            
+            // get triangles
+            var triangles = new List<int>();
+            
+            for (var i = 0; i < triangulationBuffer.Count -1; i++)
+            {
+                Triangulate(triangles, triangulationBuffer[i], triangulationBuffer[i + 1]);
+            }
+            
+            // create mesh
+            var mesh = new Mesh();
+            mesh.vertices = vertices.ToArray();
+            mesh.triangles = triangles.ToArray();
+            mesh.RecalculateNormals();
             return mesh;
         }
-
-        private static byte CalculateConfig(bool bottomLeftOpen, bool topLeftOpen, bool topRightOpen, bool bottomRightOpen)
+        
+        private static void Triangulate(ICollection<int> triangles, int startIndex, int endIndex)
         {
-            byte configuration = 0;
-
-            if (!topLeftOpen)
-                configuration += 8;
-            if (!topRightOpen)
-                configuration += 4;
-            if (!bottomRightOpen)
-                configuration += 2;
-            if (!bottomLeftOpen)
-                configuration += 1;
-
-            return configuration;
+            for (var i = startIndex; i < endIndex - 2; i++)
+            {
+                triangles.Add(startIndex);
+                triangles.Add(i + 1);
+                triangles.Add(i + 2);
+            }
         }
         
-        private static void Triangulate
-        (
-            byte configuration, 
-            Vector3 basePosition, 
-            MarchingSquaresMeshBuilder marchingSquaresMeshBuilder
-        )
+        private static IEnumerable<Vector3> GetVertices(MarchingSquareData squareData)
         {
-            switch (configuration)
+            var basePosition = squareData.BasePosition;
+            
+            return squareData.Config switch
             {
-                case 0:
-                    break;
-
+                0 => Array.Empty<Vector3>(),
+                
                 // 1 points:
-                case 1:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _bottomLeftOffset,
-                        basePosition + _leftOffset,
-                        basePosition + _bottomOffset
-                    );
-                    break;
-
-                case 2:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _bottomOffset,
-                        basePosition + _rightOffset,
-                        basePosition + _bottomRightOffset
-                    );
-                    break;
-
-                case 4:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _topOffset,
-                        basePosition + _topRightOffset,
-                        basePosition + _rightOffset
-                    );
-                    break;
-
-                case 8:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _leftOffset,
-                        basePosition + _topLeftOffset,
-                        basePosition + _topOffset
-                    );
-                    break;
-
+                1 => new[]
+                {
+                    basePosition + _bottomLeftOffset, 
+                    basePosition + _leftOffset, 
+                    basePosition + _bottomOffset
+                },
+                2 => new[]
+                {
+                    basePosition + _bottomOffset, 
+                    basePosition + _rightOffset, 
+                    basePosition + _bottomRightOffset
+                },
+                4 => new[]
+                {
+                    basePosition + _topOffset, 
+                    basePosition + _topRightOffset, 
+                    basePosition + _rightOffset
+                },
+                8 => new[]
+                {
+                    basePosition + _leftOffset, 
+                    basePosition + _topLeftOffset, 
+                    basePosition + _topOffset
+                },
+                
                 // 2 points:
-                case 3:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _bottomLeftOffset,
-                        basePosition + _leftOffset,
-                        basePosition + _rightOffset,
-                        basePosition + _bottomRightOffset
-                    );
-                    break;
+                3 => new[]
+                {
+                    basePosition + _bottomLeftOffset, 
+                    basePosition + _leftOffset, 
+                    basePosition + _rightOffset,
+                    basePosition + _bottomRightOffset
+                },
+                6 => new[]
+                {
+                    basePosition + _bottomOffset, 
+                    basePosition + _topOffset, 
+                    basePosition + _topRightOffset,
+                    basePosition + _bottomRightOffset
+                },
+                9 => new[]
+                {
+                    basePosition + _bottomLeftOffset, 
+                    basePosition + _topLeftOffset, 
+                    basePosition + _topOffset,
+                    basePosition + _bottomOffset
+                },
+                12 => new[]
+                {
+                    basePosition + _leftOffset, 
+                    basePosition + _topLeftOffset, 
+                    basePosition + _topRightOffset,
+                    basePosition + _rightOffset
+                },
+                5 => new[] // note: ambiguous case
+                {
+                    basePosition + _bottomLeftOffset, 
+                    basePosition + _leftOffset, 
+                    basePosition + _topOffset,
+                    basePosition + _topRightOffset, 
+                    basePosition + _rightOffset, 
+                    basePosition + _bottomOffset
+                },
+                10 => new[] // note: ambiguous case
+                {
+                    basePosition + _leftOffset, 
+                    basePosition + _topLeftOffset, 
+                    basePosition + _topOffset,
+                    basePosition + _rightOffset, 
+                    basePosition + _bottomRightOffset, 
+                    basePosition + _bottomOffset
+                },
                 
-                 case 6:
-                     marchingSquaresMeshBuilder.TriangulateFace
-                     (
-                         basePosition + _bottomOffset,
-                         basePosition + _topOffset,
-                         basePosition + _topRightOffset,
-                         basePosition + _bottomRightOffset
-                     );
-                    break;
+                // 3 point:
+                7 => new[]
+                {
+                    basePosition + _bottomLeftOffset, 
+                    basePosition + _leftOffset, 
+                    basePosition + _topOffset,
+                    basePosition + _topRightOffset, 
+                    basePosition + _bottomRightOffset
+                },
+                11 => new[]
+                {
+                    basePosition + _bottomLeftOffset, 
+                    basePosition + _topLeftOffset, 
+                    basePosition + _topOffset,
+                    basePosition + _rightOffset, 
+                    basePosition + _bottomRightOffset
+                },
+                13 => new[]
+                {
+                    basePosition + _bottomLeftOffset, 
+                    basePosition + _topLeftOffset, 
+                    basePosition + _topRightOffset,
+                    basePosition + _rightOffset, 
+                    basePosition + _bottomOffset
+                },
+                14 => new[]
+                {
+                    basePosition + _leftOffset, 
+                    basePosition + _topLeftOffset, 
+                    basePosition + _topRightOffset,
+                    basePosition + _bottomRightOffset, 
+                    basePosition + _bottomOffset
+                },
                 
-                case 9:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _bottomLeftOffset,
-                        basePosition + _topLeftOffset,
-                        basePosition + _topOffset,
-                        basePosition + _bottomOffset
-                    );
-                    break;
-                
-                case 12:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _leftOffset,
-                        basePosition + _topLeftOffset,
-                        basePosition + _topRightOffset,
-                        basePosition + _rightOffset
-                    );
-                    break;
-                
-                case 5: // note: ambiguous case
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _bottomLeftOffset,
-                        basePosition + _leftOffset,
-                        basePosition + _topOffset,
-                        basePosition + _topRightOffset,
-                        basePosition + _rightOffset,
-                        basePosition + _bottomOffset
-                    );
-                    break;
-
-                case 10: // note: ambiguous case
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _leftOffset,
-                        basePosition + _topLeftOffset,
-                        basePosition + _topOffset,
-                        basePosition + _rightOffset,
-                        basePosition + _bottomRightOffset,
-                        basePosition + _bottomOffset
-                    );
-                    break;
-                
-                // // 3 point:
-                case 7:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _bottomLeftOffset,
-                        basePosition + _leftOffset,
-                        basePosition + _topOffset,
-                        basePosition + _topRightOffset,
-                        basePosition + _bottomRightOffset
-                    );
-                    break;
-                
-                 case 11:
-                     marchingSquaresMeshBuilder.TriangulateFace
-                     (
-                         basePosition + _bottomLeftOffset,
-                         basePosition + _topLeftOffset,
-                         basePosition + _topOffset,
-                         basePosition + _rightOffset,
-                         basePosition + _bottomRightOffset
-                     );
-                    break;
-                
-                case 13:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _bottomLeftOffset,
-                        basePosition + _topLeftOffset,
-                        basePosition + _topRightOffset,
-                        basePosition + _rightOffset,
-                        basePosition + _bottomOffset
-                    );
-                    break;
-                
-                case 14:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _leftOffset,
-                        basePosition + _topLeftOffset,
-                        basePosition + _topRightOffset,
-                        basePosition + _bottomRightOffset,
-                        basePosition + _bottomOffset
-                    );
-                    break;
-                
-                // //4 point:
-                case 15:
-                    marchingSquaresMeshBuilder.TriangulateFace
-                    (
-                        basePosition + _bottomLeftOffset,
-                        basePosition + _topLeftOffset,
-                        basePosition + _topRightOffset,
-                        basePosition + _bottomRightOffset
-                    );
-                    break;
-            }
+                //4 point:
+                15 => new[]
+                {
+                    basePosition + _bottomLeftOffset, 
+                    basePosition + _topLeftOffset, 
+                    basePosition + _topRightOffset,
+                    basePosition + _bottomRightOffset
+                },
+                _ => throw new ArgumentException()
+            };
         }
     }
 }

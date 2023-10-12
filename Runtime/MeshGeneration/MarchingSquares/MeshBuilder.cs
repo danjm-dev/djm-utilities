@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DJM.Utilities.MeshGeneration.MarchingSquares
+namespace DJM.Utilities.MeshGeneration
 {
-    internal sealed class MarchingSquaresMeshBuilder
+    internal sealed class MeshBuilder
     {
         private readonly List<Vector3> _vertices = new();
         private readonly List<int> _triangles = new();
