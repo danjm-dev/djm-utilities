@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace DJM.Utilities.MeshGeneration
+namespace DJM.Utilities.MeshGeneration.Primitives
 {
     public static class DJMQuadMesh
     {
