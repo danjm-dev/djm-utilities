@@ -4,7 +4,42 @@ namespace DJM.Utilities.Noise
 {
     public static class NoiseGenerator
     {
-        public static float[,] GenerateMap(int width, int height, int seed, float scale, int octaves, float persistence, float lacunarity, Vector2 offset) 
+        public static bool[] GenerateSteppedMap2D
+        (
+            int width, 
+            int height, 
+            int seed, 
+            float scale, 
+            int octaves, 
+            float persistence,
+            float lacunarity, 
+            float threshold, 
+            Vector2 offset = new()
+        )
+        {
+            threshold = Mathf.Clamp01(threshold);
+            var noiseMap = GenerateMap2D(width, height, seed, scale, octaves, persistence, lacunarity, offset, true);
+            var steppedNoiseMap = new bool[noiseMap.Length];
+            for (var i = 0; i < noiseMap.Length; i++)
+            {
+                steppedNoiseMap[i] = noiseMap[i] >= threshold;
+            }
+
+            return steppedNoiseMap;
+        } 
+        
+        public static float[] GenerateMap2D
+        (
+            int width, 
+            int height, 
+            int seed, 
+            float scale, 
+            int octaves, 
+            float persistence, 
+            float lacunarity, 
+            Vector2 offset = new(),
+            bool normalise = true
+        ) 
         {
             width = Mathf.Max(1, width);
             height = Mathf.Max(1, height);
@@ -13,15 +48,17 @@ namespace DJM.Utilities.Noise
             lacunarity = Mathf.Max(1, lacunarity);
             persistence = Mathf.Clamp01(persistence);
             
-            var noiseMap = new float[width, height];
+            var noiseMap = new float[width * height];
             
             Random.InitState(seed);
             var octaveOffsets = new Vector2[octaves];
             for (var i = 0; i < octaveOffsets.Length; i++)
             {
-                var offsetX = Random.Range(-100000f, 100000f) + offset.x;
-                var offsetY = Random.Range(-100000f, 100000f) + offset.y;
-                octaveOffsets[i] = new Vector2(offsetX, offsetY);
+                octaveOffsets[i] = new Vector2
+                (
+                    Random.Range(-100000f, 100000f) + offset.x, 
+                    Random.Range(-100000f, 100000f) + offset.y
+                );
             }
             
             var maxNoiseHeight = float.MinValue;
@@ -29,10 +66,11 @@ namespace DJM.Utilities.Noise
             
             var halfWidth = width * 0.5f;
             var halfHeight = height * 0.5f;
-
+            
             for (var y = 0; y < height; y++) 
             {
                 var yCoord = y - halfHeight;
+                
                 for (var x = 0; x < width; x++) 
                 {
                     var xCoord = x - halfWidth;
@@ -54,19 +92,17 @@ namespace DJM.Utilities.Noise
                     if(noiseHeight > maxNoiseHeight) maxNoiseHeight = noiseHeight;
                     else if(noiseHeight < minNoiseHeight) minNoiseHeight = noiseHeight;
                     
-                    noiseMap[x, y] = noiseHeight;
+                    noiseMap[x + y * width] = noiseHeight;
                 }
             }
 
-            // normalise
-            for (var y = 0; y < height; y++)
+            if (!normalise) return noiseMap;
+            
+            for (var i = 0; i < noiseMap.Length; i++)
             {
-                for (var x = 0; x < width; x++)
-                {
-                    noiseMap[x, y] = Mathf.InverseLerp(minNoiseHeight, maxNoiseHeight, noiseMap[x, y]);
-                }
+                noiseMap[i] = Mathf.InverseLerp(minNoiseHeight, maxNoiseHeight, noiseMap[i]);
             }
-
+            
             return noiseMap;
         }
     }
