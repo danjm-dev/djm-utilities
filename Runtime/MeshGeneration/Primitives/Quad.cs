@@ -3,12 +3,12 @@ using UnityEngine.Rendering;
 
 namespace DJM.Utilities.MeshGeneration
 {
-    public static class QuadMesh
+    public static class Quad
     {
         public static readonly ushort[] Triangles = { 0, 1, 2, 0, 2, 3 };
         public static readonly Vector2[] Uvs = { new(0, 0), new(0, 1), new(1, 1), new(1, 0) };
         
-        public static Mesh Create(Vector3 centerPosition, float width, float height, Vector3 normal)
+        public static Mesh CreateMesh(Vector3 centerPosition, float width, float height, Vector3 normal)
         {
             // Check if normal is roughly pointing up/down
             var notParallel = Mathf.Abs(Vector3.Dot(normal, Vector3.up)) < 0.99f ? Vector3.up : Vector3.right; 

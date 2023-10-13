@@ -142,8 +142,6 @@ namespace DJM.Utilities.MeshGeneration
             };
         }
         
-        
-        
         // 0 Point
         
         #region Case0
