@@ -12,6 +12,7 @@ namespace DJM.Utilities.MeshGeneration
             
             var squareCaseMeshHelper = new SquareMeshGenerator(nodeSize, heightOffset, depthOffset);
             var vertices = new List<Vector3>();
+            var normals = new List<Vector3>();
             var triangles = new List<int>();
             
 
@@ -27,8 +28,10 @@ namespace DJM.Utilities.MeshGeneration
                         grid[i + 1]
                     );
                     
-                    triangles.AddRange(squareCaseMeshHelper.GetTriangles(config, vertices.Count));
+                    var currentVertexIndex = vertices.Count;
                     vertices.AddRange(squareCaseMeshHelper.GetVertices(config, new Vector3(x * nodeSize, 0, z * nodeSize)));
+                    normals.AddRange(SquareMeshGenerator.GetNormals(config));
+                    triangles.AddRange(SquareMeshGenerator.GetTriangles(config, currentVertexIndex));
                 }
             }
             
@@ -36,33 +39,8 @@ namespace DJM.Utilities.MeshGeneration
             var mesh = new Mesh();
             mesh.vertices = vertices.ToArray();
             mesh.triangles = triangles.ToArray();
-            mesh.RecalculateNormals();
+            mesh.normals = normals.ToArray();
             return mesh;
-        }
-
-        private static MarchingSquareData[] CalculateSquareData(IReadOnlyList<bool> grid, int width, int height, float nodeSize)
-        {
-            var marchingSquareConfig = new List<MarchingSquareData>();
-            
-            // -1 on each axis to iterate through squares rather than voxels. i++ on y loop ensures i skips far right col.
-            for (int z = 0, i = 0; z < height - 1; z++, i++)
-            {
-                for (var x = 0; x < width - 1; x++, i++)
-                {
-                    var config = CalculateConfig
-                    (
-                        grid[i],
-                        grid[i + width],
-                        grid[i + width + 1],
-                        grid[i + 1]
-                    );
-
-                    var gridPositionOffset = new Vector3(x * nodeSize, 0, z * nodeSize);
-                    marchingSquareConfig.Add(new MarchingSquareData(gridPositionOffset, config));
-                }
-            }
-
-            return marchingSquareConfig.ToArray();
         }
         
         private static byte CalculateConfig(bool bottomLeftFilled, bool topLeftFilled, bool topRightFilled, bool bottomRightFilled)
