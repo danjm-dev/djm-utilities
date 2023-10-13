@@ -260,8 +260,79 @@ namespace DJM.Utilities.MeshGeneration
                 _topLeft + positionOffset
             };
         }
+        
+        public Vector3[] CaseSixVertices(Vector3 positionOffset)
+        {
+            return new[]
+            {
+                // base
+                _baseBackRight + positionOffset,
+                _baseForwardRight + positionOffset,
+                _baseForward + positionOffset,
+                _baseBack + positionOffset,
+                // top
+                _topBackRight + positionOffset,
+                _topBack + positionOffset,
+                _topForward + positionOffset,
+                _topForwardRight + positionOffset,
+                // side
+                _baseBack + positionOffset,
+                _baseForward + positionOffset,
+                _topForward + positionOffset,
+                _topBack + positionOffset
+            };
+        }
+        
+        public Vector3[] CaseNineVertices(Vector3 positionOffset)
+        {
+            return new[]
+            {
+                // base
+                _baseForwardLeft + positionOffset,
+                _baseBackLeft + positionOffset,
+                _baseBack + positionOffset,
+                _baseForward + positionOffset,
+                // top
+                _topForwardLeft + positionOffset,
+                _topForward + positionOffset,
+                _topBack + positionOffset,
+                _topBackLeft + positionOffset,
+                // side
+                _baseForward + positionOffset,
+                _baseBack + positionOffset,
+                _topBack + positionOffset,
+                _topForward + positionOffset
+            };
+        }
 
-        public int[] CaseThreeTriangles(int vertexIndexOffset)
+        public Vector3[] CaseTwelveVertices(Vector3 positionOffset)
+        {
+            return new[]
+            {
+                // base
+                _baseForwardRight + positionOffset,
+                _baseForwardLeft + positionOffset,
+                _baseLeft + positionOffset,
+                _baseRight + positionOffset,
+                // top
+                _topForwardRight + positionOffset,
+                _topRight + positionOffset,
+                _topLeft + positionOffset,
+                _topForwardLeft + positionOffset,
+                // side
+                _baseRight + positionOffset,
+                _baseLeft + positionOffset,
+                _topLeft + positionOffset,
+                _topRight + positionOffset
+            };
+        }
+        
+        public static int[] CaseThreeTriangles(int vertexIndexOffset) => TwoPointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseSixTriangles(int vertexIndexOffset) => TwoPointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseNineTriangles(int vertexIndexOffset) => TwoPointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseTwelveTriangles(int vertexIndexOffset) => TwoPointCaseTriangles(vertexIndexOffset);
+        
+        private static int[] TwoPointCaseTriangles(int vertexIndexOffset)
         {
             return new[]
             {
@@ -288,55 +359,120 @@ namespace DJM.Utilities.MeshGeneration
                 11 + vertexIndexOffset,
             };
         }
-        
-        public Vector3[] CaseSixVertices(Vector3 positionOffset)
-        {
-            return Array.Empty<Vector3>();
-        }
 
-        public int[] CaseSixTriangles(int vertexIndexOffset)
-        {
-            return Array.Empty<int>();
-        }
-        
-        public Vector3[] CaseNineVertices(Vector3 positionOffset)
-        {
-            return Array.Empty<Vector3>();
-        }
+#endregion
 
-        public int[] CaseNineTriangles(int vertexIndexOffset)
-        {
-            return Array.Empty<int>();
-        }
-        
-        public Vector3[] CaseTwelveVertices(Vector3 positionOffset)
-        {
-            return Array.Empty<Vector3>();
-        }
+        #region 2PointAmbiguous
 
-        public int[] CaseTwelveTriangles(int vertexIndexOffset)
+        public Vector3[] CaseFiveVertices(Vector3 positionOffset)
         {
-            return Array.Empty<int>();
-        }
-        
-        public Vector3[] CaseFiveVertices(Vector3 positionOffset) // ambiguous case
-        {
-            return Array.Empty<Vector3>();
-        }
-
-        public int[] CaseFiveTriangles(int vertexIndexOffset) // ambiguous case
-        {
-            return Array.Empty<int>();
+            return new[]
+            {
+                // base
+                _baseBackLeft + positionOffset,
+                _baseBack + positionOffset,
+                _baseRight + positionOffset,
+                _baseForwardRight + positionOffset,
+                _baseForward + positionOffset,
+                _baseLeft + positionOffset,
+                // top
+                _topBackLeft + positionOffset,
+                _topLeft + positionOffset,
+                _topForward + positionOffset,
+                _topForwardRight + positionOffset,
+                _topRight + positionOffset,
+                _topBack + positionOffset,
+                // side1
+                _baseLeft + positionOffset,
+                _baseRight + positionOffset,
+                _topRight + positionOffset,
+                _topLeft + positionOffset,
+                // side2
+                _baseRight + positionOffset,
+                _baseLeft + positionOffset,
+                _topLeft + positionOffset,
+                _topRight + positionOffset
+            };
         }
         
-        public Vector3[] CaseTenVertices(Vector3 positionOffset) // ambiguous case
+        public Vector3[] CaseTenVertices(Vector3 positionOffset)
         {
-            return Array.Empty<Vector3>();
+            return new[]
+            {
+                // base
+                _baseForwardLeft + positionOffset,
+                _baseLeft + positionOffset,
+                _baseBack + positionOffset,
+                _baseBackRight + positionOffset,
+                _baseRight + positionOffset,
+                _baseForward + positionOffset,
+                // top
+                _topForwardLeft + positionOffset,
+                _topForward + positionOffset,
+                _topRight + positionOffset,
+                _topBackRight + positionOffset,
+                _topBack + positionOffset,
+                _topLeft + positionOffset,
+                // side1
+                _baseBack + positionOffset,
+                _baseLeft + positionOffset,
+                _topLeft + positionOffset,
+                _topBack + positionOffset,
+                // side2
+                _baseForward + positionOffset,
+                _baseRight + positionOffset,
+                _topRight + positionOffset,
+                _topForward + positionOffset
+            };
         }
-
-        public int[] CaseTenTriangles(int vertexIndexOffset) // ambiguous case
+        
+        public static int[] CaseFiveTriangles(int vertexIndexOffset) => TwoPointAmbiguousCaseTriangles(vertexIndexOffset);
+        public static int[] CaseTenTriangles(int vertexIndexOffset) => TwoPointAmbiguousCaseTriangles(vertexIndexOffset);
+        
+        private static int[] TwoPointAmbiguousCaseTriangles(int vertexIndexOffset)
         {
-            return Array.Empty<int>();
+            return new[]
+            {
+                // base
+                0 + vertexIndexOffset, 
+                1 + vertexIndexOffset,
+                5 + vertexIndexOffset,
+                1 + vertexIndexOffset,
+                4 + vertexIndexOffset,
+                5 + vertexIndexOffset,
+                1 + vertexIndexOffset, 
+                2 + vertexIndexOffset,
+                4 + vertexIndexOffset,
+                2 + vertexIndexOffset,
+                3 + vertexIndexOffset,
+                4 + vertexIndexOffset,
+                // top
+                6 + vertexIndexOffset, 
+                7 + vertexIndexOffset,
+                11 + vertexIndexOffset,
+                7 + vertexIndexOffset,
+                10 + vertexIndexOffset,
+                11 + vertexIndexOffset,
+                7 + vertexIndexOffset, 
+                8 + vertexIndexOffset,
+                10 + vertexIndexOffset,
+                8 + vertexIndexOffset,
+                9 + vertexIndexOffset,
+                10 + vertexIndexOffset,
+                // side
+                12 + vertexIndexOffset, 
+                13 + vertexIndexOffset, 
+                14 + vertexIndexOffset,
+                12 + vertexIndexOffset, 
+                14 + vertexIndexOffset, 
+                15 + vertexIndexOffset,
+                16 + vertexIndexOffset, 
+                17 + vertexIndexOffset, 
+                18 + vertexIndexOffset,
+                16 + vertexIndexOffset, 
+                18 + vertexIndexOffset, 
+                19 + vertexIndexOffset,
+            };
         }
 
 #endregion
