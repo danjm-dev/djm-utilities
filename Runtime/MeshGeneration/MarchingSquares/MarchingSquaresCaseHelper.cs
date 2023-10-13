@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DJM.Utilities.MeshGeneration
 {
-    internal class SquareMeshGenerator
+    internal class MarchingSquaresCaseHelper
     {
         private static readonly Vector3 ForwardRightNormal = (Vector3.forward + Vector3.right).normalized;
         private static readonly Vector3 ForwardLeftNormal = (Vector3.forward + Vector3.left).normalized;
@@ -32,7 +32,7 @@ namespace DJM.Utilities.MeshGeneration
         private readonly Vector3 _topRight;
         private readonly Vector3 _topBack;
         
-        public SquareMeshGenerator(float nodeSize, float heightOffset, float depthOffset)
+        public MarchingSquaresCaseHelper(float nodeSize, float heightOffset, float depthOffset)
         {
             if(nodeSize <= 0) throw new ArgumentException("nodeSize must be > 0");
             if(heightOffset < 0) throw new ArgumentException("height must be >= 0");
@@ -598,13 +598,13 @@ namespace DJM.Utilities.MeshGeneration
                 _topBack + positionOffset,
                 // side1
                 _baseLeft + positionOffset,
-                _baseRight + positionOffset,
-                _topRight + positionOffset,
+                _baseForward + positionOffset,
+                _topForward + positionOffset,
                 _topLeft + positionOffset,
                 // side2
                 _baseRight + positionOffset,
-                _baseLeft + positionOffset,
-                _topLeft + positionOffset,
+                _baseBack + positionOffset,
+                _topBack + positionOffset,
                 _topRight + positionOffset
             };
         }

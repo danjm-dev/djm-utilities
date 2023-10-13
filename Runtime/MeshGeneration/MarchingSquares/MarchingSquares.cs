@@ -10,7 +10,7 @@ namespace DJM.Utilities.MeshGeneration
         {
             if (grid.Length != width * height) throw new ArgumentException("grid length does not match width * height");
             
-            var squareCaseMeshHelper = new SquareMeshGenerator(nodeSize, heightOffset, depthOffset);
+            var squareCaseMeshHelper = new MarchingSquaresCaseHelper(nodeSize, heightOffset, depthOffset);
             var vertices = new List<Vector3>();
             var normals = new List<Vector3>();
             var triangles = new List<int>();
@@ -30,8 +30,8 @@ namespace DJM.Utilities.MeshGeneration
                     
                     var currentVertexIndex = vertices.Count;
                     vertices.AddRange(squareCaseMeshHelper.GetVertices(config, new Vector3(x * nodeSize, 0, z * nodeSize)));
-                    normals.AddRange(SquareMeshGenerator.GetNormals(config));
-                    triangles.AddRange(SquareMeshGenerator.GetTriangles(config, currentVertexIndex));
+                    normals.AddRange(MarchingSquaresCaseHelper.GetNormals(config));
+                    triangles.AddRange(MarchingSquaresCaseHelper.GetTriangles(config, currentVertexIndex));
                 }
             }
             
