@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DJM.Utilities.MeshGeneration
 {
-    internal class SquareCaseMeshHelper
+    internal class SquareCaseMeshHelper // make interface for this. can have 2d version from same interface
     {
         private readonly Vector3 _baseBackLeft;
         private readonly Vector3 _baseForwardLeft;
@@ -148,40 +148,18 @@ namespace DJM.Utilities.MeshGeneration
             };
         }
         
-        public int[] CaseOneTriangles(int vertexIndexOffset)
-        {
-            return new[]
-            {
-                // base
-                0 + vertexIndexOffset, 
-                1 + vertexIndexOffset,
-                2 + vertexIndexOffset,
-                // top
-                3 + vertexIndexOffset, 
-                4 + vertexIndexOffset, 
-                5 + vertexIndexOffset,
-                // side
-                6 + vertexIndexOffset, 
-                7 + vertexIndexOffset, 
-                8 + vertexIndexOffset,
-                6 + vertexIndexOffset, 
-                8 + vertexIndexOffset, 
-                9 + vertexIndexOffset,
-            };
-        }
-        
         public Vector3[] CaseTwoVertices(Vector3 positionOffset)
         {
             return new[]
             {
                 // base
-                _baseBack + positionOffset,
                 _baseBackRight + positionOffset,
                 _baseRight + positionOffset,
+                _baseBack + positionOffset,
                 // top
+                _topBackRight + positionOffset,
                 _topBack + positionOffset,
                 _topRight + positionOffset,
-                _topBackRight + positionOffset,
                 // side
                 _baseBack + positionOffset,
                 _baseRight + positionOffset,
@@ -189,8 +167,53 @@ namespace DJM.Utilities.MeshGeneration
                 _topBack + positionOffset
             };
         }
-
-        public int[] CaseTwoTriangles(int vertexIndexOffset)
+        
+        public Vector3[] CaseFourVertices(Vector3 positionOffset)
+        {
+            return new[]
+            {
+                // base
+                _baseForwardRight + positionOffset,
+                _baseForward + positionOffset,
+                _baseRight + positionOffset,
+                // top
+                _topForwardRight + positionOffset,
+                _topRight + positionOffset,
+                _topForward + positionOffset,
+                // side
+                _baseRight + positionOffset,
+                _baseForward + positionOffset,
+                _topForward + positionOffset,
+                _topRight + positionOffset
+            };
+        }
+        
+        public Vector3[] CaseEightVertices(Vector3 positionOffset)
+        {
+            return new[]
+            {
+                // base
+                _baseForwardLeft + positionOffset,
+                _baseLeft + positionOffset,
+                _baseForward + positionOffset,
+                // top
+                _topForwardLeft + positionOffset,
+                _topForward + positionOffset,
+                _topLeft + positionOffset,
+                // side
+                _baseForward + positionOffset,
+                _baseLeft + positionOffset,
+                _topLeft + positionOffset,
+                _topForward + positionOffset
+            };
+        }
+        
+        public static int[] CaseOneTriangles(int vertexIndexOffset) => OnePointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseTwoTriangles(int vertexIndexOffset) => OnePointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseFourTriangles(int vertexIndexOffset) => OnePointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseEightTriangles(int vertexIndexOffset) => OnePointCaseTriangles(vertexIndexOffset);
+        
+        private static int[] OnePointCaseTriangles(int vertexIndexOffset)
         {
             return new[]
             {
@@ -210,26 +233,6 @@ namespace DJM.Utilities.MeshGeneration
                 8 + vertexIndexOffset, 
                 9 + vertexIndexOffset,
             };
-        }
-        
-        public Vector3[] CaseFourVertices(Vector3 positionOffset)
-        {
-            return Array.Empty<Vector3>();
-        }
-
-        public int[] CaseFourTriangles(int vertexIndexOffset)
-        {
-            return Array.Empty<int>();
-        }
-        
-        public Vector3[] CaseEightVertices(Vector3 positionOffset)
-        {
-            return Array.Empty<Vector3>();
-        }
-
-        public int[] CaseEightTriangles(int vertexIndexOffset)
-        {
-            return Array.Empty<int>();
         }
 
         #endregion
