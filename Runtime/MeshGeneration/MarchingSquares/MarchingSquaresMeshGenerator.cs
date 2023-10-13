@@ -7,7 +7,7 @@ namespace DJM.Utilities.MeshGeneration
     {
         public static Mesh Generate(float nodeSize, float depth, MarchingSquareData[] gridConfig)
         {
-            var squareCaseMeshHelper = new SquareCaseMeshHelper(nodeSize, depth, depth);
+            var squareCaseMeshHelper = new SquareMeshGenerator(nodeSize, depth, depth);
             
             var vertices = new List<Vector3>();
             var triangles = new List<int>();

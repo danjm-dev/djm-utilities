@@ -4,13 +4,40 @@ using UnityEngine;
 
 namespace DJM.Utilities.MeshGeneration
 {
-    public static class MarchingSquaresMesh
+    public static class MarchingSquares
     {
-        public static Mesh Create(bool[] grid, int width, int height, float nodeSize, float depth = 0f)
+        public static Mesh CreateMesh(bool[] grid, int width, int height, float nodeSize, float heightOffset, float depthOffset)
         {
             if (grid.Length != width * height) throw new ArgumentException("grid length does not match width * height");
-            var marchingSquareConfig = CalculateSquareData(grid, width, height, nodeSize);
-            return MarchingSquaresMeshGenerator.Generate(nodeSize, depth, marchingSquareConfig);
+            
+            var squareCaseMeshHelper = new SquareMeshGenerator(nodeSize, heightOffset, depthOffset);
+            var vertices = new List<Vector3>();
+            var triangles = new List<int>();
+            
+
+            for (int z = 0, i = 0; z < height - 1; z++, i++)
+            {
+                for (var x = 0; x < width - 1; x++, i++)
+                {
+                    var config = CalculateConfig
+                    (
+                        grid[i],
+                        grid[i + width],
+                        grid[i + width + 1],
+                        grid[i + 1]
+                    );
+                    
+                    triangles.AddRange(squareCaseMeshHelper.GetTriangles(config, vertices.Count));
+                    vertices.AddRange(squareCaseMeshHelper.GetVertices(config, new Vector3(x * nodeSize, 0, z * nodeSize)));
+                }
+            }
+            
+            // create mesh
+            var mesh = new Mesh();
+            mesh.vertices = vertices.ToArray();
+            mesh.triangles = triangles.ToArray();
+            mesh.RecalculateNormals();
+            return mesh;
         }
 
         private static MarchingSquareData[] CalculateSquareData(IReadOnlyList<bool> grid, int width, int height, float nodeSize)

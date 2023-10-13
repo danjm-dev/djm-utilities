@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DJM.Utilities.MeshGeneration
 {
-    internal class SquareCaseMeshHelper // make interface for this. can have 2d version from same interface
+    internal class SquareMeshGenerator
     {
         private readonly Vector3 _baseBackLeft;
         private readonly Vector3 _baseForwardLeft;
@@ -26,18 +26,18 @@ namespace DJM.Utilities.MeshGeneration
         private readonly Vector3 _topRight;
         private readonly Vector3 _topBack;
         
-        public SquareCaseMeshHelper(float nodeSize, float height, float depth)
+        public SquareMeshGenerator(float nodeSize, float heightOffset, float depthOffset)
         {
             if(nodeSize <= 0) throw new ArgumentException("nodeSize must be > 0");
-            if(height < 0) throw new ArgumentException("height must be >= 0");
-            if(depth < 0) throw new ArgumentException("depth must be >= 0");
+            if(heightOffset < 0) throw new ArgumentException("height must be >= 0");
+            if(depthOffset < 0) throw new ArgumentException("depth must be >= 0");
             
             var forwardOffset = Vector3.forward * nodeSize;
             var halfForwardOffset = forwardOffset * .5f;
             var rightOffset = Vector3.right * nodeSize;
             var halfRightOffset = rightOffset * .5f;
             
-            var downOffset = Vector3.down * depth;
+            var downOffset = Vector3.down * depthOffset;
             
             
             _baseBackLeft = downOffset;
@@ -51,7 +51,7 @@ namespace DJM.Utilities.MeshGeneration
             _baseBack = halfRightOffset + downOffset;
             
             
-            var upOffset = Vector3.up * height;
+            var upOffset = Vector3.up * heightOffset;
             
             _topBackLeft = upOffset;
             _topForwardLeft = forwardOffset + upOffset;
@@ -481,42 +481,137 @@ namespace DJM.Utilities.MeshGeneration
 
         public Vector3[] CaseSevenVertices(Vector3 positionOffset)
         {
-            return Array.Empty<Vector3>();
-        }
-
-        public int[] CaseSevenTriangles(int vertexIndexOffset)
-        {
-            return Array.Empty<int>();
+            return new[]
+            {
+                // base
+                _baseBackRight + positionOffset,
+                _baseForwardRight + positionOffset,
+                _baseForward + positionOffset,
+                _baseLeft + positionOffset,
+                _baseBackLeft + positionOffset,
+                // top
+                _topBackRight + positionOffset,
+                _topBackLeft + positionOffset,
+                _topLeft + positionOffset,
+                _topForward + positionOffset,
+                _topForwardRight + positionOffset,
+                // side
+                _baseLeft + positionOffset,
+                _baseForward + positionOffset,
+                _topForward + positionOffset,
+                _topLeft + positionOffset
+            };
         }
         
         public Vector3[] CaseElevenVertices(Vector3 positionOffset)
         {
-            return Array.Empty<Vector3>();
+            return new[]
+            {
+                // base
+                _baseBackLeft + positionOffset,
+                _baseBackRight + positionOffset,
+                _baseRight + positionOffset,
+                _baseForward + positionOffset,
+                _baseForwardLeft + positionOffset,
+                // top
+                _topBackLeft + positionOffset,
+                _topForwardLeft + positionOffset,
+                _topForward + positionOffset,
+                _topRight + positionOffset,
+                _topBackRight + positionOffset,
+                // side
+                _baseForward + positionOffset,
+                _baseRight + positionOffset,
+                _topRight + positionOffset,
+                _topForward + positionOffset
+            };
         }
-
-        public int[] CaseElevenTriangles(int vertexIndexOffset)
-        {
-            return Array.Empty<int>();
-        }
-
+        
         public Vector3[] CaseThirteenVertices(Vector3 positionOffset)
         {
-            return Array.Empty<Vector3>();
-        }
-
-        public int[] CaseThirteenTriangles(int vertexIndexOffset)
-        {
-            return Array.Empty<int>();
+            return new[]
+            {
+                // base
+                _baseForwardLeft + positionOffset,
+                _baseBackLeft + positionOffset,
+                _baseBack + positionOffset,
+                _baseRight + positionOffset,
+                _baseForwardRight + positionOffset,
+                // top
+                _topForwardLeft + positionOffset,
+                _topForwardRight + positionOffset,
+                _topRight + positionOffset,
+                _topBack + positionOffset,
+                _topBackLeft + positionOffset,
+                // side
+                _baseRight + positionOffset,
+                _baseBack + positionOffset,
+                _topBack + positionOffset,
+                _topRight + positionOffset
+            };
         }
         
         public Vector3[] CaseFourteenVertices(Vector3 positionOffset)
         {
-            return Array.Empty<Vector3>();
+            return new[]
+            {
+                // base
+                _baseForwardRight + positionOffset,
+                _baseForwardLeft + positionOffset,
+                _baseLeft + positionOffset,
+                _baseBack + positionOffset,
+                _baseBackRight + positionOffset,
+                // top
+                _topForwardRight + positionOffset,
+                _topBackRight + positionOffset,
+                _topBack + positionOffset,
+                _topLeft + positionOffset,
+                _topForwardLeft + positionOffset,
+                // side
+                _baseBack + positionOffset,
+                _baseLeft + positionOffset,
+                _topLeft + positionOffset,
+                _topBack + positionOffset
+            };
         }
 
-        public int[] CaseFourteenTriangles(int vertexIndexOffset)
+        public static int[] CaseSevenTriangles(int vertexIndexOffset) => ThreePointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseElevenTriangles(int vertexIndexOffset) => ThreePointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseThirteenTriangles(int vertexIndexOffset) => ThreePointCaseTriangles(vertexIndexOffset);
+        public static int[] CaseFourteenTriangles(int vertexIndexOffset) => ThreePointCaseTriangles(vertexIndexOffset);
+        
+        private static int[] ThreePointCaseTriangles(int vertexIndexOffset)
         {
-            return Array.Empty<int>();
+            return new[]
+            {
+                // base
+                0 + vertexIndexOffset, 
+                1 + vertexIndexOffset,
+                2 + vertexIndexOffset,
+                0 + vertexIndexOffset,
+                2 + vertexIndexOffset,
+                3 + vertexIndexOffset,
+                0 + vertexIndexOffset,
+                3 + vertexIndexOffset,
+                4 + vertexIndexOffset,
+                // top
+                5 + vertexIndexOffset, 
+                6 + vertexIndexOffset, 
+                7 + vertexIndexOffset,
+                5 + vertexIndexOffset, 
+                7 + vertexIndexOffset, 
+                8 + vertexIndexOffset, 
+                5 + vertexIndexOffset, 
+                8 + vertexIndexOffset, 
+                9 + vertexIndexOffset, 
+                // side
+                10 + vertexIndexOffset, 
+                11 + vertexIndexOffset, 
+                12 + vertexIndexOffset,
+                10 + vertexIndexOffset, 
+                12 + vertexIndexOffset, 
+                13 + vertexIndexOffset,
+            };
         }
         
 #endregion
@@ -525,12 +620,40 @@ namespace DJM.Utilities.MeshGeneration
 
         public Vector3[] CaseFifteenVertices(Vector3 positionOffset)
         {
-            return Array.Empty<Vector3>();
+            return new[]
+            {
+                // base
+                _baseBackLeft + positionOffset,
+                _baseBackRight + positionOffset,
+                _baseForwardRight + positionOffset,
+                _baseForwardLeft + positionOffset,
+                // top
+                _topBackLeft + positionOffset,
+                _topForwardLeft + positionOffset,
+                _topForwardRight + positionOffset,
+                _topBackRight + positionOffset,
+            };
         }
 
-        public int[] CaseFifteenTriangles(int vertexIndexOffset)
+        public static int[] CaseFifteenTriangles(int vertexIndexOffset)
         {
-            return Array.Empty<int>();
+            return new[]
+            {
+                // base
+                0 + vertexIndexOffset, 
+                1 + vertexIndexOffset,
+                2 + vertexIndexOffset,
+                0 + vertexIndexOffset, 
+                2 + vertexIndexOffset, 
+                3 + vertexIndexOffset, 
+                // top
+                4 + vertexIndexOffset, 
+                5 + vertexIndexOffset,
+                6 + vertexIndexOffset,
+                4 + vertexIndexOffset, 
+                6 + vertexIndexOffset, 
+                7 + vertexIndexOffset
+            };
         }
 
         #endregion
