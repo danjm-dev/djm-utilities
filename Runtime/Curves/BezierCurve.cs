@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DJM.Utilities.Curves
 {
-    public static class BezierCurve // https://www.youtube.com/watch?v=jvPPXbo87ds
+    public static class BezierCurve
     {
         public static Vector3 Quadratic(Vector3 point0, Vector3 point1, Vector3 point2,  float t)
         {

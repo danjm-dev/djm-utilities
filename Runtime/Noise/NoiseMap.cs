@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DJM.Utilities.Noise
 {
-    public static class NoiseGenerator
+    public static class NoiseMap
     {
         public static bool[] GenerateSteppedMap2D
         (
