@@ -50,6 +50,18 @@ namespace DJM.Utilities.Extensions
         {
             parent.ForEveryChild(child => Object.DestroyImmediate(child.gameObject));
         }
+        
+        /// <summary>
+        /// Destroys all children of the given transform.
+        /// If the application is playing, this method behaves like the regular Destroy method.
+        /// If the application is not playing, this method behaves like DestroyImmediate.
+        /// </summary>
+        /// <param name="parent">The Transform whose child game objects are to be immediately destroyed.</param>
+        public static void ContextualDestroyChildren(this Transform parent)
+        {
+            if(Application.isPlaying) parent.DestroyChildren();
+            else parent.DestroyChildrenImmediate();
+        }
 
         /// <summary>
         ///     Enables all child game objects of the given transform.

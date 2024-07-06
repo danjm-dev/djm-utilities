@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace DJM.Utilities.Extensions
@@ -53,6 +53,18 @@ namespace DJM.Utilities.Extensions
         }
 
         /// <summary>
+        /// Destroys the given GameObject.
+        /// If the application is playing, this method behaves like the regular Destroy method.
+        /// If the application is not playing, this method behaves like DestroyImmediate.
+        /// </summary>
+        /// <param name="gameObject">GameObject whose children are to be destroyed.</param>
+        public static void ContextualDestroy(this GameObject gameObject)
+        {
+            if(Application.isPlaying) Object.Destroy(gameObject);
+            else Object.DestroyImmediate(gameObject);
+        }
+        
+        /// <summary>
         ///     Destroys all children of the game object
         /// </summary>
         /// <param name="gameObject">GameObject whose children are to be destroyed.</param>
@@ -68,6 +80,17 @@ namespace DJM.Utilities.Extensions
         public static void DestroyChildrenImmediate(this GameObject gameObject)
         {
             gameObject.transform.DestroyChildrenImmediate();
+        }
+        
+        /// <summary>
+        /// Destroys all children of the given GameObject.
+        /// If the application is playing, this method behaves like the regular Destroy method.
+        /// If the application is not playing, this method behaves like DestroyImmediate.
+        /// </summary>
+        /// <param name="gameObject">GameObject whose children are to be destroyed.</param>
+        public static void ContextualDestroyChildren(this GameObject gameObject)
+        {
+            gameObject.transform.ContextualDestroyChildren();
         }
 
         /// <summary>
@@ -92,7 +115,7 @@ namespace DJM.Utilities.Extensions
         ///     Resets the GameObject's transform's position, rotation, and scale to their default values.
         /// </summary>
         /// <param name="gameObject">GameObject whose transformation is to be reset.</param>
-        public static void ResetTransformation(this GameObject gameObject)
+        public static void ResetTransform(this GameObject gameObject)
         {
             gameObject.transform.Reset();
         }

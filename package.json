@@ -1,13 +1,17 @@
 {
   "name": "com.djm.utilities",
-  "version": "1.4.0",
   "displayName": "DJM Utilities",
-  "description": "Utilities for Unity Projects",
+  "version": "2.0.0",
   "dependencies": {
+    "com.unity.mathematics": "1.2.6",
+    "com.unity.burst": "1.8.13"
   },
   "author": {
     "name": "danjm.dev",
     "email": "danjm.dev@gmail.com",
     "url": "https://github.com/danjm-dev"
-  }
+  },
+  "description": "Utilities for Unity Projects",
+  "documentationUrl": "https://github.com/danjm-dev/djm-utilities"
+
 }
