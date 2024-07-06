@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace DJM.Utilities.Extensions
+namespace DJM.Utilities
 {
     public static class Float3Extensions
     {

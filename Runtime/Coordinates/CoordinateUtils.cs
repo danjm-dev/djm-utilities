@@ -1,7 +1,7 @@
 using Unity.Burst;
 using Unity.Mathematics;
 
-namespace DJM.Utilities.Utilities
+namespace DJM.Utilities.Coordinates
 {
     /// <summary>
     /// Provides utility methods for coordinate transformations and calculations.

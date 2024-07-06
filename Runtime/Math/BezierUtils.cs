@@ -2,7 +2,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace DJM.Utilities.Utilities
+namespace DJM.Utilities.Math
 {
     [BurstCompile]
     public static class BezierUtils

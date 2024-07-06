@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace DJM.Utilities.Extensions
+namespace DJM.Utilities
 {
     public static class TransformExtensions
     {

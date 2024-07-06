@@ -1,7 +1,7 @@
 ﻿using Unity.Burst;
 using Unity.Mathematics;
 
-namespace DJM.Utilities.Utilities
+namespace DJM.Utilities.Noise
 {
     [BurstCompile]
     public static class SimplexNoiseUtils

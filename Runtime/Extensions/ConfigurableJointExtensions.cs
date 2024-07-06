@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DJM.Utilities.Extensions
+namespace DJM.Utilities
 {
     public static class ConfigurableJointExtensions
     {

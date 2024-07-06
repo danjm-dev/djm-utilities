@@ -2,7 +2,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace DJM.Utilities.Utilities
+namespace DJM.Utilities.ViewPort
 {
     [BurstCompile]
     public static class ScreenSpaceUtils
