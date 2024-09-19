@@ -23,8 +23,15 @@ namespace DJM.Utilities.Math
         }
         
         [BurstCompile]
-        public static void RotateDirection(in float2 direction, float angleInRadians, out float2 rotatedDirection)
+        public static void RotateDirection
+        (
+            in float2 direction, 
+            in float angle, 
+            out float2 rotatedDirection, 
+            in AngleUnit angleUnit = AngleUnit.Radians
+        )
         {
+            var angleInRadians = GetAngleInRadians(angle, angleUnit);
             var cosTheta = math.cos(angleInRadians);
             var sinTheta = math.sin(angleInRadians);
             rotatedDirection = new float2
@@ -75,6 +82,24 @@ namespace DJM.Utilities.Math
             var directionYSquare = directionY * directionY;
 
             return axisRadii.x * axisRadii.y / math.sqrt(directionXSquare + directionYSquare);
+        }
+        
+        [BurstCompile]
+        public static void GetDirection
+        (
+            in float angle, 
+            out float2 direction, 
+            in AngleUnit angleUnit = AngleUnit.Radians
+        )
+        {
+            var angleInRadians = GetAngleInRadians(angle, angleUnit);
+            direction = new float2(math.cos(angleInRadians), math.sin(angleInRadians));
+        }
+
+        [BurstCompile]
+        private static float GetAngleInRadians(in float angle, in AngleUnit unit)
+        {
+            return unit == AngleUnit.Degrees ? math.radians(angle) : angle;
         }
     }
 }
