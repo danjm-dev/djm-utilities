@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace DJM.Utilities
 {
-    internal static class ListExtensions
+    public static class ListExtensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsValidIndex<T>(this IList<T> list, int index) => index >= 0 && index < list.Count;
