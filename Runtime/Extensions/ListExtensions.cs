@@ -61,7 +61,21 @@ namespace DJM.Utilities
         public static bool IsFirstOrLastIndex<T>(this Span<T> span, int index) => index == 0 || index == span.Length - 1;
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsFirstOrLastIndex<T>(this ReadOnlySpan<T> span, int index) => index == 0 || index == span.Length - 1;
-
+        
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetRandom<T>(this List<T> list) => list[UnityEngine.Random.Range(0, list.Count)];
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetRandom<T>(this IList<T> list) => list[UnityEngine.Random.Range(0, list.Count)];
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetRandom<T>(this IReadOnlyList<T> list) => list[UnityEngine.Random.Range(0, list.Count)];
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetRandom<T>(this T[] array) => array[UnityEngine.Random.Range(0, array.Length)];
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetRandom<T>(this Span<T> span) => span[UnityEngine.Random.Range(0, span.Length)];
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetRandom<T>(this ReadOnlySpan<T> span) => span[UnityEngine.Random.Range(0, span.Length)];
+        
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Count<T>(this List<T> list, Predicate<T> predicate)
