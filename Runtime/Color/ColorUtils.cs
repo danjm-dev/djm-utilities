@@ -12,5 +12,12 @@
                 colors[i] = UnityEngine.Color.HSVToRGB(hue, saturation, brightness);
             }
         }
+        
+        public static UnityEngine.Color GetComplementaryColor(UnityEngine.Color color)
+        {
+            UnityEngine.Color.RGBToHSV(color, out var h, out var s, out var v);
+            h = (h + 0.5f) % 1;
+            return UnityEngine.Color.HSVToRGB(h, s, v);
+        }
     }
 }
