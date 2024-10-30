@@ -20,15 +20,28 @@ namespace DJM.Utilities.Noise
             NormalizeNoise(ref output);
             return output;
         }
+
+        [BurstCompile]
+        public static float Sample2DFractalNormalized(in FractalNoiseSettings2D settings)
+        {
+            return Sample2DFractalNormalized
+            (
+                settings.Position, 
+                settings.Scale, 
+                settings.Octaves, 
+                settings.Persistence, 
+                settings.Lacunarity
+            );
+        }
         
         [BurstCompile]
         public static float Sample2DFractalNormalized
         (
             in float2 position, 
             in float scale = 1f, 
-            int octaves = 3, 
-            float persistence = 0.5f, 
-            float lacunarity = 2f
+            in int octaves = 3, 
+            in float persistence = 0.5f, 
+            in float lacunarity = 2f
         )
         {
             ScalePosition(position, scale, out var scaledPosition);
@@ -66,9 +79,22 @@ namespace DJM.Utilities.Noise
             NormalizeNoise(ref output);
             return output;
         }
+
+        [BurstCompile]
+        public static float Sample3DFractalNormalized(in FractalNoiseSettings3D settings)
+        {
+            return Sample3DFractalNormalized
+            (
+                settings.Position, 
+                settings.Scale, 
+                settings.Octaves, 
+                settings.Persistence, 
+                settings.Lacunarity
+            );
+        }
         
         [BurstCompile]
-        public static float Sample3DNormalized
+        public static float Sample3DFractalNormalized
         (
             in float3 position, 
             in float scale = 1f, 
