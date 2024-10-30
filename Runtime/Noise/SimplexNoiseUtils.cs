@@ -22,11 +22,11 @@ namespace DJM.Utilities.Noise
         }
 
         [BurstCompile]
-        public static float Sample2DFractalNormalized(in FractalNoiseSettings2D settings)
+        public static float Sample2DFractalNormalized(in float2 position, in FractalNoiseSettings settings)
         {
             return Sample2DFractalNormalized
             (
-                settings.Position, 
+                position, 
                 settings.Scale, 
                 settings.Octaves, 
                 settings.Persistence, 
@@ -39,9 +39,9 @@ namespace DJM.Utilities.Noise
         (
             in float2 position, 
             in float scale = 1f, 
-            in int octaves = 3, 
-            in float persistence = 0.5f, 
-            in float lacunarity = 2f
+            in int octaves = FractalNoseUtils.DefaultOctaves, 
+            in float persistence = FractalNoseUtils.DefaultPersistence, 
+            in float lacunarity = FractalNoseUtils.DefaultLacunarity
         )
         {
             ScalePosition(position, scale, out var scaledPosition);
@@ -81,11 +81,11 @@ namespace DJM.Utilities.Noise
         }
 
         [BurstCompile]
-        public static float Sample3DFractalNormalized(in FractalNoiseSettings3D settings)
+        public static float Sample3DFractalNormalized(in float3 position, in FractalNoiseSettings settings)
         {
             return Sample3DFractalNormalized
             (
-                settings.Position, 
+                position, 
                 settings.Scale, 
                 settings.Octaves, 
                 settings.Persistence, 
@@ -98,9 +98,9 @@ namespace DJM.Utilities.Noise
         (
             in float3 position, 
             in float scale = 1f, 
-            int octaves = 3, 
-            float persistence = 0.5f, 
-            float lacunarity = 2f
+            int octaves = FractalNoseUtils.DefaultOctaves, 
+            float persistence = FractalNoseUtils.DefaultPersistence, 
+            float lacunarity = FractalNoseUtils.DefaultLacunarity
         )
         {
             ScalePosition(position, scale, out var scaledPosition);
