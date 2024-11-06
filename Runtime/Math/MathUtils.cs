@@ -6,12 +6,16 @@ namespace DJM.Utilities.Math
     [BurstCompile]
     public static class MathUtils
     {
+        
         public const float PI2 = math.PI * 2f;
         public const double PI2_DBL = math.PI_DBL * 2d;
+        
+
         
         [BurstCompile]
         public static float MinkowskiDistance(in float2 point1, in float2 point2, in float p)
         {
+            
             // manhattan distance is p = 1
             // euclidean distance is p = 2
             
@@ -100,6 +104,12 @@ namespace DJM.Utilities.Math
         private static float GetAngleInRadians(in float angle, in AngleUnit unit)
         {
             return unit == AngleUnit.Degrees ? math.radians(angle) : angle;
+        }
+        
+        [BurstCompile]
+        public static int WrapIndex(int index, int count)
+        {
+            return (index % count + count) % count;
         }
     }
 }
