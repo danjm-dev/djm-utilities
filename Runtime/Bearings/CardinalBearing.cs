@@ -120,25 +120,25 @@ namespace DJM.Utilities.Bearings
     public static class CardinalBearingFlagsExtensions
     {
         [BurstCompile]
-        public static CardinalBearingFlags With(this CardinalBearingFlags bearingFlags, CardinalBearingFlags other)
+        public static CardinalBearingFlags WithFlags(this CardinalBearingFlags bearingFlags, CardinalBearingFlags other)
         {
             return BearingFlagsUtils.AppendFlags(bearingFlags, other);
         }
         
         [BurstCompile]
-        public static CardinalBearingFlags With(this CardinalBearingFlags bearingFlags, BearingFlags other)
+        public static CardinalBearingFlags WithFlags(this CardinalBearingFlags bearingFlags, BearingFlags other)
         {
             return BearingFlagsUtils.AppendFlags(bearingFlags, (CardinalBearingFlags)other & CardinalBearingFlags.All);
         }
         
         [BurstCompile]
-        public static CardinalBearingFlags With(this CardinalBearingFlags bearingFlags, CardinalBearing other)
+        public static CardinalBearingFlags WithFlags(this CardinalBearingFlags bearingFlags, CardinalBearing other)
         {
             return BearingFlagsUtils.AppendFlags(bearingFlags, BearingUtils.GetFlags(other));
         }
         
         [BurstCompile]
-        public static CardinalBearingFlags With(this CardinalBearingFlags bearingFlags, Bearing other)
+        public static CardinalBearingFlags WithFlags(this CardinalBearingFlags bearingFlags, Bearing other)
         {
             return BearingFlagsUtils.AppendFlags
             (
@@ -148,25 +148,25 @@ namespace DJM.Utilities.Bearings
         }
         
         [BurstCompile]
-        public static CardinalBearingFlags Without(this CardinalBearingFlags bearingFlags, CardinalBearingFlags other)
+        public static CardinalBearingFlags WithoutFlags(this CardinalBearingFlags bearingFlags, CardinalBearingFlags other)
         {
             return BearingFlagsUtils.RemoveFlags(bearingFlags, other);
         }
         
         [BurstCompile]
-        public static CardinalBearingFlags Without(this CardinalBearingFlags bearingFlags, BearingFlags other)
+        public static CardinalBearingFlags WithoutFlags(this CardinalBearingFlags bearingFlags, BearingFlags other)
         {
             return BearingFlagsUtils.RemoveFlags(bearingFlags, (CardinalBearingFlags)other & CardinalBearingFlags.All);
         }
         
         [BurstCompile]
-        public static CardinalBearingFlags Without(this CardinalBearingFlags bearingFlags, CardinalBearing other)
+        public static CardinalBearingFlags WithoutFlags(this CardinalBearingFlags bearingFlags, CardinalBearing other)
         {
             return BearingFlagsUtils.RemoveFlags(bearingFlags, BearingUtils.GetFlags(other));
         }
         
         [BurstCompile]
-        public static CardinalBearingFlags Without(this CardinalBearingFlags bearingFlags, Bearing other)
+        public static CardinalBearingFlags WithoutFlags(this CardinalBearingFlags bearingFlags, Bearing other)
         {
             return BearingFlagsUtils.RemoveFlags
             (
@@ -248,7 +248,7 @@ namespace DJM.Utilities.Bearings
         }
         
         [BurstCompile]
-        public static BearingFlags AsBearingFlags(this CardinalBearingFlags bearingFlags)
+        public static BearingFlags AsFullBearingFlags(this CardinalBearingFlags bearingFlags)
         {
             return (BearingFlags)bearingFlags;
         }

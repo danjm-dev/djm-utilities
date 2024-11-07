@@ -120,25 +120,25 @@ namespace DJM.Utilities.Bearings
     public static class OrdinalBearingFlagsExtensions
     {
         [BurstCompile]
-        public static OrdinalBearingFlags With(this OrdinalBearingFlags bearingFlags, OrdinalBearingFlags other)
+        public static OrdinalBearingFlags WithFlags(this OrdinalBearingFlags bearingFlags, OrdinalBearingFlags other)
         {
             return BearingFlagsUtils.AppendFlags(bearingFlags, other);
         }
         
         [BurstCompile]
-        public static OrdinalBearingFlags With(this OrdinalBearingFlags bearingFlags, BearingFlags other)
+        public static OrdinalBearingFlags WithFlags(this OrdinalBearingFlags bearingFlags, BearingFlags other)
         {
             return BearingFlagsUtils.AppendFlags(bearingFlags, (OrdinalBearingFlags)other & OrdinalBearingFlags.All);
         }
         
         [BurstCompile]
-        public static OrdinalBearingFlags With(this OrdinalBearingFlags bearingFlags, OrdinalBearing other)
+        public static OrdinalBearingFlags WithFlags(this OrdinalBearingFlags bearingFlags, OrdinalBearing other)
         {
             return BearingFlagsUtils.AppendFlags(bearingFlags, BearingUtils.GetFlags(other));
         }
         
         [BurstCompile]
-        public static OrdinalBearingFlags With(this OrdinalBearingFlags bearingFlags, Bearing other)
+        public static OrdinalBearingFlags WithFlags(this OrdinalBearingFlags bearingFlags, Bearing other)
         {
             return BearingFlagsUtils.AppendFlags
             (
@@ -148,25 +148,25 @@ namespace DJM.Utilities.Bearings
         }
         
         [BurstCompile]
-        public static OrdinalBearingFlags Without(this OrdinalBearingFlags bearingFlags, OrdinalBearingFlags other)
+        public static OrdinalBearingFlags WithoutFlags(this OrdinalBearingFlags bearingFlags, OrdinalBearingFlags other)
         {
             return BearingFlagsUtils.RemoveFlags(bearingFlags, other);
         }
         
         [BurstCompile]
-        public static OrdinalBearingFlags Without(this OrdinalBearingFlags bearingFlags, BearingFlags other)
+        public static OrdinalBearingFlags WithoutFlags(this OrdinalBearingFlags bearingFlags, BearingFlags other)
         {
             return BearingFlagsUtils.RemoveFlags(bearingFlags, (OrdinalBearingFlags)other & OrdinalBearingFlags.All);
         }
         
         [BurstCompile]
-        public static OrdinalBearingFlags Without(this OrdinalBearingFlags bearingFlags, OrdinalBearing other)
+        public static OrdinalBearingFlags WithoutFlags(this OrdinalBearingFlags bearingFlags, OrdinalBearing other)
         {
             return BearingFlagsUtils.RemoveFlags(bearingFlags, BearingUtils.GetFlags(other));
         }
         
         [BurstCompile]
-        public static OrdinalBearingFlags Without(this OrdinalBearingFlags bearingFlags, Bearing other)
+        public static OrdinalBearingFlags WithoutFlags(this OrdinalBearingFlags bearingFlags, Bearing other)
         {
             return BearingFlagsUtils.RemoveFlags
             (
@@ -248,7 +248,7 @@ namespace DJM.Utilities.Bearings
         }
         
         [BurstCompile]
-        public static BearingFlags AsBearingFlags(this OrdinalBearingFlags bearingFlags)
+        public static BearingFlags AsFullBearingFlags(this OrdinalBearingFlags bearingFlags)
         {
             return (BearingFlags)bearingFlags;
         }
