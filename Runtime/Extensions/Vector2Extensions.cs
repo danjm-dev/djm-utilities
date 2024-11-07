@@ -8,11 +8,11 @@ namespace DJM.Utilities
     public static class Vector2Extensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 XX(this float2 v) => new(v.x, v.x);
+        public static Vector2 XX(this Vector2 v) => new(v.x, v.x);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 YX(this float2 v) => new(v.y, v.x);
+        public static Vector2 YX(this Vector2 v) => new(v.y, v.x);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 YY(this float2 v) => new(v.y, v.y);
+        public static Vector2 YY(this Vector2 v) => new(v.y, v.y);
         
         
         
@@ -29,11 +29,11 @@ namespace DJM.Utilities
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 XXAsFloat(this float2 v) => new(v.x, v.x);
+        public static float2 XXAsFloat(this Vector2 v) => new(v.x, v.x);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 YXAsFloat(this float2 v) => new(v.y, v.x);
+        public static float2 YXAsFloat(this Vector2 v) => new(v.y, v.x);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 YYAsFloat(this float2 v) => new(v.y, v.y);
+        public static float2 YYAsFloat(this Vector2 v) => new(v.y, v.y);
         
         
         

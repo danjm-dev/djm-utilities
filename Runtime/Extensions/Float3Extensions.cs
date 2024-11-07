@@ -36,5 +36,25 @@ namespace DJM.Utilities
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 ZZAsVector(this float3 v) => new(v.z, v.z);
+        
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 WithX(this float3 v, float x) => new(x, v.y, v.z);
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 WithY(this float3 v, float y) => new(v.x, y, v.z);
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 WithZ(this float3 v, float z) => new(v.x, v.y, z);
+        
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 AddX(this float3 v, float x) => new(v.x + x, v.y, v.z);
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 AddY(this float3 v, float y) => new(v.x, v.y + y, v.z);
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float3 AddZ(this float3 v, float z) => new(v.x, v.y, v.z + z);
     }
 }
