@@ -1,0 +1,18 @@
+{
+    "name": "DJM.Utilities.Editor",
+    "rootNamespace": "DJM.Utilities.Editor",
+    "references": [
+        "GUID:079e14d1d21625a419f93b4449f7f7e7"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
