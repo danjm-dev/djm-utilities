@@ -56,6 +56,7 @@ namespace DJM.Utilities.Tests.Bearings
         [TestCase(CardinalBearingFlags.North, Bearing.North, CardinalBearingFlags.North)]
         [TestCase(CardinalBearingFlags.None, Bearing.South, CardinalBearingFlags.South)]
         [TestCase(CardinalBearingFlags.North, Bearing.South, CardinalBearingFlags.North | CardinalBearingFlags.South)]
+        [TestCase(CardinalBearingFlags.South, Bearing.SouthEast, CardinalBearingFlags.South)]
         public void WithFlags_OtherBearing_MatchingResult
         (
             CardinalBearingFlags initialBearingFlags, 
