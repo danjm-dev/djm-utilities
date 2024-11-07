@@ -5,19 +5,19 @@ namespace DJM.Utilities.Bearings
 {
     public enum OrdinalBearing : byte
     {
-        NorthEast = 0,
-        SouthEast = 1,
-        SouthWest = 2,
-        NorthWest = 3
+        NorthEast = 1,
+        SouthEast = 3,
+        SouthWest = 5,
+        NorthWest = 7
     }
     
     [System.Flags]
     public enum OrdinalBearingFlags : byte
     {
-        NorthEast = 1 << 0,
-        SouthEast = 1 << 1,
-        SouthWest = 1 << 2,
-        NorthWest = 1 << 3,
+        NorthEast = 1 << 1,
+        SouthEast = 1 << 3,
+        SouthWest = 1 << 5,
+        NorthWest = 1 << 7,
         None = 0,
         All = NorthEast | SouthEast | SouthWest | NorthWest
     }
