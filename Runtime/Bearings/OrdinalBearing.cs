@@ -82,7 +82,7 @@ namespace DJM.Utilities.Bearings
         }
         
         [BurstCompile]
-        public static Bearing AsBearing(this OrdinalBearing bearing)
+        public static Bearing AsFullBearing(this OrdinalBearing bearing)
         {
             return (Bearing)bearing;
         }
