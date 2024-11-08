@@ -176,6 +176,11 @@ namespace DJM.Utilities.Bearings
         }
         
         
+        [BurstCompile]
+        public static bool Any(this CardinalBearingFlags bearingFlags)
+        {
+            return bearingFlags != CardinalBearingFlags.None;
+        }
         
         [BurstCompile]
         public static bool HasAny(this CardinalBearingFlags bearingFlags, CardinalBearingFlags other)

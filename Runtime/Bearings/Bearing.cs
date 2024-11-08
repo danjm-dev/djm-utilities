@@ -212,6 +212,12 @@ namespace DJM.Utilities.Bearings
         
         
         [BurstCompile]
+        public static bool Any(this BearingFlags bearingFlags)
+        {
+            return bearingFlags != BearingFlags.None;
+        }
+        
+        [BurstCompile]
         public static bool HasAny(this BearingFlags bearingFlags, BearingFlags other)
         {
             return BearingFlagsUtils.HasAnyFlags(bearingFlags, other);
