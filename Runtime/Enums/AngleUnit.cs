@@ -1,4 +1,4 @@
-﻿namespace DJM.Utilities.Math
+﻿namespace DJM.Utilities
 {
     public enum AngleUnit : byte
     {

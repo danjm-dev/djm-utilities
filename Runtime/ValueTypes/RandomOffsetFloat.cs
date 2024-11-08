@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace DJM.Utilities.Floats
+namespace DJM.Utilities.ValueTypes
 {
     [Serializable]
     public struct RandomOffsetFloat : IFormattable, IEquatable<RandomOffsetFloat>
