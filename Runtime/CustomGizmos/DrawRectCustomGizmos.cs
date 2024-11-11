@@ -17,7 +17,7 @@ namespace DJM.Utilities.CustomGizmos
         {
 #if UNITY_EDITOR
             SetColor(color);
-            DrawRectInternal(center, normal, size);
+            DrawRectOutlineInternal(center, normal, size);
             RevertColor();
 #endif
         }
@@ -32,7 +32,7 @@ namespace DJM.Utilities.CustomGizmos
         {
 #if UNITY_EDITOR
             SetColor(color);
-            DrawRectInternal(center.XY0(), Vector3.forward, size);
+            DrawRectOutlineInternal(center.XY0(), Vector3.forward, size);
             RevertColor();
 #endif
         }
@@ -47,15 +47,15 @@ namespace DJM.Utilities.CustomGizmos
         {
 #if UNITY_EDITOR
             SetColor(color);
-            DrawRectInternal(center.X0Y(), Vector3.up, size);
+            DrawRectOutlineInternal(center.X0Y(), Vector3.up, size);
             RevertColor();
 #endif
         }
         
-        [Conditional("UNITY_EDITOR")]
-        private static void DrawRectInternal(Vector3 center, Vector3 normal, Vector2 size)
-        {
 #if UNITY_EDITOR
+        private static void DrawRectOutlineInternal(Vector3 center, Vector3 normal, Vector2 size)
+        {
+
             if(size == Vector2.zero) return;
             if(normal == Vector3.zero) return;
             
@@ -76,7 +76,15 @@ namespace DJM.Utilities.CustomGizmos
             PointBuffer[3] = origin + xOffset;
             
             Gizmos.DrawLineStrip(new ReadOnlySpan<Vector3>(PointBuffer, 0, 4), true);
-#endif
+
         }
+        
+        // private static void DrawRectFilledInternal(Vector3 center, Vector3 normal, Vector2 size)
+        // {
+        //
+        //
+        //     
+        // }
+#endif
     }
 }

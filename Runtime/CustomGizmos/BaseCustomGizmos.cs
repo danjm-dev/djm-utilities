@@ -1,5 +1,4 @@
-﻿using DJM.Utilities.Math;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DJM.Utilities.CustomGizmos
 {

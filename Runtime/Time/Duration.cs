@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DJM.Utilities.Time
 {
+    [Obsolete("Use DJM.Utilities.ValueTypes.RandomOffsetFloat instead")]
     public readonly struct Duration
     {
         public readonly float BaseDuration;

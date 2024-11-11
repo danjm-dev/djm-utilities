@@ -112,7 +112,7 @@ namespace DJM.Utilities.Coordinates
         }
         
         /// <summary>
-        /// Converts 1D coordinates to a position with a offset.
+        /// Converts 1D coordinates to a position with an offset.
         /// </summary>
         /// <param name="coordinates">The coordinates to convert.</param>
         /// <param name="unitSize">The size of a unit.</param>
@@ -131,7 +131,7 @@ namespace DJM.Utilities.Coordinates
         }
         
         /// <summary>
-        /// Converts 2D coordinates to a position with a offset.
+        /// Converts 2D coordinates to a position with an offset.
         /// </summary>
         /// <param name="coordinates">The coordinates to convert.</param>
         /// <param name="unitSize">The size of a unit.</param>
