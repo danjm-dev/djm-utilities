@@ -167,6 +167,114 @@ namespace DJM.Utilities.Coordinates
         {
             position = coordinates * unitSize + offset;
         }
+           
+        /// <summary>
+        /// Converts 1D coordinates to its center position.
+        /// </summary>
+        /// <param name="coordinates">The coordinates to convert.</param>
+        /// <param name="unitSize">The size of a unit.</param>
+        /// <param name="position">The resulting 1D position.</param>
+        [BurstCompile]
+        public static void CoordinatesToCenterPosition
+        (
+            in int coordinates, 
+            in float unitSize, 
+            out float position
+        )
+        {
+            CoordinatesToPosition(coordinates, unitSize, unitSize * 0.5f, out position);
+        }
+        
+        /// <summary>
+        /// Converts 2D coordinates to its center position.
+        /// </summary>
+        /// <param name="coordinates">The coordinates to convert.</param>
+        /// <param name="unitSize">The size of a unit.</param>
+        /// <param name="position">The resulting 2D position.</param>
+        [BurstCompile]
+        public static void CoordinatesToCenterPosition
+        (
+            in int2 coordinates, 
+            in float2 unitSize, 
+            out float2 position
+        )
+        {
+            CoordinatesToPosition(coordinates, unitSize, unitSize * 0.5f, out position);
+        }
+        
+        /// <summary>
+        /// Converts 3D coordinates to its center position.
+        /// </summary>
+        /// <param name="coordinates">The coordinates to convert.</param>
+        /// <param name="unitSize">The size of a unit.</param>
+        /// <param name="position">The resulting 3D position.</param>
+        [BurstCompile]
+        public static void CoordinatesToCenterPosition
+        (
+            in int3 coordinates, 
+            in float3 unitSize, 
+            out float3 position
+        )
+        {
+            CoordinatesToPosition(coordinates, unitSize, unitSize * 0.5f, out position);
+        }
+        
+        /// <summary>
+        /// Converts 1D coordinates to its center position with an offset.
+        /// </summary>
+        /// <param name="coordinates">The coordinates to convert.</param>
+        /// <param name="unitSize">The size of a unit.</param>
+        /// <param name="offset">The amount to offset the position by.</param>
+        /// <param name="position">The resulting 1D position.</param>
+        [BurstCompile]
+        public static void CoordinatesToCenterPosition
+        (
+            in int coordinates, 
+            in float unitSize, 
+            in float offset,
+            out float position
+        )
+        {
+            CoordinatesToPosition(coordinates, unitSize, offset + unitSize * 0.5f, out position);
+        }
+        
+        /// <summary>
+        /// Converts 2D coordinates to its center position with an offset.
+        /// </summary>
+        /// <param name="coordinates">The coordinates to convert.</param>
+        /// <param name="unitSize">The size of a unit.</param>
+        /// <param name="offset">The amount to offset the position by.</param>
+        /// <param name="position">The resulting 2D position.</param>
+        [BurstCompile]
+        public static void CoordinatesToCenterPosition
+        (
+            in int2 coordinates, 
+            in float2 unitSize, 
+            in float2 offset,
+            out float2 position
+        )
+        {
+            CoordinatesToPosition(coordinates, unitSize, offset + unitSize * 0.5f, out position);
+        }
+        
+        /// <summary>
+        /// Converts 3D coordinates to its center position with an offset.
+        /// </summary>
+        /// <param name="coordinates">The coordinates to convert.</param>
+        /// <param name="unitSize">The size of a unit.</param>
+        /// /// <param name="offset">The amount to offset the position by.</param>
+        /// <param name="position">The resulting 3D position.</param>
+        [BurstCompile]
+        public static void CoordinatesToCenterPosition
+        (
+            in int3 coordinates, 
+            in float3 unitSize, 
+            in float3 offset,
+            out float3 position
+        )
+        {
+            CoordinatesToPosition(coordinates, unitSize, offset + unitSize * 0.5f, out position);
+        }
         
         /// <summary>
         /// Gets the scale factor for 2D coordinates scale conversion.
@@ -305,68 +413,12 @@ namespace DJM.Utilities.Coordinates
         {
             localCoordinates = worldCoordinates - origin;
         }
-        
-        /// <summary>
-        /// Ensures that the minimum bounds are less than the maximum bounds.
-        /// </summary>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
-        /// <param name="validatedBoundsMin">Validated minimum bounds.</param>
-        /// <param name="validatedBoundsMax">Validated maximum bounds.</param>
-        [BurstCompile]
-        public static void EnsureBoundsValidity
-        (
-            in int2 boundsMin, 
-            in int2 boundsMax, 
-            out int2 validatedBoundsMin, 
-            out int2 validatedBoundsMax
-        )
-        {
-            validatedBoundsMin = math.min(boundsMin, boundsMax);
-            validatedBoundsMax = math.max(boundsMin, boundsMax);
-        }
-        
-        /// <summary>
-        /// Ensures that the minimum bounds are less than the maximum bounds.
-        /// </summary>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
-        [BurstCompile]
-        public static void EnsureBoundsValidity(ref int2 boundsMin, ref int2 boundsMax)
-        {
-            var min = math.min(boundsMin, boundsMax);
-            var max = math.max(boundsMin, boundsMax);
-            boundsMin = min;
-            boundsMax = max;
-        }
-        
-        /// <summary>
-        /// Gets the positions of the minimum and maximum bounds.
-        /// </summary>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
-        /// <param name="unitSize">Coordinate unit size.</param>
-        /// <param name="boundsMinPosition">Minimum bounds position.</param>
-        /// <param name="boundsMaxPosition">Maximum bounds position.</param>
-        [BurstCompile]
-        public static void GetBoundsPositions
-        (
-            in int2 boundsMin, 
-            in int2 boundsMax, 
-            in float2 unitSize,
-            out float2 boundsMinPosition, 
-            out float2 boundsMaxPosition
-        )
-        {
-            CoordinatesToPosition(boundsMin, unitSize, out boundsMinPosition);
-            CoordinatesToPosition(boundsMax, unitSize, unitSize, out boundsMaxPosition);
-        }
 
         /// <summary>
-        /// Gets the resolution of the grid made by the bounds.
+        /// Gets the 2D resolution of the grid made by bounds.
         /// </summary>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
+        /// <param name="boundsMin">Bounds minimum.</param>
+        /// <param name="boundsMax">Bounds maximum.</param>
         /// <param name="boundsResolution">Bounds grid resolution.</param>
         [BurstCompile]
         public static void GetBoundsResolution(in int2 boundsMin, in int2 boundsMax, out int2 boundsResolution)
@@ -375,11 +427,23 @@ namespace DJM.Utilities.Coordinates
         }
         
         /// <summary>
+        /// Gets the 3D resolution of the grid made by the bounds.
+        /// </summary>
+        /// <param name="boundsMin">Bounds minimum.</param>
+        /// <param name="boundsMax">Bounds maximum.</param>
+        /// <param name="boundsResolution">Bounds grid resolution.</param>
+        [BurstCompile]
+        public static void GetBoundsResolution(in int3 boundsMin, in int3 boundsMax, out int3 boundsResolution)
+        {
+            boundsResolution = boundsMax - boundsMin + 1;
+        }
+        
+        /// <summary>
         /// Checks if 2D coordinates are within given bounds, including bounds edge coordinates.
         /// </summary>
         /// <param name="coordinates">Coordinates to check.</param>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
+        /// <param name="boundsMin">Bounds minimum.</param>
+        /// <param name="boundsMax">Bounds maximum.</param>
         /// <returns>True if coordinates are within bounds, false otherwise.</returns>
         [BurstCompile]
         public static bool IsWithinBoundsInclusive(in int2 coordinates, in int2 boundsMin, in int2 boundsMax)
@@ -389,11 +453,26 @@ namespace DJM.Utilities.Coordinates
         }
         
         /// <summary>
+        /// Checks if 2D coordinates are within bounds of a grid with given resolution, including bounds edge coordinates.
+        /// </summary>
+        /// <remarks>
+        /// Min bounds are assumed to be zero.
+        /// </remarks>
+        /// <param name="coordinates">Coordinates to check.</param>
+        /// <param name="resolution">Resolution of grid.</param>
+        /// <returns>True if coordinates are within bounds, false otherwise.</returns>
+        [BurstCompile]
+        public static bool IsWithinBoundsInclusive(in int2 coordinates, in int2 resolution)
+        {
+            return IsWithinBoundsInclusive(coordinates, int2.zero, resolution - 1);
+        }
+        
+        /// <summary>
         /// Checks if 3D coordinates are within given bounds, including bounds edge coordinates.
         /// </summary>
         /// <param name="coordinates">Coordinates to check.</param>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
+        /// <param name="boundsMin">Bounds minimum.</param>
+        /// <param name="boundsMax">Bounds maximum.</param>
         /// <returns>True if coordinates are within bounds, false otherwise.</returns>
         [BurstCompile]
         public static bool IsWithinBoundsInclusive(in int3 coordinates, in int3 boundsMin, in int3 boundsMax)
@@ -403,11 +482,26 @@ namespace DJM.Utilities.Coordinates
         }
         
         /// <summary>
+        /// Checks if 3D coordinates are within bounds of a grid with given resolution, including bounds edge coordinates.
+        /// </summary>
+        /// <remarks>
+        /// Min bounds are assumed to be zero.
+        /// </remarks>
+        /// <param name="coordinates">Coordinates to check.</param>
+        /// <param name="resolution">Resolution of grid.</param>
+        /// <returns>True if coordinates are within bounds, false otherwise.</returns>
+        [BurstCompile]
+        public static bool IsWithinBoundsInclusive(in int3 coordinates, in int3 resolution)
+        {
+            return IsWithinBoundsInclusive(coordinates, int3.zero, resolution - 1);
+        }
+        
+        /// <summary>
         /// Checks if 2D coordinates are within given bounds, excluding bounds edge coordinates.
         /// </summary>
         /// <param name="coordinates">Coordinates to check.</param>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
+        /// <param name="boundsMin">Bounds minimum.</param>
+        /// <param name="boundsMax">Bounds maximum.</param>
         /// <returns>True if coordinates are within bounds, false otherwise.</returns>
         [BurstCompile]
         public static bool IsWithinBoundsExclusive(in int2 coordinates, in int2 boundsMin, in int2 boundsMax)
@@ -417,11 +511,26 @@ namespace DJM.Utilities.Coordinates
         }
         
         /// <summary>
+        /// Checks if 2D coordinates are within bounds of a grid with given resolution, excluding bounds edge coordinates.
+        /// </summary>
+        /// <remarks>
+        /// Min bounds are assumed to be zero.
+        /// </remarks>
+        /// <param name="coordinates">Coordinates to check.</param>
+        /// <param name="resolution">Resolution of grid.</param>
+        /// <returns>True if coordinates are within bounds, false otherwise.</returns>
+        [BurstCompile]
+        public static bool IsWithinBoundsExclusive(in int2 coordinates, in int2 resolution)
+        {
+            return IsWithinBoundsExclusive(coordinates, int2.zero, resolution - 1);
+        }
+        
+        /// <summary>
         /// Checks if 3D coordinates are within given bounds, excluding bounds edge coordinates.
         /// </summary>
         /// <param name="coordinates">Coordinates to check.</param>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
+        /// <param name="boundsMin">Bounds minimum.</param>
+        /// <param name="boundsMax">Bounds maximum.</param>
         /// <returns>True if coordinates are within bounds, false otherwise.</returns>
         [BurstCompile]
         public static bool IsWithinBoundsExclusive(in int3 coordinates, in int3 boundsMin, in int3 boundsMax)
@@ -431,11 +540,26 @@ namespace DJM.Utilities.Coordinates
         }
         
         /// <summary>
+        /// Checks if 3D coordinates are within bounds of a grid with given resolution, excluding bounds edge coordinates.
+        /// </summary>
+        /// <remarks>
+        /// Min bounds are assumed to be zero.
+        /// </remarks>
+        /// <param name="coordinates">Coordinates to check.</param>
+        /// <param name="resolution">Resolution of grid.</param>
+        /// <returns>True if coordinates are within bounds, false otherwise.</returns>
+        [BurstCompile]
+        public static bool IsWithinBoundsExclusive(in int3 coordinates, in int3 resolution)
+        {
+            return IsWithinBoundsExclusive(coordinates, int3.zero, resolution - 1);
+        }
+        
+        /// <summary>
         /// Checks if 2D coordinates are on the edge of given bounds.
         /// </summary>
         /// <param name="coordinates">Coordinates to check.</param>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
+        /// <param name="boundsMin">Bounds minimum.</param>
+        /// <param name="boundsMax">Bounds maximum.</param>
         /// <returns>True if coordinates are on the edge of bounds, false otherwise.</returns>
         [BurstCompile]
         public static bool IsOnBoundsEdge(in int2 coordinates, in int2 boundsMin, in int2 boundsMax)
@@ -448,11 +572,26 @@ namespace DJM.Utilities.Coordinates
         }
         
         /// <summary>
+        /// Checks if 2D coordinates are on the edge of a grid with given resolution.
+        /// </summary>
+        /// <remarks>
+        /// Min bounds are assumed to be zero.
+        /// </remarks>
+        /// <param name="coordinates">Coordinates to check.</param>
+        /// <param name="resolution">Resolution of grid.</param>
+        /// <returns>True if coordinates are on the edge of bounds, false otherwise.</returns>
+        [BurstCompile]
+        public static bool IsOnBoundsEdge(in int2 coordinates, in int2 resolution)
+        {
+            return IsOnBoundsEdge(coordinates, int2.zero, resolution - 1);
+        }
+        
+        /// <summary>
         /// Checks if 3D coordinates are on the edge of given bounds.
         /// </summary>
         /// <param name="coordinates">Coordinates to check.</param>
-        /// <param name="boundsMin">Minimum bounds.</param>
-        /// <param name="boundsMax">Maximum bounds.</param>
+        /// <param name="boundsMin">Bounds minimum.</param>
+        /// <param name="boundsMax">Bounds maximum.</param>
         /// <returns>True if coordinates are on the edge of bounds, false otherwise.</returns>
         [BurstCompile]
         public static bool IsOnBoundsEdge(in int3 coordinates, in int3 boundsMin, in int3 boundsMax)
@@ -462,6 +601,21 @@ namespace DJM.Utilities.Coordinates
             
             var maximumOnBounds = coordinates == boundsMax;
             return maximumOnBounds.x || maximumOnBounds.y || maximumOnBounds.z;
+        }
+        
+        /// <summary>
+        /// Checks if 3D coordinates are on the edge of a grid with given resolution.
+        /// </summary>
+        /// <remarks>
+        /// Min bounds are assumed to be zero.
+        /// </remarks>
+        /// <param name="coordinates">Coordinates to check.</param>
+        /// <param name="resolution">Resolution of grid.</param>
+        /// <returns>True if coordinates are on the edge of bounds, false otherwise.</returns>
+        [BurstCompile]
+        public static bool IsOnBoundsEdge(in int3 coordinates, in int3 resolution)
+        {
+            return IsOnBoundsEdge(coordinates, int3.zero, resolution - 1);
         }
         
         /// <summary>

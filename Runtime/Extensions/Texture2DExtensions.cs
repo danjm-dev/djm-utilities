@@ -6,6 +6,11 @@ namespace DJM.Utilities
 {
     public static class Texture2DExtensions
     {
+        public static int2 Resolution(this Texture2D texture2D)
+        {
+            return new int2(texture2D.width, texture2D.height);
+        }
+        
         public static UnityEngine.Color GetPixel(this Texture2D texture2D, Vector2Int coordinates)
         {
             return texture2D.GetPixel(coordinates.x, coordinates.y);
