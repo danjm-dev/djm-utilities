@@ -9,52 +9,110 @@ namespace DJM.Utilities.Coordinates
     public static class CoordinateRaycastUtils
     {
         [BurstCompile]
-        public static void GetIntersectingCoordinates
+        public static bool Raycast<T>
         (
-            in float2 originPosition, 
+            in float2 origin,
             in float2 direction, 
-            in float range,
-            in float2 coordinatesUnitSize,
-            in float2 coordinatesOrigin,
-            in NativeList<int2> results
-        )
+            in float distance,
+            in int layerMask,
+            in float2 coordinateUnitSize,
+            in int2 gridResolution,
+            in NativeArray<T> nodeArray,
+            out CoordinateRaycastHitResults2D hitResults
+        ) where T : unmanaged, ICoordinateRaycastTarget
         {
-            var localPosition = originPosition - coordinatesOrigin;
-            CoordinateUtils.PositionToCoordinates
-            (
-                localPosition, 
-                coordinatesUnitSize, 
-                out var coordinates
-            );
+            var normalizedDirection = math.normalizesafe(direction, Direction2D.Right);
+            var clampedDistance = math.max(distance, 0);
             
-            var unitStepSize = new float2
-            (
-                math.abs(coordinatesUnitSize.x / direction.x),
-                math.abs(coordinatesUnitSize.y / direction.y)
-            );
+            CoordinateInternalUtils.ValidateNodeArrayResolution(gridResolution, nodeArray);
+            
+            CoordinateUtils.PositionToCoordinates(origin, coordinateUnitSize, out var coordinates);
+            CalculateUnitStepSize(coordinateUnitSize, normalizedDirection, out var unitStepSize);
             
             CalculateStartingConditions
             (
-                localPosition, 
+                origin, 
                 coordinates, 
-                coordinatesUnitSize, 
-                direction, 
+                coordinateUnitSize, 
+                normalizedDirection, 
+                unitStepSize, 
+                out var rayLengthX, 
+                out var rayLengthY, 
+                out var coordinateOffsetX, 
+                out var coordinateOffsetY
+            );
+            
+            var currentDistance = 0f;
+            
+            while (currentDistance <= clampedDistance)
+            {
+                if (CoordinateNodeArrayUtils.TestRayHit(coordinates, in gridResolution, in nodeArray, in layerMask))
+                {
+                    var hitPosition = origin + normalizedDirection * currentDistance;
+                    hitResults = new CoordinateRaycastHitResults2D(coordinates, hitPosition);
+                    return true;
+                }
+                
+                if (rayLengthX < rayLengthY)
+                {
+                    coordinates += coordinateOffsetX;
+                    currentDistance = rayLengthX;
+                    rayLengthX += unitStepSize.x;
+                }
+                else
+                {
+                    coordinates += coordinateOffsetY;
+                    currentDistance = rayLengthY;
+                    rayLengthY += unitStepSize.y;
+                }
+            }
+
+            hitResults = default;
+            return false;
+        }
+        
+        [BurstCompile]
+        public static void GetIntersectingCoordinates
+        (
+            in float2 origin, 
+            in float2 direction, 
+            in float distance,
+            in float2 coordinateUnitSize,
+            in NativeList<int2> results
+        )
+        {
+            var normalizedDirection = math.normalizesafe(direction, Direction2D.Right);
+            var clampedDistance = math.max(distance, 0);
+            
+            CoordinateUtils.PositionToCoordinates
+            (
+                origin, 
+                coordinateUnitSize, 
+                out var coordinates
+            );
+            
+            CalculateUnitStepSize(coordinateUnitSize, normalizedDirection, out var unitStepSize);
+            
+            CalculateStartingConditions
+            (
+                origin, 
+                coordinates, 
+                coordinateUnitSize, 
+                normalizedDirection, 
                 unitStepSize, 
                 out var xRayLength, 
                 out var yRayLength, 
                 out var xCoordsOffset, 
                 out var yCoordsOffset
             );
-
-
             
             var currentDistance = 0f;
-            
             results.Clear();
-            results.Add(coordinates);
             
-            while (currentDistance < range)
+            while (currentDistance <= clampedDistance)
             {
+                results.Add(coordinates);
+                
                 if (xRayLength < yRayLength)
                 {
                     coordinates += xCoordsOffset;
@@ -67,15 +125,19 @@ namespace DJM.Utilities.Coordinates
                     currentDistance = yRayLength;
                     yRayLength += unitStepSize.y;
                 }
-                
-                if(currentDistance > range) break;
-                
-                results.Add(coordinates);
-                
-                //var hitPosition = originPosition + direction * currentDistance;
             }
         }
 
+        [BurstCompile]
+        private static void CalculateUnitStepSize(in float2 unitSize, in float2 rayDirection, out float2 unitStepSize)
+        {
+            unitStepSize = new float2
+            (
+                math.abs(unitSize.x / rayDirection.x),
+                math.abs(unitSize.y / rayDirection.y)
+            );
+        }
+        
         [BurstCompile]
         private static void CalculateStartingConditions
         (
