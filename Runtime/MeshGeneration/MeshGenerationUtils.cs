@@ -1,7 +1,5 @@
-﻿using DJM.Utilities.Math;
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -14,8 +12,6 @@ namespace DJM.Utilities.MeshGeneration
                                                        MeshUpdateFlags.DontValidateIndices | 
                                                        MeshUpdateFlags.DontNotifyMeshUsers | 
                                                        MeshUpdateFlags.DontResetBoneBounds;
-
-        
         [BurstCompile]
         public static void AllocateMeshData
         (
@@ -58,19 +54,6 @@ namespace DJM.Utilities.MeshGeneration
             var bounds = meshDataArray[0].GetSubMesh(0).bounds;
             Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh, NoCalculationFlags);
             mesh.bounds = bounds;
-        }
-    }
-    
-    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly struct VertexData 
-    {
-        public readonly float3 Position;
-        public readonly float3 Normal;
-        
-        public VertexData(float3 position, float3 normal)
-        {
-            Position = position;
-            Normal = normal;
         }
     }
 }

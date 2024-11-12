@@ -136,7 +136,7 @@ namespace DJM.Utilities.CustomGizmos
         private static void DrawRectInternal(Vector3 center, Vector3 normal, Vector2 size, UnityEngine.Color? color)
         {
             SetColor(color);
-            Gizmos.DrawMesh(_rectMesh, center, Quaternion.LookRotation(normal), size.XYO());
+            Gizmos.DrawMesh(_rectMesh, center, Quaternion.LookRotation(-normal), size.XYO());
             RevertColor();
         }
 #endif

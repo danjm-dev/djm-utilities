@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using DJM.Utilities.MeshGeneration;
+using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 namespace DJM.Utilities.CustomGizmos
 {
+    [InitializeOnLoad]
     public static partial class Gizmos2
     {
         public static UnityEngine.Color Color
@@ -37,22 +41,26 @@ namespace DJM.Utilities.CustomGizmos
 
 
         private static readonly Mesh _rectMesh;
+        private static readonly Mesh _circleMesh;
         
         
         static Gizmos2()
         {
-            _rectMesh = new Mesh
-            {
-                vertices = new[]
-                {
-                    new Vector3(-0.5f, -0.5f, 0f),
-                    new Vector3(0.5f, -0.5f, 0f),
-                    new Vector3(0.5f, 0.5f, 0f),
-                    new Vector3(-0.5f, 0.5f, 0f)
-                },
-                triangles = new[] { 0, 1, 2, 0, 2, 3 },
-                normals = new[] { Vector3.back, Vector3.back, Vector3.back, Vector3.back }
-            };
+            _rectMesh = PrimitiveMeshUtils.GenerateRectMesh(1f, math.right(), math.up());
+            _circleMesh = PrimitiveMeshUtils.GenerateCircleMesh(1f, math.right(), math.up(), CirclePointCount);
+            
+            // _rectMesh = new Mesh
+            // {
+            //     vertices = new[]
+            //     {
+            //         new Vector3(-0.5f, -0.5f, 0f),
+            //         new Vector3(0.5f, -0.5f, 0f),
+            //         new Vector3(0.5f, 0.5f, 0f),
+            //         new Vector3(-0.5f, 0.5f, 0f)
+            //     },
+            //     triangles = new[] { 0, 1, 2, 0, 2, 3 },
+            //     normals = new[] { Vector3.back, Vector3.back, Vector3.back, Vector3.back }
+            // };
             
             
             

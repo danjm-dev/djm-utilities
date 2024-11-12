@@ -93,14 +93,6 @@ namespace DJM.Utilities.CustomGizmos
         
         private const int CirclePointCount = 36;
         private const float CircleRadiansPerPoint = MathUtils.PI2 / CirclePointCount;
-        private static Mesh _circleMesh;
-
-        private static Mesh GetCircleMesh()
-        {
-            if(_circleMesh.OrNull() is not null) return _circleMesh;
-            _circleMesh = PrimitiveMeshUtils.GenerateCircleMesh(1f, math.right(), math.up(), CirclePointCount);
-            return _circleMesh;
-        }
         
         private static void DrawCircleOutlineInternal
         (
@@ -143,7 +135,7 @@ namespace DJM.Utilities.CustomGizmos
         )
         {
             SetColor(color);
-            Gizmos.DrawMesh(GetCircleMesh(), center, Quaternion.LookRotation(normal), Vector3.one * radius);
+            Gizmos.DrawMesh(_circleMesh, center, Quaternion.LookRotation(normal), Vector3.one * radius);
             RevertColor();
         }
 #endif

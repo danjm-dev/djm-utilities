@@ -52,6 +52,46 @@ namespace DJM.Utilities.MeshGeneration
             return mesh;
         }
         
+        [BurstDiscard]
+        public static void GenerateRectMesh
+        (
+            float2 size,
+            float3 xAxis,
+            float3 yAxis,
+            Mesh mesh
+        )
+        {
+            GenerateRectMeshData
+            (
+                size, 
+                xAxis, 
+                yAxis, 
+                out var vertices, 
+                out var indices, 
+                out var bounds
+            );
+            
+            MeshGenerationUtils.AllocateMeshData(vertices, indices, bounds, out var meshDataArray);
+            
+            vertices.Dispose();
+            indices.Dispose();
+            
+            MeshGenerationUtils.ApplyMeshData(mesh, meshDataArray);
+        }
+        
+        [BurstDiscard]
+        public static Mesh GenerateRectMesh
+        (
+            float2 size,
+            float3 xAxis,
+            float3 yAxis
+        )
+        {
+            var mesh = new Mesh();
+            GenerateRectMesh(size, xAxis, yAxis, mesh);
+            return mesh;
+        }
+        
         [BurstCompile]
         private static void GenerateCircleMeshData
         (
@@ -98,5 +138,44 @@ namespace DJM.Utilities.MeshGeneration
             bounds = new Bounds(Vector3.zero, (Vector2.one * radius).XYO());
         }
 
+        [BurstCompile]
+        private static void GenerateRectMeshData
+        (
+            in float2 size, 
+            in float3 xAxis, 
+            in float3 yAxis, 
+            out NativeArray<VertexData> vertices,
+            out NativeArray<ushort> indices,
+            out Bounds bounds
+        )
+        {
+            const int vertexCount = 4;
+            const int indexCount = 6;
+            
+            vertices = new NativeArray<VertexData>(vertexCount, Allocator.Temp);
+            indices = new NativeArray<ushort>(indexCount, Allocator.Temp);
+
+            var xAxisNormalized = math.normalizesafe(xAxis, math.right());
+            var yAxisNormalized = math.normalizesafe(yAxis, math.up());
+            var normal = math.normalize(math.cross(xAxisNormalized, yAxisNormalized));
+            
+            var xOffset = xAxisNormalized * size.x;
+            var yOffset = yAxisNormalized * size.y;
+            var originOffset = xOffset * -0.5f + yOffset * -0.5f;
+            
+            vertices[0] = new VertexData(originOffset, normal);
+            vertices[1] = new VertexData(originOffset + yOffset, normal);
+            vertices[2] = new VertexData(originOffset + yOffset + xOffset, normal);
+            vertices[3] = new VertexData(originOffset + xOffset, normal);
+            
+            indices[0] = 0;
+            indices[1] = 1;
+            indices[2] = 2;
+            indices[3] = 0;
+            indices[4] = 2;
+            indices[5] = 3;
+
+            bounds = new Bounds(Vector3.zero, size.XYO());
+        }
     }
 }
