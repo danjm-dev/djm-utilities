@@ -16,52 +16,56 @@ namespace DJM.Utilities.CustomGizmos
         )
         {
 #if UNITY_EDITOR
-            SetColor(color);
             DrawRectOutlineInternal(center, normal, size);
-            RevertColor();
 #endif
         }
         
         [Conditional("UNITY_EDITOR")]
-        public static void DrawRectXY
+        public static void DrawRect
         (
             Vector2 center, 
             Vector2 size, 
+            float? positionDepth = null, 
+            AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
         )
         {
 #if UNITY_EDITOR
-            SetColor(color);
-            DrawRectOutlineInternal(center.XY0(), Vector3.forward, size);
-            RevertColor();
+            DrawRectOutlineInternal(Get3DPosition(center, plane, positionDepth), Get2DPlaneNormal(plane), size, color);
 #endif
         }
         
         [Conditional("UNITY_EDITOR")]
-        public static void DrawRectXZ
+        public static void DrawRect
         (
-            Vector2 center, 
+            Vector3 center, 
             Vector2 size, 
+            AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
         )
         {
 #if UNITY_EDITOR
-            SetColor(color);
-            DrawRectOutlineInternal(center.X0Y(), Vector3.up, size);
-            RevertColor();
+            DrawRectOutlineInternal(center, Get2DPlaneNormal(plane), size, color);
 #endif
         }
         
 #if UNITY_EDITOR
-        private static void DrawRectOutlineInternal(Vector3 center, Vector3 normal, Vector2 size)
+        private static void DrawRectOutlineInternal
+        (
+            Vector3 center, 
+            Vector3 normal, 
+            Vector2 size, 
+            UnityEngine.Color? color = null
+        )
         {
-
             if(size == Vector2.zero) return;
             if(normal == Vector3.zero) return;
             
+            SetColor(color);
+            
             normal = normal.normalized;
             
-            var referenceVector = (Mathf.Abs(Vector3.Dot(normal, Vector3.up)) < 0.99f) ? Vector3.up : Vector3.forward;
+            var referenceVector = Mathf.Abs(Vector3.Dot(normal, Vector3.up)) < 0.99f ? Vector3.up : Vector3.forward;
             var xDirection = Vector3.Cross(normal, referenceVector).normalized;
             var yDirection = Vector3.Cross(xDirection, normal).normalized;
             
@@ -77,6 +81,7 @@ namespace DJM.Utilities.CustomGizmos
             
             Gizmos.DrawLineStrip(new ReadOnlySpan<Vector3>(PointBuffer, 0, 4), true);
 
+            RevertColor();
         }
         
         // private static void DrawRectFilledInternal(Vector3 center, Vector3 normal, Vector2 size)

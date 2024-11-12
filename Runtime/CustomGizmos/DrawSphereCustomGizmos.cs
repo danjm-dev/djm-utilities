@@ -16,12 +16,45 @@ namespace DJM.Utilities.CustomGizmos
         }
         
         [Conditional("UNITY_EDITOR")]
+        public static void DrawSphere
+        (
+            Vector2 center, 
+            float radius, 
+            float? positionDepth = null, 
+            AxisAlignedPlane? plane = null, 
+            UnityEngine.Color? color = null
+        )
+        {
+#if UNITY_EDITOR
+
+            var position = Get3DPosition(center, plane, positionDepth);
+            DrawSphere(position, radius, color);
+#endif
+        }
+        
+        [Conditional("UNITY_EDITOR")]
         public static void DrawWireSphere(Vector3 center, float radius, UnityEngine.Color? color = null)
         {
 #if UNITY_EDITOR
             SetColor(color);
             Gizmos.DrawWireSphere(center, radius);
             RevertColor();
+#endif
+        }
+        
+        [Conditional("UNITY_EDITOR")]
+        public static void DrawWireSphere
+        (
+            Vector2 center, 
+            float radius, 
+            float? positionDepth = null, 
+            AxisAlignedPlane? plane = null, 
+            UnityEngine.Color? color = null
+        )
+        {
+#if UNITY_EDITOR
+            var position = Get3DPosition(center, plane, positionDepth);
+            DrawWireSphere(position, radius, color);
 #endif
         }
     }

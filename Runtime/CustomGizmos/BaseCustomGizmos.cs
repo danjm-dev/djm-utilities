@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace DJM.Utilities.CustomGizmos
@@ -33,6 +34,7 @@ namespace DJM.Utilities.CustomGizmos
         private static float _depth2D = 0f;
         private static AxisAlignedPlane _2DPlane = AxisAlignedPlane.XY;
         
+        
         private static void SetColor(UnityEngine.Color? color = null)
         {
             if(!color.HasValue) return;
@@ -45,24 +47,51 @@ namespace DJM.Utilities.CustomGizmos
             if(Gizmos.color == _originalColor) return;
             Gizmos.color = _originalColor;
         }
-        
-        private static Vector2 GetRectOriginPosition(Vector2 position, Vector2 rectSize, RectPivot pivot)
+
+        private static Vector3 GetRectOriginPosition
+        (
+            Vector3 position, 
+            Vector2 rectSize, 
+            RectPivot pivot, 
+            AxisAlignedPlane? planeOverride
+        )
         {
             if(pivot == RectPivot.Origin) return position;
-            return position - rectSize * 0.5f;
+            
+            var plane = planeOverride ?? _2DPlane;
+            var (xAxis, yAxis) = plane.GetAxes();
+            
+            var offset = Vector3.zero;
+            offset += xAxis * rectSize.x * 0.5f;
+            offset += yAxis * rectSize.y * 0.5f;
+            
+            return position - offset;
         }
-
-        private static Vector3 GetPositionFor2D(Vector2 position)
+        
+        private static Vector3 Get3DPosition(Vector2 position, AxisAlignedPlane? planeOverride, float? depthOverride)
         {
-            return _2DPlane switch
+            var plane = planeOverride ?? _2DPlane;
+            var depth = depthOverride ?? _depth2D;
+            return plane switch
             {
-                AxisAlignedPlane.XY => position.XY0(_depth2D),
-                AxisAlignedPlane.XZ => position.X0Y(_depth2D),
-                AxisAlignedPlane.YZ => position.X0Y(_depth2D),
-                _ => position.XY0(_depth2D)
+                AxisAlignedPlane.XY => position.XYO(depth),
+                AxisAlignedPlane.XZ => position.XOY(depth),
+                AxisAlignedPlane.ZY => position.OYX(depth),
+                _ => position.XYO(depth)
             };
         }
         
+        private static Vector3 Get2DPlaneNormal(AxisAlignedPlane? planeOverride)
+        {
+            var plane = planeOverride ?? _2DPlane;
+            return plane.GetNormal();
+        }
+
+        private static (Vector3, Vector3) Get2DPlaneAxes(AxisAlignedPlane? planeOverride)
+        {
+            var plane = planeOverride ?? _2DPlane;
+            return plane.GetAxes();
+        }
 #endif
     }
 }

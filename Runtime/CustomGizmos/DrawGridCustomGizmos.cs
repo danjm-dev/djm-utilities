@@ -7,77 +7,76 @@ namespace DJM.Utilities.CustomGizmos
     public static partial class Gizmos2
     {
         [Conditional("UNITY_EDITOR")]
-        public static void DrawGridLinesXY
+        public static void DrawGridLines
         (
             Vector3 position, 
             Vector2Int gridResolution, 
             Vector2 cellSize, 
             RectPivot pivot = RectPivot.Center,
+            AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
         )
         {
 #if UNITY_EDITOR
-            SetColor(color);
-            var originPosition = GetRectOriginPosition(position.XY(), gridResolution * cellSize, pivot);
-            DrawGridLinesInternal(originPosition.XY0(position.z), gridResolution, cellSize, Vector3.right, Vector3.up);
-            RevertColor();
+            var originPosition = GetRectOriginPosition(position, gridResolution * cellSize, pivot, plane);
+            var (xAxis, yAxis) = Get2DPlaneAxes(plane);
+            DrawGridLinesInternal(originPosition, gridResolution, cellSize, xAxis, yAxis, color);
 #endif
         }
         
         [Conditional("UNITY_EDITOR")]
-        public static void DrawGridLinesXZ
+        public static void DrawGridLines
         (
-            Vector3 position, 
+            Vector2 position, 
             Vector2Int gridResolution, 
             Vector2 cellSize, 
             RectPivot pivot = RectPivot.Center,
+            float? positionDepth = null, 
+            AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
         )
         {
 #if UNITY_EDITOR
-            SetColor(color);
-            var originPosition = GetRectOriginPosition(position.XZ(), gridResolution * cellSize, pivot);
-            DrawGridLinesInternal(originPosition.X0Y(position.y), gridResolution, cellSize, Vector3.right, Vector3.forward);
-            RevertColor();
+            var position3D = Get3DPosition(position, plane, positionDepth);
+            DrawGridLines(position3D, gridResolution, cellSize, pivot, plane, color);
 #endif
         }
         
         [Conditional("UNITY_EDITOR")]
-        public static void DrawGridNodesXY
+        public static void DrawGridNodes
         (
             Vector3 position, 
             Vector2Int gridResolution, 
             Vector2 cellSize, 
             RectPivot pivot = RectPivot.Center,
+            AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
         )
         {
 #if UNITY_EDITOR
-            SetColor(color);
-            var originPosition = GetRectOriginPosition(position.XY(), gridResolution * cellSize, pivot);
-            DrawGridNodesInternal(originPosition.XY0(position.z), gridResolution, cellSize, Vector3.right, Vector3.up);
-            RevertColor();
+            var originPosition = GetRectOriginPosition(position, gridResolution * cellSize, pivot, plane);
+            var (xAxis, yAxis) = Get2DPlaneAxes(plane);
+            DrawGridNodesInternal(originPosition, gridResolution, cellSize, xAxis, yAxis, color);
 #endif
         }
         
         [Conditional("UNITY_EDITOR")]
-        public static void DrawGridNodesXZ
+        public static void DrawGridNodes
         (
-            Vector3 position, 
+            Vector2 position, 
             Vector2Int gridResolution, 
             Vector2 cellSize, 
             RectPivot pivot = RectPivot.Center,
+            float? positionDepth = null, 
+            AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
         )
         {
 #if UNITY_EDITOR
-            SetColor(color);
-            var originPosition = GetRectOriginPosition(position.XZ(), gridResolution * cellSize, pivot);
-            DrawGridNodesInternal(originPosition.X0Y(position.y), gridResolution, cellSize, Vector3.right, Vector3.forward);
-            RevertColor();
+            var position3D = Get3DPosition(position, plane, positionDepth);
+            DrawGridNodes(position3D, gridResolution, cellSize, pivot, plane, color);
 #endif
         }
-
 
 #if UNITY_EDITOR
         private static void DrawGridLinesInternal
@@ -86,11 +85,14 @@ namespace DJM.Utilities.CustomGizmos
             Vector2Int resolution, 
             Vector2 cellSize,
             Vector3 xAxis,
-            Vector3 yAxis
+            Vector3 yAxis,
+            UnityEngine.Color? color = null
         )
         {
             if(resolution.x <= 0 || resolution.y <= 0) return;
             if(cellSize.x <= 0 || cellSize.y <= 0) return;
+            
+            SetColor(color);
             
             for(var x = 0; x <= resolution.x; x++)
             {
@@ -105,6 +107,8 @@ namespace DJM.Utilities.CustomGizmos
                 var end = start + xAxis * (resolution.x * cellSize.x);
                 Gizmos.DrawLine(start, end);
             }
+            
+            RevertColor();
         }
         
         private static void DrawGridNodesInternal
@@ -113,9 +117,12 @@ namespace DJM.Utilities.CustomGizmos
             Vector2Int resolution, 
             Vector2 cellSize,
             Vector3 xAxis,
-            Vector3 yAxis
+            Vector3 yAxis,
+            UnityEngine.Color? color = null
         )
         {
+            SetColor(color);
+            
             if(resolution.x <= 0 || resolution.y <= 0) return;
             if(cellSize.x <= 0 || cellSize.y <= 0) return;
 
@@ -132,8 +139,9 @@ namespace DJM.Utilities.CustomGizmos
                 var position = originPosition + xAxis * position2D.x + yAxis * position2D.y;
                 DrawCircleInternal(position, normal, nodeCircleRadius);
             }
+            
+            RevertColor();
         }
 #endif
-        
     }
 }
