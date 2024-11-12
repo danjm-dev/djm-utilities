@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using DJM.Utilities.Math;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace DJM.Utilities.CustomGizmos
@@ -18,11 +19,21 @@ namespace DJM.Utilities.CustomGizmos
         }
         
         [Conditional("UNITY_EDITOR")]
+        public static void DrawCircle(Vector2 center, float radius, UnityEngine.Color? color = null)
+        {
+#if UNITY_EDITOR
+            SetColor(color);
+            DrawCircleInternal(center.XY0(_depth2D), Vector3.forward, radius);
+            RevertColor();
+#endif
+        }
+        
+        [Conditional("UNITY_EDITOR")]
         public static void DrawCircleXY(Vector2 center, float radius, UnityEngine.Color? color = null)
         {
 #if UNITY_EDITOR
             SetColor(color);
-            DrawCircleInternal(center.XY0(), Vector3.forward, radius);
+            DrawCircleInternal(center.XY0(_depth2D), Vector3.forward, radius);
             RevertColor();
 #endif
         }
@@ -32,7 +43,7 @@ namespace DJM.Utilities.CustomGizmos
         {
 #if UNITY_EDITOR
             SetColor(color);
-            DrawCircleInternal(center.X0Y(), Vector3.up, radius);
+            DrawCircleInternal(center.X0Y(_depth2D), Vector3.up, radius);
             RevertColor();
 #endif
         }
@@ -40,7 +51,6 @@ namespace DJM.Utilities.CustomGizmos
 #if UNITY_EDITOR       
         private static void DrawCircleInternal(Vector3 center, Vector3 normal, float radius)
         {
-
             const int pointCount = 32;
             const float radiansPerPoint = MathUtils.PI2 / pointCount;
             

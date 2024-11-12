@@ -25,19 +25,19 @@ namespace DJM.Utilities.Debugging
         }
         
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        public static void LogUnmanaged(string message)
+        public static void Log(string message)
         {
             Debug.Log(message);
         }
         
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        public static void LogWarningUnmanaged(string message)
+        public static void LogWarning(string message)
         {
             Debug.LogWarning(message);
         }
                 
         [Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        public static void LogErrorUnmanaged(string message)
+        public static void LogError(string message)
         {
             Debug.LogError(message);
         }

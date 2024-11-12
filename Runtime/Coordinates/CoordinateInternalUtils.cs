@@ -15,7 +15,7 @@ namespace DJM.Utilities.Coordinates
             (in int2 resolution, in NativeArray<T> nodeArray) where T : unmanaged
         {
             if(resolution.x * resolution.y == nodeArray.Length) return;
-            DebugUtils.LogErrorUnmanaged("Node array length does not match resolution");
+            DebugUtils.LogError("Node array length does not match resolution");
         }
     }
 
