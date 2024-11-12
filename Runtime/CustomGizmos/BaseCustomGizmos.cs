@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using DJM.Utilities.MeshGeneration;
+﻿using DJM.Utilities.MeshGeneration;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -21,23 +19,12 @@ namespace DJM.Utilities.CustomGizmos
             get => Gizmos.matrix;
             set => Gizmos.matrix = value;
         }
-
-        [Conditional("UNITY_EDITOR")]
-        public static void Set2DConfiguration(AxisAlignedPlane plane, float depth)
-        {
-#if UNITY_EDITOR
-            _2DPlane = plane;
-            _depth2D = depth;
-#endif
-        }
         
 #if UNITY_EDITOR
         private static readonly Vector3[] PointBuffer = new Vector3[256];
         private static UnityEngine.Color _originalColor = Gizmos.color;
-        
-        // todo: set these in project settings
-        private static float _depth2D = 0f;
-        private static AxisAlignedPlane _2DPlane = AxisAlignedPlane.XY;
+
+
 
 
         private static readonly Mesh _rectMesh;
@@ -73,7 +60,7 @@ namespace DJM.Utilities.CustomGizmos
         {
             if(pivot == RectPivot.Origin) return position;
             
-            var plane = planeOverride ?? _2DPlane;
+            var plane = planeOverride ?? CustomGizmosSettings.DefaultPlane;
             var (xAxis, yAxis) = plane.GetAxes();
             
             var offset = Vector3.zero;
@@ -85,8 +72,8 @@ namespace DJM.Utilities.CustomGizmos
         
         private static Vector3 Get3DPosition(Vector2 position, AxisAlignedPlane? planeOverride, float? depthOverride)
         {
-            var plane = planeOverride ?? _2DPlane;
-            var depth = depthOverride ?? _depth2D;
+            var plane = planeOverride ?? CustomGizmosSettings.DefaultPlane;
+            var depth = depthOverride ?? CustomGizmosSettings.DefaultPositionDepth;
             return plane switch
             {
                 AxisAlignedPlane.XY => position.XYO(depth),
@@ -98,13 +85,13 @@ namespace DJM.Utilities.CustomGizmos
         
         private static Vector3 Get2DPlaneNormal(AxisAlignedPlane? planeOverride)
         {
-            var plane = planeOverride ?? _2DPlane;
+            var plane = planeOverride ?? CustomGizmosSettings.DefaultPlane;
             return plane.GetNormal();
         }
 
         private static (Vector3, Vector3) Get2DPlaneAxes(AxisAlignedPlane? planeOverride)
         {
-            var plane = planeOverride ?? _2DPlane;
+            var plane = planeOverride ?? CustomGizmosSettings.DefaultPlane;
             return plane.GetAxes();
         }
 #endif
