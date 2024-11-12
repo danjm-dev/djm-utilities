@@ -15,7 +15,7 @@ namespace DJM.Utilities
         {
             return plane switch
             {
-                AxisAlignedPlane.XY => Vector3.forward,
+                AxisAlignedPlane.XY => Vector3.back,
                 AxisAlignedPlane.XZ => Vector3.up,
                 AxisAlignedPlane.ZY => Vector3.right,
                 _ => Vector3.zero

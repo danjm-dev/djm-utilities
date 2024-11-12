@@ -16,7 +16,7 @@ namespace DJM.Utilities.CustomGizmos
         )
         {
 #if UNITY_EDITOR
-            DrawRectOutlineInternal(center, normal, size);
+            DrawRectInternal(center, normal, size, color);
 #endif
         }
         
@@ -31,7 +31,13 @@ namespace DJM.Utilities.CustomGizmos
         )
         {
 #if UNITY_EDITOR
-            DrawRectOutlineInternal(Get3DPosition(center, plane, positionDepth), Get2DPlaneNormal(plane), size, color);
+            DrawRectInternal
+            (
+                Get3DPosition(center, plane, positionDepth), 
+                Get2DPlaneNormal(plane), 
+                size, 
+                color
+            );
 #endif
         }
         
@@ -45,18 +51,61 @@ namespace DJM.Utilities.CustomGizmos
         )
         {
 #if UNITY_EDITOR
-            DrawRectOutlineInternal(center, Get2DPlaneNormal(plane), size, color);
+            DrawRectInternal(center, Get2DPlaneNormal(plane), size, color);
 #endif
         }
         
-#if UNITY_EDITOR
-        private static void DrawRectOutlineInternal
+        [Conditional("UNITY_EDITOR")]
+        public static void DrawRectOutline
         (
             Vector3 center, 
             Vector3 normal, 
             Vector2 size, 
             UnityEngine.Color? color = null
         )
+        {
+#if UNITY_EDITOR
+            DrawRectOutlineInternal(center, normal, size, color);
+#endif
+        }
+        
+        [Conditional("UNITY_EDITOR")]
+        public static void DrawRectOutline
+        (
+            Vector2 center, 
+            Vector2 size, 
+            float? positionDepth = null, 
+            AxisAlignedPlane? plane = null, 
+            UnityEngine.Color? color = null
+        )
+        {
+#if UNITY_EDITOR
+            DrawRectOutlineInternal
+            (
+                Get3DPosition(center, plane, positionDepth), 
+                Get2DPlaneNormal(plane), 
+                size, 
+                color
+            );
+#endif
+        }
+        
+        [Conditional("UNITY_EDITOR")]
+        public static void DrawRectOutline
+        (
+            Vector3 center, 
+            Vector2 size, 
+            AxisAlignedPlane? plane = null, 
+            UnityEngine.Color? color = null
+        )
+        {
+#if UNITY_EDITOR
+            DrawRectOutlineInternal(center, Get2DPlaneNormal(plane), size, color);
+#endif
+        }
+        
+#if UNITY_EDITOR
+        private static void DrawRectOutlineInternal(Vector3 center, Vector3 normal, Vector2 size, UnityEngine.Color? color)
         {
             if(size == Vector2.zero) return;
             if(normal == Vector3.zero) return;
@@ -84,12 +133,12 @@ namespace DJM.Utilities.CustomGizmos
             RevertColor();
         }
         
-        // private static void DrawRectFilledInternal(Vector3 center, Vector3 normal, Vector2 size)
-        // {
-        //
-        //
-        //     
-        // }
+        private static void DrawRectInternal(Vector3 center, Vector3 normal, Vector2 size, UnityEngine.Color? color)
+        {
+            SetColor(color);
+            Gizmos.DrawMesh(_rectMesh, center, Quaternion.LookRotation(normal), size.XYO());
+            RevertColor();
+        }
 #endif
     }
 }
