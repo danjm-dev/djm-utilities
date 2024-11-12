@@ -1,4 +1,5 @@
-﻿using DJM.Utilities.Settings;
+﻿using DJM.Utilities.CustomGizmos;
+using DJM.Utilities.Settings;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,8 +7,7 @@ namespace DJM.Utilities.Editor.CustomGizmos
 {
     internal sealed class CustomGizmosSettingsProvider : SettingsProvider
     {
-        private const string Name = "Custom Gizmos";
-        private const string Path = PathUtils.ProjectSettingsHierarchyPathPrefix + Name;
+        private const string Path = PathUtils.ProjectSettingsHierarchyPathRoot + "Custom Gizmos";
 
         private CustomGizmosSettingsProvider(string path, SettingsScope scopes) : base(path, scopes) { }
         
@@ -15,17 +15,28 @@ namespace DJM.Utilities.Editor.CustomGizmos
         {
             base.OnGUI(searchContext);
             
-            var serializedObject = new SerializedObject(CustomGizmosSettings.instance);
-            var defaultPlaneProperty = serializedObject.FindProperty("defaultPlane");
-            var defaultPositionDepthProperty = serializedObject.FindProperty("defaultPositionDepth");
-
-            EditorGUILayout.Space();
+            using var serializedObject = new SerializedObject(CustomGizmosSettings.instance);
             
-            EditorGUILayout.PropertyField(defaultPlaneProperty);
-            EditorGUILayout.PropertyField(defaultPositionDepthProperty);
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField(new GUIContent("2D Gizmos"), EditorStyles.boldLabel);
 
-            if(!serializedObject.hasModifiedProperties) return;
-            serializedObject.ApplyModifiedProperties();
+            
+            var defaultPlaneProperty = serializedObject.FindProperty("defaultPlane");
+            CustomGizmosSettings.DefaultPlane = (AxisAlignedPlane)EditorGUILayout.EnumPopup
+            (
+                new GUIContent(defaultPlaneProperty.displayName), 
+                CustomGizmosSettings.DefaultPlane, 
+                EditorStyles.popup
+            );
+            
+            
+            var defaultPositionDepthProperty = serializedObject.FindProperty("defaultPositionDepth");
+            CustomGizmosSettings.DefaultPositionDepth = EditorGUILayout.FloatField
+            (
+                new GUIContent(defaultPositionDepthProperty.displayName), 
+                CustomGizmosSettings.DefaultPositionDepth, 
+                EditorStyles.numberField
+            );
         }
         
         [SettingsProvider]

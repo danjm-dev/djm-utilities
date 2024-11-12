@@ -2,10 +2,10 @@
 {
     public static class PathUtils
     {
-        public const string DJMPath = "DJM/";
-        public const string ResourcesFilePath = "Assets/Resources/";
-        public const string CustomProjectSettingsFilePath = "Assets/CustomProjectSettings/";
-        public const string ProjectSettingsHierarchyPathPrefix = "Project/" + DJMPath;
+        public const string AssetPathRoot = "Assets/Plugins/DJM/";
+        public const string AssetPathProjectSettings = AssetPathRoot + "ProjectSettings/";
+        
+        public const string ProjectSettingsHierarchyPathRoot = "Project/DJM/";
     }
     
 }

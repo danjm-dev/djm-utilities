@@ -1,10 +1,11 @@
-﻿using DJM.Utilities.Settings;
+﻿#if UNITY_EDITOR
+using DJM.Utilities.Settings;
 using UnityEditor;
 using UnityEngine;
 
-namespace DJM.Utilities.Editor.CustomGizmos
+namespace DJM.Utilities.CustomGizmos
 {
-    [FilePath(PathUtils.CustomProjectSettingsFilePath + nameof(CustomGizmosSettings), FilePathAttribute.Location.ProjectFolder)]
+    [FilePath(PathUtils.AssetPathProjectSettings + nameof(CustomGizmosSettings), FilePathAttribute.Location.ProjectFolder)]
     internal sealed class CustomGizmosSettings : ScriptableSingleton<CustomGizmosSettings>
     {
         [SerializeField] private AxisAlignedPlane defaultPlane = AxisAlignedPlane.XY;
@@ -37,3 +38,4 @@ namespace DJM.Utilities.Editor.CustomGizmos
         }
     }
 }
+#endif
