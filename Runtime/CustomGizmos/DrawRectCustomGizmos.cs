@@ -10,6 +10,7 @@ namespace DJM.Utilities.CustomGizmos
         (
             Vector2 center, 
             Vector2 size, 
+            RectPivot pivot = RectPivot.Center,
             float? positionDepth = null, 
             AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
@@ -23,7 +24,8 @@ namespace DJM.Utilities.CustomGizmos
                 Get3DPosition(center, plane, positionDepth), 
                 size,
                 xAxis, 
-                yAxis
+                yAxis,
+                pivot
             );
             RevertColor();
 #endif
@@ -34,6 +36,7 @@ namespace DJM.Utilities.CustomGizmos
         (
             Vector3 center, 
             Vector2 size, 
+            RectPivot pivot = RectPivot.Center,
             AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
         )
@@ -42,32 +45,33 @@ namespace DJM.Utilities.CustomGizmos
             SetColor(color);
 
             var (xAxis, yAxis) = Get2DPlaneAxes(plane);
-            RectCustomGizmoUtils.DrawRect(center, size, xAxis, yAxis);
+            RectCustomGizmoUtils.DrawRect(center, size, xAxis, yAxis, pivot);
             RevertColor();
 #endif
         }
         
-        [Conditional("UNITY_EDITOR")]
-        public static void DrawRectOutline
-        (
-            Vector3 center, 
-            Vector3 normal, 
-            Vector2 size, 
-            UnityEngine.Color? color = null
-        )
-        {
-#if UNITY_EDITOR
-            SetColor(color);
-            RectCustomGizmoUtils.DrawRectOutline(center, normal, size);
-            RevertColor();
-#endif
-        }
+//         [Conditional("UNITY_EDITOR")]
+//         public static void DrawRectOutline
+//         (
+//             Vector3 center, 
+//             Vector3 normal, 
+//             Vector2 size, 
+//             UnityEngine.Color? color = null
+//         )
+//         {
+// #if UNITY_EDITOR
+//             SetColor(color);
+//             RectCustomGizmoUtils.DrawRectOutline(center, normal, size);
+//             RevertColor();
+// #endif
+//         }
         
         [Conditional("UNITY_EDITOR")]
         public static void DrawRectOutline
         (
             Vector2 center, 
             Vector2 size, 
+            RectPivot pivot = RectPivot.Center,
             float? positionDepth = null, 
             AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
@@ -75,11 +79,14 @@ namespace DJM.Utilities.CustomGizmos
         {
 #if UNITY_EDITOR
             SetColor(color);
+            var (xAxis, yAxis) = Get2DPlaneAxes(plane);
             RectCustomGizmoUtils.DrawRectOutline
             (
                 Get3DPosition(center, plane, positionDepth), 
-                Get2DPlaneNormal(plane), 
-                size
+                size,
+                xAxis,
+                yAxis,
+                pivot
             );
             RevertColor();
 #endif
@@ -90,13 +97,15 @@ namespace DJM.Utilities.CustomGizmos
         (
             Vector3 center, 
             Vector2 size, 
+            RectPivot pivot = RectPivot.Center,
             AxisAlignedPlane? plane = null, 
             UnityEngine.Color? color = null
         )
         {
 #if UNITY_EDITOR
             SetColor(color);
-            RectCustomGizmoUtils.DrawRectOutline(center, Get2DPlaneNormal(plane), size);
+            var (xAxis, yAxis) = Get2DPlaneAxes(plane);
+            RectCustomGizmoUtils.DrawRectOutline(center, size, xAxis, yAxis, pivot);
             RevertColor();
 #endif
         }

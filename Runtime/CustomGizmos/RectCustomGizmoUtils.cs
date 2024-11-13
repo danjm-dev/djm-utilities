@@ -19,36 +19,45 @@ namespace DJM.Utilities.CustomGizmos
             RectMesh = PrimitiveMeshUtils.GenerateRectMesh(1f, math.right(), math.up());
         }
         
-        public static void DrawRect(Vector3 center, Vector2 size, Vector3 horizontalAxis, Vector3 verticalAxis)
+        public static void DrawRect(Vector3 position, Vector2 size, Vector3 right, Vector3 up, RectPivot pivot)
         {
+            size = Vector2.Max(size, Vector2.zero);
+            if(size == Vector2.zero) return;
+            
             MathUtils.GetValidAxes
             (
-                horizontalAxis, 
-                verticalAxis, 
-                out _, 
-                out var up, 
-                out var forward
+                right, 
+                up, 
+                out var validRight, 
+                out var validUp, 
+                out var validForward
             );
             
-            var rotation = Quaternion.LookRotation(forward, up);
-            Gizmos.DrawMesh(RectMesh, center, rotation, size.XYO());
+            var rotation = Quaternion.LookRotation(validForward, validUp);
+            position = pivot == RectPivot.Origin 
+                ? position + validRight.AsVector() * size.x * 0.5f + validUp.AsVector() * size.y * 0.5f 
+                : position;
+            Gizmos.DrawMesh(RectMesh, position, rotation, size.XYO());
         }
         
-        public static void DrawRectOutline(Vector3 center, Vector3 normal, Vector2 size)
+        public static void DrawRectOutline(Vector3 position, Vector2 size, Vector3 right, Vector3 up, RectPivot pivot)
         {
+            size = Vector2.Max(size, Vector2.zero);
             if(size == Vector2.zero) return;
-            if(normal == Vector3.zero) return;
             
-            normal = normal.normalized;
+            MathUtils.GetValidAxes
+            (
+                right, 
+                up, 
+                out var validRight, 
+                out var validUp, 
+                out _
+            );
             
-            var referenceVector = Mathf.Abs(Vector3.Dot(normal, Vector3.up)) < 0.99f ? Vector3.up : Vector3.forward;
-            var xDirection = Vector3.Cross(normal, referenceVector).normalized;
-            var yDirection = Vector3.Cross(xDirection, normal).normalized;
+            var xOffset = validRight.AsVector() * size.x;
+            var yOffset = validUp.AsVector() * size.y;
             
-            var xOffset = xDirection * size.x;
-            var yOffset = yDirection * size.y;
-            
-            var origin = center - xOffset * 0.5f - yOffset * 0.5f;
+            var origin = pivot == RectPivot.Origin ? position : position - xOffset * 0.5f - yOffset * 0.5f;
             
             PointBuffer[0] = origin;
             PointBuffer[1] = origin + yOffset;
