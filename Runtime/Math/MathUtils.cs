@@ -6,16 +6,12 @@ namespace DJM.Utilities.Math
     [BurstCompile]
     public static class MathUtils
     {
-        
         public const float PI2 = math.PI * 2f;
         public const double PI2_DBL = math.PI_DBL * 2d;
-        
-
         
         [BurstCompile]
         public static float MinkowskiDistance(in float2 point1, in float2 point2, in float p)
         {
-            
             // manhattan distance is p = 1
             // euclidean distance is p = 2
             
@@ -99,7 +95,22 @@ namespace DJM.Utilities.Math
             var angleInRadians = GetAngleInRadians(angle, angleUnit);
             direction = new float2(math.cos(angleInRadians), math.sin(angleInRadians));
         }
-
+        
+        [BurstCompile]
+        public static void GetValidAxes
+        (
+            in float3 right, 
+            in float3 up, 
+            out float3 validRight, 
+            out float3 validUp, 
+            out float3 validForward
+        )
+        {
+            validRight = math.normalizesafe(right, math.right());
+            validUp = math.normalizesafe(up, math.up());
+            validForward = math.normalize(math.cross(right, up));
+        }
+        
         [BurstCompile]
         private static float GetAngleInRadians(in float angle, in AngleUnit unit)
         {

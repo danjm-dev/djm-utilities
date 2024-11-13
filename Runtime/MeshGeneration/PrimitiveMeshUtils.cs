@@ -104,21 +104,18 @@ namespace DJM.Utilities.MeshGeneration
             out Bounds bounds
         )
         {
+            MathUtils.GetValidAxes(xAxis, yAxis, out var right, out var up, out var forward);
+            var xAxisOffset = right * radius;
+            var yAxisOffset = up * radius;
+            var normal = -forward;
+            
             var segmentCountClamped = math.max(segmentCount, 3);
             var vertexCount = segmentCountClamped + 1;
             var indexCount = segmentCountClamped * 3;
+            var anglePerSegment = MathUtils.PI2 / segmentCountClamped;
             
             vertices = new NativeArray<VertexData>(vertexCount, Allocator.Temp);
             indices = new NativeArray<ushort>(indexCount, Allocator.Temp);
-
-            var xAxisOffset = math.normalizesafe(xAxis, math.right());
-            var yAxisOffset = math.normalizesafe(yAxis, math.up());
-            var normal = math.normalize(math.cross(xAxisOffset, yAxisOffset));
-            
-            xAxisOffset *= radius;
-            yAxisOffset *= radius;
-            
-            var anglePerSegment = MathUtils.PI2 / segmentCountClamped;
             
             vertices[0] = new VertexData(float3.zero, normal);
             
@@ -131,8 +128,8 @@ namespace DJM.Utilities.MeshGeneration
                 vertices[i + 1] = new VertexData(x * xAxisOffset + y * yAxisOffset, normal);
                 
                 indices[i * 3] = 0;
-                indices[i * 3 + 1] = (ushort)(i + 1);
-                indices[i * 3 + 2] = (ushort)(i + 2 <= segmentCountClamped ? i + 2 : 1);
+                indices[i * 3 + 1] = (ushort)(i + 2 <= segmentCountClamped ? i + 2 : 1);
+                indices[i * 3 + 2] = (ushort)(i + 1);
             }
 
             bounds = new Bounds(Vector3.zero, (Vector2.one * radius).XYO());
@@ -148,20 +145,18 @@ namespace DJM.Utilities.MeshGeneration
             out NativeArray<ushort> indices,
             out Bounds bounds
         )
-        {
+        { 
             const int vertexCount = 4;
             const int indexCount = 6;
             
+            MathUtils.GetValidAxes(xAxis, yAxis, out var right, out var up, out var forward);
+            var xOffset = right * size.x;
+            var yOffset = up * size.y;
+            var originOffset = xOffset * -0.5f + yOffset * -0.5f;
+            var normal = -forward;
+            
             vertices = new NativeArray<VertexData>(vertexCount, Allocator.Temp);
             indices = new NativeArray<ushort>(indexCount, Allocator.Temp);
-
-            var xAxisNormalized = math.normalizesafe(xAxis, math.right());
-            var yAxisNormalized = math.normalizesafe(yAxis, math.up());
-            var normal = math.normalize(math.cross(xAxisNormalized, yAxisNormalized));
-            
-            var xOffset = xAxisNormalized * size.x;
-            var yOffset = yAxisNormalized * size.y;
-            var originOffset = xOffset * -0.5f + yOffset * -0.5f;
             
             vertices[0] = new VertexData(originOffset, normal);
             vertices[1] = new VertexData(originOffset + yOffset, normal);

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using DJM.Utilities.Math;
-using DJM.Utilities.MeshGeneration;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace DJM.Utilities.CustomGizmos

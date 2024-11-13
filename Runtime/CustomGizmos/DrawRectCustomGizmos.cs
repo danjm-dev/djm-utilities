@@ -8,22 +8,6 @@ namespace DJM.Utilities.CustomGizmos
         [Conditional("UNITY_EDITOR")]
         public static void DrawRect
         (
-            Vector3 center, 
-            Vector3 normal, 
-            Vector2 size, 
-            UnityEngine.Color? color = null
-        )
-        {
-#if UNITY_EDITOR
-            SetColor(color);
-            RectCustomGizmoUtils.DrawRect(center, normal, size);
-            RevertColor();
-#endif
-        }
-        
-        [Conditional("UNITY_EDITOR")]
-        public static void DrawRect
-        (
             Vector2 center, 
             Vector2 size, 
             float? positionDepth = null, 
@@ -33,11 +17,13 @@ namespace DJM.Utilities.CustomGizmos
         {
 #if UNITY_EDITOR
             SetColor(color);
+            var (xAxis, yAxis) = Get2DPlaneAxes(plane);
             RectCustomGizmoUtils.DrawRect
             (
                 Get3DPosition(center, plane, positionDepth), 
-                Get2DPlaneNormal(plane), 
-                size
+                size,
+                xAxis, 
+                yAxis
             );
             RevertColor();
 #endif
@@ -54,7 +40,9 @@ namespace DJM.Utilities.CustomGizmos
         {
 #if UNITY_EDITOR
             SetColor(color);
-            RectCustomGizmoUtils.DrawRect(center, Get2DPlaneNormal(plane), size);
+
+            var (xAxis, yAxis) = Get2DPlaneAxes(plane);
+            RectCustomGizmoUtils.DrawRect(center, size, xAxis, yAxis);
             RevertColor();
 #endif
         }

@@ -4,6 +4,7 @@ using DJM.Utilities.MeshGeneration;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using MathUtils = DJM.Utilities.Math.MathUtils;
 
 namespace DJM.Utilities.CustomGizmos
 {
@@ -18,9 +19,19 @@ namespace DJM.Utilities.CustomGizmos
             RectMesh = PrimitiveMeshUtils.GenerateRectMesh(1f, math.right(), math.up());
         }
         
-        public static void DrawRect(Vector3 center, Vector3 normal, Vector2 size)
+        public static void DrawRect(Vector3 center, Vector2 size, Vector3 horizontalAxis, Vector3 verticalAxis)
         {
-            Gizmos.DrawMesh(RectMesh, center, Quaternion.LookRotation(-normal), size.XYO());
+            MathUtils.GetValidAxes
+            (
+                horizontalAxis, 
+                verticalAxis, 
+                out _, 
+                out var up, 
+                out var forward
+            );
+            
+            var rotation = Quaternion.LookRotation(forward, up);
+            Gizmos.DrawMesh(RectMesh, center, rotation, size.XYO());
         }
         
         public static void DrawRectOutline(Vector3 center, Vector3 normal, Vector2 size)

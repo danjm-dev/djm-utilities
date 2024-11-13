@@ -23,17 +23,13 @@ namespace DJM.Utilities.CustomGizmos
 #if UNITY_EDITOR
         private static readonly Vector3[] PointBuffer = new Vector3[256];
         private static UnityEngine.Color _originalColor = Gizmos.color;
+        
 
-
-
-
-        private static readonly Mesh _rectMesh;
         private static readonly Mesh _circleMesh;
         
         
         static Gizmos2()
         {
-            _rectMesh = PrimitiveMeshUtils.GenerateRectMesh(1f, math.right(), math.up());
             _circleMesh = PrimitiveMeshUtils.GenerateCircleMesh(1f, math.right(), math.up(), CirclePointCount);
         }
         
