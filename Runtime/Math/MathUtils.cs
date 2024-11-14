@@ -141,5 +141,13 @@ namespace DJM.Utilities.Math
         {
             return (index % count + count) % count;
         }
+        
+        [BurstCompile]
+        public static void MultiplyVector(in float4x4 matrix, in float3 vector, out float3 result)
+        {
+            result.x = matrix.c0.x * vector.x + matrix.c1.x * vector.y + matrix.c2.x * vector.z;
+            result.y = matrix.c0.y * vector.x + matrix.c1.y * vector.y + matrix.c2.y * vector.z;
+            result.z = matrix.c0.z * vector.x + matrix.c1.z * vector.y + matrix.c2.z * vector.z;
+        }
     }
 }
