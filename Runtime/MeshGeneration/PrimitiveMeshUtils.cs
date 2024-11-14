@@ -104,7 +104,7 @@ namespace DJM.Utilities.MeshGeneration
             out Bounds bounds
         )
         {
-            MathUtils.GetValidAxes(xAxis, yAxis, out var right, out var up, out var forward);
+            MathUtils.GetNormalizedAxes(xAxis, yAxis, out var right, out var up, out var forward);
             var xAxisOffset = right * radius;
             var yAxisOffset = up * radius;
             var normal = -forward;
@@ -149,7 +149,7 @@ namespace DJM.Utilities.MeshGeneration
             const int vertexCount = 4;
             const int indexCount = 6;
             
-            MathUtils.GetValidAxes(xAxis, yAxis, out var right, out var up, out var forward);
+            MathUtils.GetNormalizedAxes(xAxis, yAxis, out var right, out var up, out var forward);
             var xOffset = right * size.x;
             var yOffset = up * size.y;
             var originOffset = xOffset * -0.5f + yOffset * -0.5f;

@@ -97,7 +97,7 @@ namespace DJM.Utilities.Math
         }
         
         [BurstCompile]
-        public static void GetValidAxes
+        public static void GetNormalizedAxes
         (
             in float3 right, 
             in float3 up, 

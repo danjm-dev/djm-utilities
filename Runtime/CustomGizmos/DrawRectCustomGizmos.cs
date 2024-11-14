@@ -11,24 +11,24 @@ namespace DJM.Utilities.CustomGizmos
             Vector2 center, 
             Vector2 size, 
             RectPivot pivot = RectPivot.Center,
-            float? positionDepth = null, 
-            AxisAlignedPlane? plane = null, 
+            SignedAxis? rightAxis = null,
+            SignedAxis? upAxis = null,
+            float? forwardDepth = null, 
             UnityEngine.Color? color = null
         )
         {
-#if UNITY_EDITOR
-            SetColor(color);
-            var (xAxis, yAxis) = Get2DPlaneAxes(plane);
-            RectCustomGizmoUtils.DrawRect
-            (
-                Get3DPosition(center, plane, positionDepth), 
-                size,
-                xAxis, 
-                yAxis,
-                pivot
-            );
-            RevertColor();
-#endif
+// #if UNITY_EDITOR
+//             SetColor(color);
+//             RectCustomGizmoUtils.DrawRect
+//             (
+//                 CustomGizmoUtils.Get3DPosition(center, rightAxis, upAxis, forwardDepth), 
+//                 size,
+//                 CustomGizmoUtils.GetRightAxis(rightAxis).GetDirection(), 
+//                 CustomGizmoUtils.GetUpAxis(upAxis).GetDirection(),
+//                 pivot
+//             );
+//             RevertColor();
+// #endif
         }
         
         [Conditional("UNITY_EDITOR")]
@@ -41,13 +41,13 @@ namespace DJM.Utilities.CustomGizmos
             UnityEngine.Color? color = null
         )
         {
-#if UNITY_EDITOR
-            SetColor(color);
-
-            var (xAxis, yAxis) = Get2DPlaneAxes(plane);
-            RectCustomGizmoUtils.DrawRect(center, size, xAxis, yAxis, pivot);
-            RevertColor();
-#endif
+// #if UNITY_EDITOR
+//             SetColor(color);
+//
+//             var (xAxis, yAxis) = Get2DPlaneAxes(plane);
+//             RectCustomGizmoUtils.DrawRect(center, size, xAxis, yAxis, pivot);
+//             RevertColor();
+// #endif
         }
         
 //         [Conditional("UNITY_EDITOR")]

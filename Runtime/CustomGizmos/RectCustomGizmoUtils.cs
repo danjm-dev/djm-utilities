@@ -24,7 +24,7 @@ namespace DJM.Utilities.CustomGizmos
             size = Vector2.Max(size, Vector2.zero);
             if(size == Vector2.zero) return;
             
-            MathUtils.GetValidAxes
+            MathUtils.GetNormalizedAxes
             (
                 right, 
                 up, 
@@ -45,7 +45,7 @@ namespace DJM.Utilities.CustomGizmos
             size = Vector2.Max(size, Vector2.zero);
             if(size == Vector2.zero) return;
             
-            MathUtils.GetValidAxes
+            MathUtils.GetNormalizedAxes
             (
                 right, 
                 up, 

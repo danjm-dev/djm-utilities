@@ -21,20 +21,36 @@ namespace DJM.Utilities.Editor.CustomGizmos
             EditorGUILayout.LabelField(new GUIContent("2D Gizmos"), EditorStyles.boldLabel);
 
             
-            var defaultPlaneProperty = serializedObject.FindProperty("defaultPlane");
-            CustomGizmosSettings.DefaultPlane = (AxisAlignedPlane)EditorGUILayout.EnumPopup
+            var defaultRightAxisProperty = serializedObject.FindProperty("defaultRightAxis");
+            CustomGizmosSettings.DefaultRightAxis = (SignedAxis)EditorGUILayout.EnumPopup
             (
-                new GUIContent(defaultPlaneProperty.displayName), 
-                CustomGizmosSettings.DefaultPlane, 
+                new GUIContent(defaultRightAxisProperty.displayName), 
+                CustomGizmosSettings.DefaultRightAxis, 
                 EditorStyles.popup
             );
             
+            var defaultUpAxisProperty = serializedObject.FindProperty("defaultUpAxis");
+            CustomGizmosSettings.DefaultUpAxis = (SignedAxis)EditorGUILayout.EnumPopup
+            (
+                new GUIContent(defaultUpAxisProperty.displayName), 
+                CustomGizmosSettings.DefaultUpAxis, 
+                EditorStyles.popup
+            );
             
-            var defaultPositionDepthProperty = serializedObject.FindProperty("defaultPositionDepth");
-            CustomGizmosSettings.DefaultPositionDepth = EditorGUILayout.FloatField
+            // var defaultPlaneProperty = serializedObject.FindProperty("defaultPlane");
+            // CustomGizmosSettings.DefaultPlane = (AxisAlignedPlane)EditorGUILayout.EnumPopup
+            // (
+            //     new GUIContent(defaultPlaneProperty.displayName), 
+            //     CustomGizmosSettings.DefaultPlane, 
+            //     EditorStyles.popup
+            // );
+            
+            
+            var defaultPositionDepthProperty = serializedObject.FindProperty("defaultForwardDepth");
+            CustomGizmosSettings.DefaultForwardDepth = EditorGUILayout.FloatField
             (
                 new GUIContent(defaultPositionDepthProperty.displayName), 
-                CustomGizmosSettings.DefaultPositionDepth, 
+                CustomGizmosSettings.DefaultForwardDepth, 
                 EditorStyles.numberField
             );
         }

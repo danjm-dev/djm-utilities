@@ -19,6 +19,33 @@ namespace DJM.Utilities
     public static class SignedAxisExtensions
     {
         [BurstCompile]
+        public static Axis GetUnsignedAxis(this SignedAxis axis)
+        {
+            return axis switch
+            {
+                SignedAxis.PositiveX => Axis.X,
+                SignedAxis.PositiveY => Axis.Y,
+                SignedAxis.PositiveZ => Axis.Z,
+                SignedAxis.NegativeX => Axis.X,
+                SignedAxis.NegativeY => Axis.Y,
+                SignedAxis.NegativeZ => Axis.Z,
+                _ => default
+            };
+        }
+        
+        [BurstCompile]
+        public static bool IsPositive(this SignedAxis axis)
+        {
+            return (int)axis < 3;
+        }
+        
+        [BurstCompile]
+        public static bool IsNegative(this SignedAxis axis)
+        {
+            return !IsPositive(axis);
+        }
+        
+        [BurstCompile]
         public static void GetColor(this SignedAxis axis, out UnityEngine.Color color)
         {
             color = axis switch

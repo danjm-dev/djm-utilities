@@ -69,7 +69,7 @@ namespace DJM.Utilities.CustomGizmos
         private static Vector3 Get3DPosition(Vector2 position, AxisAlignedPlane? planeOverride, float? depthOverride)
         {
             var plane = planeOverride ?? CustomGizmosSettings.DefaultPlane;
-            var depth = depthOverride ?? CustomGizmosSettings.DefaultPositionDepth;
+            var depth = depthOverride ?? CustomGizmosSettings.DefaultForwardDepth;
             return plane switch
             {
                 AxisAlignedPlane.XY => position.XYO(depth),
