@@ -68,27 +68,11 @@ namespace DJM.Utilities.CustomGizmos
             return this;
         }
 
-        public IGizmoContext DrawCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center)
-        {
-            size = MathUtils.Abs(size);
-            var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
-            Gizmos.DrawCube(Get3DPosition(position, offset), size);
-            return this;
-        }
-
         public IGizmoContext DrawWireCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center)
         {
             size = MathUtils.Abs(size);
             var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
             Gizmos.DrawWireCube(position + offset, size);
-            return this;
-        }
-
-        public IGizmoContext DrawWireCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center)
-        {
-            size = MathUtils.Abs(size);
-            var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
-            Gizmos.DrawWireCube(Get3DPosition(position, offset), size);
             return this;
         }
         
@@ -124,23 +108,13 @@ namespace DJM.Utilities.CustomGizmos
             return this;
         }
 
-        public IGizmoContext DrawSphere(Vector2 position, float radius)
-        {
-            return DrawSphere(Get3DPosition(position), radius);
-        }
-
         public IGizmoContext DrawWireSphere(Vector3 position, float radius)
         {
             Gizmos.DrawWireSphere(position, Mathf.Abs(radius));
             return this;
         }
-
-        public IGizmoContext DrawWireSphere(Vector2 position, float radius)
-        {
-            return DrawWireSphere(Get3DPosition(position), radius);
-        }
-
-
+        
+        
         
         public IGizmoContext DrawCircle(Vector3 position, float radius)
         {
@@ -163,9 +137,76 @@ namespace DJM.Utilities.CustomGizmos
         {
             return DrawCircleOutline(Get3DPosition(position), radius);
         }
-        
-        
-        
+
+        public IGizmoContext DrawGridLines
+        (
+            Vector3 position, 
+            Vector2Int gridResolution, 
+            Vector2 cellSize,
+            RectPivot pivot = RectPivot.Center
+        )
+        {
+            GridCustomGizmoUtils.DrawGridLines(position, gridResolution, cellSize, _rightAxis, _upAxis, pivot);
+            return this;
+        }
+
+        public IGizmoContext DrawGridLines
+        (
+            Vector2 position, 
+            Vector2Int gridResolution, 
+            Vector2 cellSize,
+            RectPivot pivot = RectPivot.Center
+        )
+        {
+            return DrawGridLines(Get3DPosition(position), gridResolution, cellSize, pivot);
+        }
+
+        public IGizmoContext DrawGridLines
+        (
+            Vector3 position, 
+            Vector3Int gridResolution, 
+            Vector3 cellSize,
+            RectPivot pivot = RectPivot.Center
+        )
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGizmoContext DrawGridNodes
+        (
+            Vector3 position, 
+            Vector2Int gridResolution, 
+            Vector2 cellSize,
+            RectPivot pivot = RectPivot.Center
+        )
+        {
+            GridCustomGizmoUtils.DrawGridNodes(position, gridResolution, cellSize, _rightAxis, _upAxis, pivot);
+            return this;
+        }
+
+        public IGizmoContext DrawGridNodes
+        (
+            Vector2 position, 
+            Vector2Int gridResolution, 
+            Vector2 cellSize,
+            RectPivot pivot = RectPivot.Center
+        )
+        {
+            return DrawGridNodes(Get3DPosition(position), gridResolution, cellSize, pivot);
+        }
+
+        public IGizmoContext DrawGridNodes
+        (
+            Vector3 position, 
+            Vector3Int gridResolution, 
+            Vector3 cellSize,
+            RectPivot pivot = RectPivot.Center
+        )
+        {
+            throw new NotImplementedException();
+        }
+
+
         private void SetDefaultSettings()
         {
             Gizmos.color = UnityEngine.Color.white;
@@ -222,9 +263,7 @@ namespace DJM.Utilities.CustomGizmos
         public IGizmoContext DrawLine(Vector2 from, Vector2 to);
         
         public IGizmoContext DrawCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center);
-        public IGizmoContext DrawCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center);
         public IGizmoContext DrawWireCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center);
-        public IGizmoContext DrawWireCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center);
         
         public IGizmoContext DrawRect(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center);
         public IGizmoContext DrawRect(Vector2 position, Vector2 size, RectPivot pivot = RectPivot.Center);
@@ -232,13 +271,19 @@ namespace DJM.Utilities.CustomGizmos
         public IGizmoContext DrawRectOutline(Vector2 position, Vector2 size, RectPivot pivot = RectPivot.Center);
 
         public IGizmoContext DrawSphere(Vector3 position, float radius);
-        public IGizmoContext DrawSphere(Vector2 position, float radius);
         public IGizmoContext DrawWireSphere(Vector3 position, float radius);
-        public IGizmoContext DrawWireSphere(Vector2 position, float radius);
         
         public IGizmoContext DrawCircle(Vector3 position, float radius);
         public IGizmoContext DrawCircle(Vector2 position, float radius);
         public IGizmoContext DrawCircleOutline(Vector3 position, float radius);
         public IGizmoContext DrawCircleOutline(Vector2 position, float radius);
+
+        public IGizmoContext DrawGridLines(Vector3 position, Vector2Int gridResolution, Vector2 cellSize, RectPivot pivot = RectPivot.Center);
+        public IGizmoContext DrawGridLines(Vector2 position, Vector2Int gridResolution, Vector2 cellSize, RectPivot pivot = RectPivot.Center);
+        public IGizmoContext DrawGridLines(Vector3 position, Vector3Int gridResolution, Vector3 cellSize, RectPivot pivot = RectPivot.Center);
+        
+        public IGizmoContext DrawGridNodes(Vector3 position, Vector2Int gridResolution, Vector2 cellSize, RectPivot pivot = RectPivot.Center);
+        public IGizmoContext DrawGridNodes(Vector2 position, Vector2Int gridResolution, Vector2 cellSize, RectPivot pivot = RectPivot.Center);
+        public IGizmoContext DrawGridNodes(Vector3 position, Vector3Int gridResolution, Vector3 cellSize, RectPivot pivot = RectPivot.Center);
     }
 }
