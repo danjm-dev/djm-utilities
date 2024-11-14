@@ -381,6 +381,189 @@ namespace DJM.Utilities.BezierCurves
         }
         
         [BurstCompile]
+        public static float CalculateLength
+        (            
+            in float3 p0, 
+            in float3 p1, 
+            in float3 p2, 
+            in float3 p3, 
+            in int segmentResolution = 30
+        )
+        {
+            var segmentResolutionClamped = math.max(segmentResolution, 1);
+            var tIncrement = 1f / segmentResolutionClamped;
+            var lengthSum = 0f;
+            
+            EvaluatePosition(p0, p1, p2, p3, 0f, out var previousPosition);
+            
+            for (var i = 1; i <= segmentResolutionClamped; i++)
+            {
+                EvaluatePosition(p0, p1, p2, p3, i * tIncrement, out var position);
+                lengthSum += math.length(position - previousPosition);
+                previousPosition = position;
+            }
+
+            return lengthSum;
+        }
+        
+        [BurstCompile]
+        public static float CalculateLength(in CubicBezierCurve curve)
+        {
+            return CalculateLength(curve.P0, curve.P1, curve.P2, curve.P3);
+        }
+        
+        [BurstCompile]
+        public static float CalculateLength
+        (            
+            in float3 p0, 
+            in float3 p1, 
+            in float3 p2, 
+            in int segmentResolution = 30
+        )
+        {
+            var segmentResolutionClamped = math.max(segmentResolution, 1);
+            var tIncrement = 1f / segmentResolutionClamped;
+            var lengthSum = 0f;
+            
+            EvaluatePosition(p0, p1, p2, 0f, out var previousPosition);
+            
+            for (var i = 1; i <= segmentResolutionClamped; i++)
+            {
+                EvaluatePosition(p0, p1, p2, i * tIncrement, out var position);
+                lengthSum += math.length(position - previousPosition);
+                previousPosition = position;
+            }
+
+            return lengthSum;
+        }
+        
+        [BurstCompile]
+        public static float CalculateLength(in QuadraticBezierCurve curve)
+        {
+            return CalculateLength(curve.P0, curve.P1, curve.P2);
+        }
+        
+        [BurstCompile]
+        public static float CalculateLength
+        (            
+            in float2 p0, 
+            in float2 p1, 
+            in float2 p2, 
+            in float2 p3, 
+            in int segmentResolution = 30
+        )
+        {
+            var segmentResolutionClamped = math.max(segmentResolution, 1);
+            var tIncrement = 1f / segmentResolutionClamped;
+            var lengthSum = 0f;
+            
+            EvaluatePosition(p0, p1, p2, p3, 0f, out var previousPosition);
+            
+            for (var i = 1; i <= segmentResolutionClamped; i++)
+            {
+                EvaluatePosition(p0, p1, p2, p3, i * tIncrement, out var position);
+                lengthSum += math.length(position - previousPosition);
+                previousPosition = position;
+            }
+
+            return lengthSum;
+        }
+        
+        [BurstCompile]
+        public static float CalculateLength(in CubicBezierCurve2D curve)
+        {
+            return CalculateLength(curve.P0, curve.P1, curve.P2, curve.P3);
+        }
+        
+        [BurstCompile]
+        public static float CalculateLength
+        (            
+            in float2 p0, 
+            in float2 p1, 
+            in float2 p2, 
+            in int segmentResolution = 30
+        )
+        {
+            var segmentResolutionClamped = math.max(segmentResolution, 1);
+            var tIncrement = 1f / segmentResolutionClamped;
+            var lengthSum = 0f;
+            
+            EvaluatePosition(p0, p1, p2, 0f, out var previousPosition);
+            
+            for (var i = 1; i <= segmentResolutionClamped; i++)
+            {
+                EvaluatePosition(p0, p1, p2, i * tIncrement, out var position);
+                lengthSum += math.length(position - previousPosition);
+                previousPosition = position;
+            }
+
+            return lengthSum;
+        }
+        
+        [BurstCompile]
+        public static float CalculateLength(in QuadraticBezierCurve2D curve)
+        {
+            return CalculateLength(curve.P0, curve.P1, curve.P2);
+        }
+        
+        [BurstCompile]
+        public static float CalculateApproximateLength(in float3 p0, in float3 p1, in float3 p2, in float3 p3)
+        {
+            var chord = math.length(p3 - p0);
+            var net = math.length(p0 - p1) + math.length(p2 - p1) + math.length(p3 - p2);
+            return (net + chord) / 2;
+        }
+        
+        [BurstCompile]
+        public static float CalculateApproximateLength(in CubicBezierCurve curve)
+        {
+            return CalculateApproximateLength(curve.P0, curve.P1, curve.P2, curve.P3);
+        }
+        
+        [BurstCompile]
+        public static float CalculateApproximateLength(in float3 p0, in float3 p1, in float3 p2)
+        {
+            var chord = math.length(p2 - p0);
+            var net = math.length(p0 - p1) + math.length(p2 - p1);
+            return (net + chord) / 2;
+        }
+        
+        [BurstCompile]
+        public static float CalculateApproximateLength(in QuadraticBezierCurve curve)
+        {
+            return CalculateApproximateLength(curve.P0, curve.P1, curve.P2);
+        }
+        
+        [BurstCompile]
+        public static float CalculateApproximateLength(in float2 p0, in float2 p1, in float2 p2, in float2 p3)
+        {
+            var chord = math.length(p3 - p0);
+            var net = math.length(p0 - p1) + math.length(p2 - p1) + math.length(p3 - p2);
+            return (net + chord) / 2;
+        }
+        
+        [BurstCompile]
+        public static float CalculateApproximateLength(in CubicBezierCurve2D curve)
+        {
+            return CalculateApproximateLength(curve.P0, curve.P1, curve.P2, curve.P3);
+        }
+        
+        [BurstCompile]
+        public static float CalculateApproximateLength(in float2 p0, in float2 p1, in float2 p2)
+        {
+            var chord = math.length(p2 - p0);
+            var net = math.length(p0 - p1) + math.length(p2 - p1);
+            return (net + chord) / 2;
+        }
+        
+        [BurstCompile]
+        public static float CalculateApproximateLength(in QuadraticBezierCurve2D curve)
+        {
+            return CalculateApproximateLength(curve.P0, curve.P1, curve.P2);
+        }
+        
+        
+        [BurstCompile]
         private static void CalculateCurvature(in float3 firstDerivative, in float3 secondDerivative, out float curvature)
         {
             var firstDerivativeNormSq = math.lengthsq(firstDerivative);
