@@ -138,6 +138,52 @@ namespace DJM.Utilities.CustomGizmos
             return DrawCircleOutline(Get3DPosition(position), radius);
         }
 
+        
+        
+        public IGizmoContext DrawEclipse(Vector3 position, Vector2 axisRadii)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGizmoContext DrawEclipse(Vector2 position, Vector2 axisRadii)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGizmoContext DrawEclipseOutline(Vector3 position, Vector2 axisRadii)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGizmoContext DrawEclipseOutline(Vector2 position, Vector2 axisRadii)
+        {
+            throw new NotImplementedException();
+        }
+
+        
+        
+        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2)
+        {
+            throw new NotImplementedException();
+        }
+
+        
+        
         public IGizmoContext DrawGridLines
         (
             Vector3 position, 
@@ -277,7 +323,17 @@ namespace DJM.Utilities.CustomGizmos
         public IGizmoContext DrawCircle(Vector2 position, float radius);
         public IGizmoContext DrawCircleOutline(Vector3 position, float radius);
         public IGizmoContext DrawCircleOutline(Vector2 position, float radius);
-
+        
+        public IGizmoContext DrawEclipse(Vector3 position, Vector2 axisRadii);
+        public IGizmoContext DrawEclipse(Vector2 position, Vector2 axisRadii);
+        public IGizmoContext DrawEclipseOutline(Vector3 position, Vector2 axisRadii);
+        public IGizmoContext DrawEclipseOutline(Vector2 position, Vector2 axisRadii);
+        
+        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3);
+        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3);
+        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2);
+        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2);
+        
         public IGizmoContext DrawGridLines(Vector3 position, Vector2Int gridResolution, Vector2 cellSize, RectPivot pivot = RectPivot.Center);
         public IGizmoContext DrawGridLines(Vector2 position, Vector2Int gridResolution, Vector2 cellSize, RectPivot pivot = RectPivot.Center);
         public IGizmoContext DrawGridLines(Vector3 position, Vector3Int gridResolution, Vector3 cellSize, RectPivot pivot = RectPivot.Center);

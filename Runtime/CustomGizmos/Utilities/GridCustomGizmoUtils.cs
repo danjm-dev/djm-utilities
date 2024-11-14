@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using DJM.Utilities.Coordinates;
+using DJM.Utilities.Math;
 using UnityEngine;
 
 namespace DJM.Utilities.CustomGizmos
@@ -17,7 +18,7 @@ namespace DJM.Utilities.CustomGizmos
         )
         {
             if(resolution.x <= 0 || resolution.y <= 0) return;
-            if(cellSize.x <= 0 || cellSize.y <= 0) return;
+            cellSize = Vector2.Max(cellSize, Vector2.zero);
             
             var originPosition = GetGridOriginPosition(position, resolution, cellSize, right, up, pivot);
             
@@ -36,6 +37,22 @@ namespace DJM.Utilities.CustomGizmos
             }
         }
         
+        public static void DrawGridLines
+        (
+            Vector3 position,
+            Vector3Int resolution,
+            Vector3 cellSize,
+            Vector3 right,
+            Vector3 up,
+            RectPivot pivot
+        )
+        {
+            if(resolution.x <= 0 || resolution.y <= 0 || resolution.z <= 0) return;
+            cellSize = Vector3.Max(cellSize, Vector3.zero);
+            
+            var originPosition = GetGridOriginPosition(position, resolution, cellSize, right, up, pivot);
+        }
+        
         public static void DrawGridNodes
         (
             Vector3 position, 
@@ -47,7 +64,7 @@ namespace DJM.Utilities.CustomGizmos
         )
         {
             if(resolution.x <= 0 || resolution.y <= 0) return;
-            if(cellSize.x <= 0 || cellSize.y <= 0) return;
+            cellSize = Vector2.Max(cellSize, Vector2.zero);
 
             var originPosition = GetGridOriginPosition(position, resolution, cellSize, right, up, pivot);
             
@@ -77,6 +94,27 @@ namespace DJM.Utilities.CustomGizmos
             return pivot == RectPivot.Origin 
                 ? position 
                 : position - right * (gridSize.x * 0.5f) - up * (gridSize.y * 0.5f);
+        }
+        
+        private static Vector3 GetGridOriginPosition
+        (
+            Vector3 position, 
+            Vector3Int resolution, 
+            Vector3 cellSize, 
+            Vector3 right, 
+            Vector3 up, 
+            RectPivot pivot
+        )
+        {
+            if(pivot == RectPivot.Origin) return position;
+            
+            var forward = Vector3.Cross(right, up).normalized;
+            var gridSize = Vector3.Scale(resolution, cellSize);
+            
+            return position 
+                   - right * (gridSize.x * 0.5f) 
+                   - up * (gridSize.y * 0.5f) 
+                   - forward * (gridSize.z * 0.5f);
         }
     }
 }
