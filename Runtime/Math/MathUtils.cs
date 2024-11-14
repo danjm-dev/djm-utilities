@@ -1,5 +1,6 @@
 ﻿using Unity.Burst;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace DJM.Utilities.Math
 {
@@ -109,6 +110,24 @@ namespace DJM.Utilities.Math
             validRight = math.normalizesafe(right, math.right());
             validUp = math.normalizesafe(up, math.up());
             validForward = math.normalize(math.cross(right, up));
+        }
+        
+        [BurstDiscard]
+        public static Vector4 Abs(in Vector4 v)
+        {
+            return math.abs(v);
+        }
+        
+        [BurstDiscard]
+        public static Vector3 Abs(in Vector3 v)
+        {
+            return math.abs(v);
+        }
+        
+        [BurstDiscard]
+        public static Vector2 Abs(in Vector2 v)
+        {
+            return math.abs(v);
         }
         
         [BurstCompile]

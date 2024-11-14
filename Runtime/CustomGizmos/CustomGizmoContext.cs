@@ -1,5 +1,6 @@
 ﻿using System;
 using DJM.Utilities.Debugging;
+using DJM.Utilities.Math;
 using UnityEngine;
 
 namespace DJM.Utilities.CustomGizmos
@@ -61,7 +62,7 @@ namespace DJM.Utilities.CustomGizmos
         
         public IGizmoContext DrawCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center)
         {
-            size = size.Abs();
+            size = MathUtils.Abs(size);
             var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
             Gizmos.DrawCube(position + offset, size);
             return this;
@@ -69,7 +70,7 @@ namespace DJM.Utilities.CustomGizmos
 
         public IGizmoContext DrawCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center)
         {
-            size = size.Abs();
+            size = MathUtils.Abs(size);
             var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
             Gizmos.DrawCube(Get3DPosition(position, offset), size);
             return this;
@@ -77,7 +78,7 @@ namespace DJM.Utilities.CustomGizmos
 
         public IGizmoContext DrawWireCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center)
         {
-            size = size.Abs();
+            size = MathUtils.Abs(size);
             var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
             Gizmos.DrawWireCube(position + offset, size);
             return this;
@@ -85,7 +86,7 @@ namespace DJM.Utilities.CustomGizmos
 
         public IGizmoContext DrawWireCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center)
         {
-            size = size.Abs();
+            size = MathUtils.Abs(size);
             var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
             Gizmos.DrawWireCube(Get3DPosition(position, offset), size);
             return this;
@@ -95,7 +96,7 @@ namespace DJM.Utilities.CustomGizmos
         
         public IGizmoContext DrawRect(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center)
         {
-            RectCustomGizmoUtils.DrawRect(position, size, _rightAxis, _upAxis, pivot);
+            RectCustomGizmoUtils.DrawRect(position, MathUtils.Abs(size), _rightAxis, _upAxis, pivot);
             return this;
         }
         
@@ -106,7 +107,7 @@ namespace DJM.Utilities.CustomGizmos
         
         public IGizmoContext DrawRectOutline(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center)
         {
-            RectCustomGizmoUtils.DrawRectOutline(position, size, _rightAxis, _upAxis, pivot);
+            RectCustomGizmoUtils.DrawRectOutline(position, MathUtils.Abs(size), _rightAxis, _upAxis, pivot);
             return this;
         }
         
@@ -119,7 +120,7 @@ namespace DJM.Utilities.CustomGizmos
         
         public IGizmoContext DrawSphere(Vector3 position, float radius)
         {
-            Gizmos.DrawSphere(position, radius);
+            Gizmos.DrawSphere(position, Mathf.Abs(radius));
             return this;
         }
 
@@ -130,7 +131,7 @@ namespace DJM.Utilities.CustomGizmos
 
         public IGizmoContext DrawWireSphere(Vector3 position, float radius)
         {
-            Gizmos.DrawWireSphere(position, radius);
+            Gizmos.DrawWireSphere(position, Mathf.Abs(radius));
             return this;
         }
 
@@ -143,7 +144,7 @@ namespace DJM.Utilities.CustomGizmos
         
         public IGizmoContext DrawCircle(Vector3 position, float radius)
         {
-            CircleCustomGizmoUtils.DrawCircle(position, radius, _rightAxis, _upAxis);
+            CircleCustomGizmoUtils.DrawCircle(position, Mathf.Abs(radius), _rightAxis, _upAxis);
             return this;
         }
         
@@ -154,7 +155,7 @@ namespace DJM.Utilities.CustomGizmos
         
         public IGizmoContext DrawCircleOutline(Vector3 position, float radius)
         {
-            CircleCustomGizmoUtils.DrawCircleOutline(position, radius, _rightAxis, _upAxis);
+            CircleCustomGizmoUtils.DrawCircleOutline(position, Mathf.Abs(radius), _rightAxis, _upAxis);
             return this;
         }
         

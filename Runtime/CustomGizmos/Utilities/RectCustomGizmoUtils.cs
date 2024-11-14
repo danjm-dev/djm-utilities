@@ -21,7 +21,6 @@ namespace DJM.Utilities.CustomGizmos
         
         public static void DrawRect(Vector3 position, Vector2 size, Vector3 right, Vector3 up, RectPivot pivot)
         {
-            size = Vector2.Max(size, Vector2.zero);
             if(size == Vector2.zero) return;
             
             MathUtils.GetNormalizedAxes
@@ -42,7 +41,6 @@ namespace DJM.Utilities.CustomGizmos
         
         public static void DrawRectOutline(Vector3 position, Vector2 size, Vector3 right, Vector3 up, RectPivot pivot)
         {
-            size = Vector2.Max(size, Vector2.zero);
             if(size == Vector2.zero) return;
             
             MathUtils.GetNormalizedAxes
