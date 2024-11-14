@@ -50,5 +50,8 @@ namespace DJM.Utilities
         public static Vector2Int AddX(this Vector2Int v, int x) => new(v.x + x, v.y);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2Int AddY(this Vector2Int v, int y) => new(v.x, v.y + y);
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 Abs(this Vector2 v) => new(Mathf.Abs(v.x), Mathf.Abs(v.y));
     }
 }

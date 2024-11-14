@@ -181,5 +181,9 @@ namespace DJM.Utilities
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 AddZ(this Vector3 v, float z) => new(v.x, v.y, v.z + z);
+        
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 Abs(this Vector3 v) => new(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z));
     }
 }

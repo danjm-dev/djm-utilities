@@ -56,6 +56,40 @@ namespace DJM.Utilities.CustomGizmos
         {
             return DrawLine(Get3DPosition(from), Get3DPosition(to));
         }
+
+        
+        
+        public IGizmoContext DrawCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center)
+        {
+            size = size.Abs();
+            var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
+            Gizmos.DrawCube(position + offset, size);
+            return this;
+        }
+
+        public IGizmoContext DrawCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center)
+        {
+            size = size.Abs();
+            var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
+            Gizmos.DrawCube(Get3DPosition(position, offset), size);
+            return this;
+        }
+
+        public IGizmoContext DrawWireCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center)
+        {
+            size = size.Abs();
+            var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
+            Gizmos.DrawWireCube(position + offset, size);
+            return this;
+        }
+
+        public IGizmoContext DrawWireCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center)
+        {
+            size = size.Abs();
+            var offset = pivot == RectPivot.Center ? Vector3.zero : size * 0.5f;
+            Gizmos.DrawWireCube(Get3DPosition(position, offset), size);
+            return this;
+        }
         
         
         
@@ -140,9 +174,15 @@ namespace DJM.Utilities.CustomGizmos
             _forwardDepth = CustomGizmosSettings.DefaultForwardDepth;
         }
 
-        private Vector3 Get3DPosition(Vector2 position2D)
+        private Vector3 Get3DPosition(Vector2 position2D, Vector3 offset = default)
         {
-            return CustomGizmoUtils.Get3DPosition(position2D, _rightAxis, _upAxis, _forwardDepth);
+            return CustomGizmoUtils.Get3DPosition
+            (
+                position2D + offset.XY(), 
+                _forwardDepth + offset.z, 
+                _rightAxis, 
+                _upAxis
+            );
         }
     }
 
@@ -176,12 +216,14 @@ namespace DJM.Utilities.CustomGizmos
 
         public IGizmoContext Set2DAxes(SignedAxis rightAxis, SignedAxis upAxis, float forwardDepth = 0f);
         public IGizmoContext Set2DAxes(Vector3 rightAxis, Vector3 upAxis, float forwardDepth = 0f);
-
         
         public IGizmoContext DrawLine(Vector3 from, Vector3 to);
         public IGizmoContext DrawLine(Vector2 from, Vector2 to);
         
-        
+        public IGizmoContext DrawCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center);
+        public IGizmoContext DrawCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center);
+        public IGizmoContext DrawWireCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center);
+        public IGizmoContext DrawWireCube(Vector2 position, Vector3 size, RectPivot pivot = RectPivot.Center);
         
         public IGizmoContext DrawRect(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center);
         public IGizmoContext DrawRect(Vector2 position, Vector2 size, RectPivot pivot = RectPivot.Center);

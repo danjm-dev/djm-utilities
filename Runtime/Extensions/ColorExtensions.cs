@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace DJM.Utilities
 {
-    internal static class ColorExtensions
+    public static class ColorExtensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UnityEngine.Color WithRed(this UnityEngine.Color color, float red)
