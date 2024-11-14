@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
 
-namespace DJM.Utilities.CustomGizmos
+namespace DJM.Utilities.Gizmos
 {
     internal class DefaultGizmoContext : IGizmoContext
     {
         public IGizmoContext SetColor(UnityEngine.Color color) => this;
         public IGizmoContext SetMatrix(Matrix4x4 matrix) => this;
-        public IGizmoContext Set2DAxes(SignedAxis rightAxis, SignedAxis upAxis, float forwardDepth = 0) => this;
-        public IGizmoContext Set2DAxes(Vector3 rightAxis, Vector3 upAxis, float forwardDepth = 0) => this;
+        public IGizmoContext SetPivot(RectPivot pivot) => this;
+        public IGizmoContext Set2DAxes(SignedAxis rightAxis, SignedAxis upAxis) => this;
+        public IGizmoContext Set2DAxes(Vector3 rightAxis, Vector3 upAxis) => this;
+        public IGizmoContext Set2DDepth(float depth) => this;
+        public IGizmoContext SetSize(float size) => this;
+        public IGizmoContext SetSize(Vector2 size) => this;
+        public IGizmoContext SetSize(Vector3 size) => this;
         public IGizmoContext DrawLine(Vector3 from, Vector3 to) => this;
         public IGizmoContext DrawLine(Vector2 from, Vector2 to) => this;
-        public IGizmoContext DrawCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center) => this;
-        public IGizmoContext DrawWireCube(Vector3 position, Vector3 size, RectPivot pivot = RectPivot.Center) => this;
+        public IGizmoContext DrawCube(Vector3 position, Vector3? size = null, RectPivot? pivot = null) => this;
+        public IGizmoContext DrawWireCube(Vector3 position, Vector3? size = null, RectPivot? pivot = null) => this;
         public IGizmoContext DrawRect(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center) => this;
         public IGizmoContext DrawRect(Vector2 position, Vector2 size, RectPivot pivot = RectPivot.Center) => this;
         public IGizmoContext DrawRectOutline(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center) => this;

@@ -1,10 +1,11 @@
 ﻿#if UNITY_EDITOR
 using System;
+using DJM.Utilities.Debugging;
 using DJM.Utilities.Settings;
 using UnityEditor;
 using UnityEngine;
 
-namespace DJM.Utilities.CustomGizmos
+namespace DJM.Utilities.Gizmos
 {
     [FilePath(PathUtils.AssetPathProjectSettings + nameof(CustomGizmosSettings), FilePathAttribute.Location.ProjectFolder)]
     internal sealed class CustomGizmosSettings : ScriptableSingleton<CustomGizmosSettings>
@@ -12,17 +13,14 @@ namespace DJM.Utilities.CustomGizmos
         [SerializeField] private SignedAxis defaultRightAxis = SignedAxis.PositiveX;
         [SerializeField] private SignedAxis defaultUpAxis = SignedAxis.PositiveY;
         [SerializeField] private float defaultForwardDepth = 0f;
-        
-        [SerializeField] private AxisAlignedPlane defaultPlane = AxisAlignedPlane.XY;
-        
-
-
+        [SerializeField] private RectPivot defaultPivot = RectPivot.Center;
         
         public static SignedAxis DefaultRightAxis
         {
             get => instance.defaultRightAxis;
             set
             {
+                if(instance.defaultRightAxis == value) return;
                 instance.defaultRightAxis = value;
                 ValidateUpAxis(instance.defaultRightAxis, ref instance.defaultUpAxis);
                 instance.Save(true);
@@ -34,34 +32,57 @@ namespace DJM.Utilities.CustomGizmos
             get => instance.defaultUpAxis;
             set
             {
+                if(instance.defaultUpAxis == value) return;
                 instance.defaultUpAxis = value;
                 ValidateRightAxis(instance.defaultUpAxis, ref instance.defaultRightAxis);
                 instance.Save(true);
             }
         }
 
+        public static SignedAxis DefaultForwardAxis
+        {
+            get
+            {
+                var forward = Vector3.Cross
+                (
+                    instance.defaultRightAxis.GetDirection(), 
+                    instance.defaultUpAxis.GetDirection()
+                ).normalized;
+                
+                if(forward.x > 0.9f) return SignedAxis.PositiveX;
+                if(forward.y > 0.9f) return SignedAxis.PositiveY;
+                if(forward.z > 0.9f) return SignedAxis.PositiveZ;
+                
+                if(forward.x < -0.9f) return SignedAxis.NegativeX;
+                if(forward.y < -0.9f) return SignedAxis.NegativeY;
+                if(forward.z < -0.9f) return SignedAxis.NegativeZ;
+                
+                DebugUtils.LogError("Could not determine default forward axis, returning PositiveZ");
+                return SignedAxis.PositiveZ;
+            }
+        }
+        
         public static float DefaultForwardDepth
         {
             get => instance.defaultForwardDepth;
             set
             {
+                if(Mathf.Approximately(instance.defaultForwardDepth, value)) return;
                 instance.defaultForwardDepth = value;
                 instance.Save(true);
             }
         }
         
-        [Obsolete]
-        public static AxisAlignedPlane DefaultPlane
+        public static RectPivot DefaultPivot
         {
-            get => instance.defaultPlane;
+            get => instance.defaultPivot;
             set
             {
-                instance.defaultPlane = value;
+                if(instance.defaultPivot == value) return;
+                instance.defaultPivot = value;
                 instance.Save(true);
             }
         }
-        
-
         
         private void OnEnable() => Initialize();
         private void Awake() => Initialize();
@@ -72,12 +93,6 @@ namespace DJM.Utilities.CustomGizmos
             ValidateUpAxis(defaultRightAxis, ref defaultUpAxis);
             instance.Save(true);
         }
-
-
-
-        
-
-
         
         private static void ValidateUpAxis(in SignedAxis right, ref SignedAxis up)
         {

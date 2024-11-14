@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using MathUtils = DJM.Utilities.Math.MathUtils;
 
-namespace DJM.Utilities.CustomGizmos
+namespace DJM.Utilities.Gizmos
 {
     [InitializeOnLoad]
     internal static class RectCustomGizmoUtils
@@ -36,7 +36,7 @@ namespace DJM.Utilities.CustomGizmos
             position = pivot == RectPivot.Origin 
                 ? position + validRight.AsVector() * size.x * 0.5f + validUp.AsVector() * size.y * 0.5f 
                 : position;
-            Gizmos.DrawMesh(RectMesh, position, rotation, size.XYO());
+            UnityEngine.Gizmos.DrawMesh(RectMesh, position, rotation, size.XYO());
         }
         
         public static void DrawRectOutline(Vector3 position, Vector2 size, Vector3 right, Vector3 up, RectPivot pivot)
@@ -62,7 +62,7 @@ namespace DJM.Utilities.CustomGizmos
             PointBuffer[2] = origin + xOffset + yOffset;
             PointBuffer[3] = origin + xOffset;
             
-            Gizmos.DrawLineStrip(new ReadOnlySpan<Vector3>(PointBuffer), true);
+            UnityEngine.Gizmos.DrawLineStrip(new ReadOnlySpan<Vector3>(PointBuffer), true);
         }
     }
 }

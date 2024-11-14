@@ -1,9 +1,8 @@
 ﻿#if UNITY_EDITOR
 using DJM.Utilities.Coordinates;
-using DJM.Utilities.Math;
 using UnityEngine;
 
-namespace DJM.Utilities.CustomGizmos
+namespace DJM.Utilities.Gizmos
 {
     internal static class GridCustomGizmoUtils
     {
@@ -26,14 +25,14 @@ namespace DJM.Utilities.CustomGizmos
             {
                 var start = originPosition + right * (x * cellSize.x);
                 var end = start + up * (resolution.y * cellSize.y);
-                Gizmos.DrawLine(start, end);
+                UnityEngine.Gizmos.DrawLine(start, end);
             }
             
             for(var y = 0; y <= resolution.y; y++)
             {
                 var start = originPosition + up * (y * cellSize.y);
                 var end = start + right * (resolution.x * cellSize.x);
-                Gizmos.DrawLine(start, end);
+                UnityEngine.Gizmos.DrawLine(start, end);
             }
         }
         

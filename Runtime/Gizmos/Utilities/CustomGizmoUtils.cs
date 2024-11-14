@@ -2,7 +2,7 @@
 using DJM.Utilities.Math;
 using UnityEngine;
 
-namespace DJM.Utilities.CustomGizmos
+namespace DJM.Utilities.Gizmos
 {
     internal static class CustomGizmoUtils
     {

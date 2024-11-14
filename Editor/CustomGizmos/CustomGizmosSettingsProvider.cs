@@ -1,4 +1,4 @@
-﻿using DJM.Utilities.CustomGizmos;
+﻿using DJM.Utilities.Gizmos;
 using DJM.Utilities.Settings;
 using UnityEditor;
 using UnityEngine;
@@ -18,8 +18,6 @@ namespace DJM.Utilities.Editor.CustomGizmos
             using var serializedObject = new SerializedObject(CustomGizmosSettings.instance);
             
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField(new GUIContent("2D Gizmos"), EditorStyles.boldLabel);
-
             
             var defaultRightAxisProperty = serializedObject.FindProperty("defaultRightAxis");
             CustomGizmosSettings.DefaultRightAxis = (SignedAxis)EditorGUILayout.EnumPopup
@@ -37,14 +35,26 @@ namespace DJM.Utilities.Editor.CustomGizmos
                 EditorStyles.popup
             );
             
-            // var defaultPlaneProperty = serializedObject.FindProperty("defaultPlane");
-            // CustomGizmosSettings.DefaultPlane = (AxisAlignedPlane)EditorGUILayout.EnumPopup
-            // (
-            //     new GUIContent(defaultPlaneProperty.displayName), 
-            //     CustomGizmosSettings.DefaultPlane, 
-            //     EditorStyles.popup
-            // );
+            EditorGUILayout.LabelField
+            (
+                new GUIContent("Default Forward Axis"), 
+                new GUIContent(CustomGizmosSettings.DefaultForwardAxis.ToString()), 
+                EditorStyles.label
+            );
             
+            
+            EditorGUILayout.Space();
+            
+            var defaultPivotProperty = serializedObject.FindProperty("defaultPivot");
+            CustomGizmosSettings.DefaultPivot = (RectPivot)EditorGUILayout.EnumPopup
+            (
+                new GUIContent(defaultPivotProperty.displayName), 
+                CustomGizmosSettings.DefaultPivot, 
+                EditorStyles.popup
+            );
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField(new GUIContent("2D Gizmos"), EditorStyles.boldLabel);
             
             var defaultPositionDepthProperty = serializedObject.FindProperty("defaultForwardDepth");
             CustomGizmosSettings.DefaultForwardDepth = EditorGUILayout.FloatField

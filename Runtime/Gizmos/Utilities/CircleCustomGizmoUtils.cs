@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using MathUtils = DJM.Utilities.Math.MathUtils;
 
-namespace DJM.Utilities.CustomGizmos
+namespace DJM.Utilities.Gizmos
 {
     [InitializeOnLoad]
     internal static class CircleCustomGizmoUtils
@@ -48,7 +48,7 @@ namespace DJM.Utilities.CustomGizmos
             );
             
             var rotation = Quaternion.LookRotation(validForward, validUp);
-            Gizmos.DrawMesh(CircleMesh, center, rotation, Vector3.one.WithZ(0) * radius);
+            UnityEngine.Gizmos.DrawMesh(CircleMesh, center, rotation, Vector3.one.WithZ(0) * radius);
         }
         
         public static void DrawCircleOutline
@@ -81,7 +81,7 @@ namespace DJM.Utilities.CustomGizmos
                 PointBuffer[i] = center + x * xOffSet + y * yOffSet;
             }
             
-            Gizmos.DrawLineStrip(new ReadOnlySpan<Vector3>(PointBuffer), true);
+            UnityEngine.Gizmos.DrawLineStrip(new ReadOnlySpan<Vector3>(PointBuffer), true);
         }
     }
 }
