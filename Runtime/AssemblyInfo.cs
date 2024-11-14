@@ -2,8 +2,3 @@
 
 [assembly: InternalsVisibleTo("DJM.Utilities.Editor")]
 [assembly: InternalsVisibleTo("DJM.Utilities.Tests")]
-
-namespace DJM.Utilities
-{
-
-}

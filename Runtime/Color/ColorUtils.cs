@@ -1,4 +1,6 @@
-﻿namespace DJM.Utilities.Color
+﻿using System;
+
+namespace DJM.Utilities.Color
 {
     public static class ColorUtils
     {
@@ -11,6 +13,14 @@
                 var hue = i * hueIncrement;
                 colors[i] = UnityEngine.Color.HSVToRGB(hue, saturation, brightness);
             }
+        }
+        
+        public static UnityEngine.Color[] GenerateContrastingColors(int count, float saturation = 0.7f, float brightness = 0.6f)
+        {
+            if (count <= 0) return Array.Empty<UnityEngine.Color>();
+            var results = new UnityEngine.Color[count];
+            GenerateContrastingColors(results, saturation, brightness);
+            return results;
         }
         
         public static UnityEngine.Color GetComplementaryColor(UnityEngine.Color color)

@@ -1,7 +1,8 @@
 ﻿using System;
 using DJM.Utilities.Debugging;
-using DJM.Utilities.Math;
+using UnityEditor;
 using UnityEngine;
+using MathUtils = DJM.Utilities.Math.MathUtils;
 
 namespace DJM.Utilities.CustomGizmos
 {
@@ -142,44 +143,44 @@ namespace DJM.Utilities.CustomGizmos
         
         public IGizmoContext DrawEclipse(Vector3 position, Vector2 axisRadii)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public IGizmoContext DrawEclipse(Vector2 position, Vector2 axisRadii)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public IGizmoContext DrawEclipseOutline(Vector3 position, Vector2 axisRadii)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public IGizmoContext DrawEclipseOutline(Vector2 position, Vector2 axisRadii)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         
         
         public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2)
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         
@@ -215,7 +216,7 @@ namespace DJM.Utilities.CustomGizmos
             RectPivot pivot = RectPivot.Center
         )
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public IGizmoContext DrawGridNodes
@@ -249,7 +250,7 @@ namespace DJM.Utilities.CustomGizmos
             RectPivot pivot = RectPivot.Center
         )
         {
-            throw new NotImplementedException();
+            return this;
         }
 
 
@@ -273,14 +274,6 @@ namespace DJM.Utilities.CustomGizmos
             );
         }
     }
-
-    // internal class DefaultGizmoContext : IGizmoContext
-    // {
-    //     public IGizmoContext SetColor(UnityEngine.Color color) => this;
-    //     public IGizmoContext SetMatrix(Matrix4x4 matrix) => this;
-    //
-    //     public void Dispose() { }
-    // }
     
     public static class Giz
     {
@@ -291,10 +284,14 @@ namespace DJM.Utilities.CustomGizmos
 #if UNITY_EDITOR
             Instance = new CustomGizmoContext();
 #else
-            //Instance = new DefaultGizmoContext();
+            Instance = new DefaultGizmoContext();
 #endif
         }
-        
+
+#if UNITY_EDITOR
+        [InitializeOnLoadMethod]
+        private static void Initialize() => Instance.Dispose();
+#endif
     }
     
     public interface IGizmoContext : IDisposable
