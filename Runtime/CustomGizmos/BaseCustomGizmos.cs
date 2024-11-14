@@ -1,37 +1,11 @@
-﻿using DJM.Utilities.MeshGeneration;
-using Unity.Mathematics;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DJM.Utilities.CustomGizmos
 {
-    [InitializeOnLoad]
     public static partial class Gizmos2
     {
-        public static UnityEngine.Color Color
-        {
-            get => Gizmos.color;
-            set => Gizmos.color = value;
-        } 
-        
-        public static Matrix4x4 Matrix
-        {
-            get => Gizmos.matrix;
-            set => Gizmos.matrix = value;
-        }
-        
 #if UNITY_EDITOR
-        private static readonly Vector3[] PointBuffer = new Vector3[256];
         private static UnityEngine.Color _originalColor = Gizmos.color;
-        
-
-        private static readonly Mesh _circleMesh;
-        
-        
-        static Gizmos2()
-        {
-            _circleMesh = PrimitiveMeshUtils.GenerateCircleMesh(1f, math.right(), math.up(), CirclePointCount);
-        }
         
         private static void SetColor(UnityEngine.Color? color = null)
         {
@@ -77,12 +51,6 @@ namespace DJM.Utilities.CustomGizmos
                 AxisAlignedPlane.ZY => position.OYX(depth),
                 _ => position.XYO(depth)
             };
-        }
-        
-        private static Vector3 Get2DPlaneNormal(AxisAlignedPlane? planeOverride)
-        {
-            var plane = planeOverride ?? CustomGizmosSettings.DefaultPlane;
-            return plane.GetNormal();
         }
 
         private static (Vector3, Vector3) Get2DPlaneAxes(AxisAlignedPlane? planeOverride)

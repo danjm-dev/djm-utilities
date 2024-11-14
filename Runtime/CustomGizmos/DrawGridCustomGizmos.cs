@@ -137,7 +137,7 @@ namespace DJM.Utilities.CustomGizmos
                 CoordinateUtils.IndexToCoordinates(i, resolution.AsInt(), out var coordinates);
                 CoordinateUtils.CoordinatesToPosition(coordinates, cellSize, positionOffset, out var position2D);
                 var position = originPosition + xAxis * position2D.x + yAxis * position2D.y;
-                DrawCircleOutlineInternal(position, normal, nodeCircleRadius);
+                //DrawCircleOutlineInternal(position, normal, nodeCircleRadius);
             }
             
             RevertColor();

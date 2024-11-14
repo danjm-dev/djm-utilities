@@ -38,15 +38,28 @@ namespace DJM.Utilities.CustomGizmos
             _forwardDepth = forwardDepth;
             return this;
         }
-        
+
         public IGizmoContext Set2DPlane(SignedAxis rightAxis, SignedAxis upAxis, float forwardDepth = 0)
         {
             return Set2DPlane(rightAxis.GetDirection(), upAxis.GetDirection(), forwardDepth);
         }
-
         
         
+        
+        public IGizmoContext DrawLine(Vector3 from, Vector3 to)
+        {
+            Gizmos.DrawLine(from, to);
+            return this;
+        }
 
+        public IGizmoContext DrawLine(Vector2 from, Vector2 to)
+        {
+            var from3D = CustomGizmoUtils.Get3DPosition(from, _rightAxis, _upAxis, _forwardDepth);
+            var to3D = CustomGizmoUtils.Get3DPosition(to, _rightAxis, _upAxis, _forwardDepth);
+            return DrawLine(from3D, to3D);
+        }
+        
+        
         
         public IGizmoContext DrawRect(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center)
         {
@@ -72,6 +85,31 @@ namespace DJM.Utilities.CustomGizmos
             return DrawRectOutline(position3D, size, pivot);
         }
         
+        
+        
+        public IGizmoContext DrawCircle(Vector3 position, float radius)
+        {
+            CircleCustomGizmoUtils.DrawCircle(position, radius, _rightAxis, _upAxis);
+            return this;
+        }
+        
+        public IGizmoContext DrawCircle(Vector2 position, float radius)
+        {
+            var position3D = CustomGizmoUtils.Get3DPosition(position, _rightAxis, _upAxis, _forwardDepth);
+            return DrawCircle(position3D, radius);
+        }
+        
+        public IGizmoContext DrawCircleOutline(Vector3 position, float radius)
+        {
+            CircleCustomGizmoUtils.DrawCircleOutline(position, radius, _rightAxis, _upAxis);
+            return this;
+        }
+        
+        public IGizmoContext DrawCircleOutline(Vector2 position, float radius)
+        {
+            var position3D = CustomGizmoUtils.Get3DPosition(position, _rightAxis, _upAxis, _forwardDepth);
+            return DrawCircleOutline(position3D, radius);
+        }
         
         
         
@@ -116,9 +154,18 @@ namespace DJM.Utilities.CustomGizmos
         public IGizmoContext Set2DPlane(SignedAxis rightAxis, SignedAxis upAxis, float forwardDepth = 0f);
         public IGizmoContext Set2DPlane(Vector3 rightAxis, Vector3 upAxis, float forwardDepth = 0f);
 
+        
+        public IGizmoContext DrawLine(Vector3 from, Vector3 to);
+        public IGizmoContext DrawLine(Vector2 from, Vector2 to);
+        
         public IGizmoContext DrawRect(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center);
         public IGizmoContext DrawRect(Vector2 position, Vector2 size, RectPivot pivot = RectPivot.Center);
         public IGizmoContext DrawRectOutline(Vector3 position, Vector2 size, RectPivot pivot = RectPivot.Center);
         public IGizmoContext DrawRectOutline(Vector2 position, Vector2 size, RectPivot pivot = RectPivot.Center);
+
+        public IGizmoContext DrawCircle(Vector3 position, float radius);
+        public IGizmoContext DrawCircle(Vector2 position, float radius);
+        public IGizmoContext DrawCircleOutline(Vector3 position, float radius);
+        public IGizmoContext DrawCircleOutline(Vector2 position, float radius);
     }
 }

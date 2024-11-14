@@ -6,23 +6,6 @@ namespace DJM.Utilities.CustomGizmos
 {
     internal static class CustomGizmoUtils
     {
-        // public static Vector3 Get3DPosition
-        // (
-        //     Vector2 position2D, 
-        //     SignedAxis? rightAxis, 
-        //     SignedAxis? upAxis,
-        //     float? forwardDepth
-        // )
-        // {
-        //     return Get3DPosition
-        //     (
-        //         position2D, 
-        //         rightAxis?.GetDirection(), 
-        //         upAxis?.GetDirection(),
-        //         forwardDepth
-        //     );
-        // }
-        //
         public static Vector3 Get3DPosition
         (
             Vector2 position2D, 
@@ -42,16 +25,6 @@ namespace DJM.Utilities.CustomGizmos
             
             return position2D.x * right + position2D.y * up + forwardDepth * forward;
         }
-
-        // public static SignedAxis GetRightAxis(SignedAxis? rightAxis)
-        // {
-        //     return rightAxis ?? CustomGizmosSettings.CurrentRightAxis;
-        // }
-        //
-        // public static SignedAxis GetUpAxis(SignedAxis? upAxis)
-        // {
-        //     return upAxis ?? CustomGizmosSettings.CurrentUpAxis;
-        // }
         
         public static bool AreAxesValid(SignedAxis right, SignedAxis up)
         {
