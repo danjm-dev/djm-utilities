@@ -8,25 +8,19 @@ namespace DJM.Utilities
 {
     public static class Float2Extensions
     {
-        [Obsolete("Use XOY instead")]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete("Use XOY instead")]
         public static float3 X0Y(this float2 v, float y = 0f) => new(v.x, y, v.y);
-        [Obsolete("Use XY0 instead")]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete("Use XY0 instead")]
         public static float3 XY0(this float2 v, float z = 0f) => new(v.x, v.y, z);
-        
-        [Obsolete]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
         public static Vector3 X0YAsVector(this float2 v, float y = 0f) => new(v.x, y, v.y);
-        [Obsolete]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
         public static Vector3 XY0AsVector(this float2 v, float z = 0f) => new(v.x, v.y, z);
         
 
 
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 XXXO(this float2 current, float w = 0f) => new(current.x, current.x, current.x, w);
-
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 XXYO(this float2 current, float w = 0f) => new(current.x, current.x, current.y, w);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -187,17 +181,14 @@ namespace DJM.Utilities
         public static float2 OY(this float2 current, float x = 0f) => new(x, current.y);
         
         
-        
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 AsVector(this float2 v) => new(v.x, v.y);
-        
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 WithX(this float2 v, float x) => new(x, v.y);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 WithY(this float2 v, float y) => new(v.x, y);
-        
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
