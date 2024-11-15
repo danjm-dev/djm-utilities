@@ -15,6 +15,8 @@ namespace DJM.Utilities.Gizmos
         [SerializeField] private float default2dDepth = 0f;
         [SerializeField] private RectPivot defaultPivot = RectPivot.Center;
         
+        [SerializeField, Min(1)] private int defaultBezierCurveSegmentResolution = 30;
+        
         public static SignedAxis DefaultRightAxis
         {
             get => instance.defaultRightAxis;
@@ -80,6 +82,17 @@ namespace DJM.Utilities.Gizmos
             {
                 if(instance.defaultPivot == value) return;
                 instance.defaultPivot = value;
+                instance.Save(true);
+            }
+        }
+        
+        public static int DefaultBezierCurveSegmentResolution
+        {
+            get => instance.defaultBezierCurveSegmentResolution;
+            set
+            {
+                if(instance.defaultBezierCurveSegmentResolution == value) return;
+                instance.defaultBezierCurveSegmentResolution = value;
                 instance.Save(true);
             }
         }

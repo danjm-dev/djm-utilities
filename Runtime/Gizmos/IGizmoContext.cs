@@ -52,14 +52,14 @@ namespace DJM.Utilities.Gizmos
         public IGizmoContext DrawEclipseOutline(Vector3 position, Vector2? axisRadii = null);
         public IGizmoContext DrawEclipseOutline(Vector2 position, Vector2? axisRadii = null);
         
-        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3);
-        public IGizmoContext DrawBezierCurve(CubicBezierCurve curve);
-        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3);
-        public IGizmoContext DrawBezierCurve(CubicBezierCurve2D curve);
-        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2);
-        public IGizmoContext DrawBezierCurve(QuadraticBezierCurve curve);
-        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2);
-        public IGizmoContext DrawBezierCurve(QuadraticBezierCurve2D curve);
+        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, int? segmentResolution = null);
+        public IGizmoContext DrawBezierCurve(CubicBezierCurve curve, int? segmentResolution = null);
+        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, int? segmentResolution = null);
+        public IGizmoContext DrawBezierCurve(CubicBezierCurve2D curve, int? segmentResolution = null);
+        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, int? segmentResolution = null);
+        public IGizmoContext DrawBezierCurve(QuadraticBezierCurve curve, int? segmentResolution = null);
+        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, int? segmentResolution = null);
+        public IGizmoContext DrawBezierCurve(QuadraticBezierCurve2D curve, int? segmentResolution = null);
         
         public IGizmoContext DrawGridLines(Vector3 position, Vector2Int gridResolution, Vector2 cellSize, RectPivot? pivot = null);
         public IGizmoContext DrawGridLines(Vector2 position, Vector2Int gridResolution, Vector2 cellSize, RectPivot? pivot = null);

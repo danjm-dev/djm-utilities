@@ -111,6 +111,7 @@ namespace DJM.Utilities.Gizmos
             return DrawLine(Get3DPosition(from), Get3DPosition(to));
         }
         
+
         
         
         public IGizmoContext DrawCube(Vector3 position, Vector3? size = null, RectPivot? pivot = null)
@@ -236,44 +237,49 @@ namespace DJM.Utilities.Gizmos
 
 
 
-        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, int? segmentResolution = null)
         {
+            BezierCurveCustomGizmoUtils.DrawCurve(p0, p1, p2, p3, GetBezierCurveResolution(segmentResolution));
             return this;
         }
 
-        public IGizmoContext DrawBezierCurve(CubicBezierCurve curve)
+        public IGizmoContext DrawBezierCurve(CubicBezierCurve curve, int? segmentResolution = null)
         {
+            DrawBezierCurve(curve.P0, curve.P1, curve.P2, curve.P3, segmentResolution);
             return this;
         }
 
-        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
+        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, int? segmentResolution = null)
         {
+            return DrawBezierCurve
+                (Get3DPosition(p0), Get3DPosition(p1), Get3DPosition(p2), Get3DPosition(p3), 
+                    segmentResolution);
+        }
+
+        public IGizmoContext DrawBezierCurve(CubicBezierCurve2D curve, int? segmentResolution = null)
+        {
+            return DrawBezierCurve(curve.P0, curve.P1, curve.P2, curve.P3, segmentResolution);
+        }
+
+        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, int? segmentResolution = null)
+        {
+            BezierCurveCustomGizmoUtils.DrawCurve(p0, p1, p2, GetBezierCurveResolution(segmentResolution));
             return this;
         }
 
-        public IGizmoContext DrawBezierCurve(CubicBezierCurve2D curve)
+        public IGizmoContext DrawBezierCurve(QuadraticBezierCurve curve, int? segmentResolution = null)
         {
-            return this;
+            return DrawBezierCurve(curve.P0, curve.P1, curve.P2, segmentResolution);
         }
 
-        public IGizmoContext DrawBezierCurve(Vector3 p0, Vector3 p1, Vector3 p2)
+        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2, int? segmentResolution = null)
         {
-            return this;
+            return DrawBezierCurve(Get3DPosition(p0), Get3DPosition(p1), Get3DPosition(p2), segmentResolution);
         }
 
-        public IGizmoContext DrawBezierCurve(QuadraticBezierCurve curve)
+        public IGizmoContext DrawBezierCurve(QuadraticBezierCurve2D curve, int? segmentResolution = null)
         {
-            return this;
-        }
-
-        public IGizmoContext DrawBezierCurve(Vector2 p0, Vector2 p1, Vector2 p2)
-        {
-            return this;
-        }
-
-        public IGizmoContext DrawBezierCurve(QuadraticBezierCurve2D curve)
-        {
-            return this;
+            return DrawBezierCurve(curve.P0, curve.P1, curve.P2, segmentResolution);
         }
 
         
@@ -394,6 +400,11 @@ namespace DJM.Utilities.Gizmos
         private RectPivot GetPivot(RectPivot? overrideValue)
         {
             return overrideValue ?? _pivot;
+        }
+        
+        private int GetBezierCurveResolution(int? overrideValue)
+        {
+            return Mathf.Max(overrideValue ?? CustomGizmosSettings.DefaultBezierCurveSegmentResolution, 1);
         }
     }
 }

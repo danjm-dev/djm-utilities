@@ -43,15 +43,7 @@ namespace DJM.Utilities.Editor.CustomGizmos
             );
             
             
-            EditorGUILayout.Space();
             
-            var defaultPivotProperty = serializedObject.FindProperty("defaultPivot");
-            CustomGizmosSettings.DefaultPivot = (RectPivot)EditorGUILayout.EnumPopup
-            (
-                new GUIContent(defaultPivotProperty.displayName), 
-                CustomGizmosSettings.DefaultPivot, 
-                EditorStyles.popup
-            );
             
             EditorGUILayout.Space();
             EditorGUILayout.LabelField(new GUIContent("2D Gizmos"), EditorStyles.boldLabel);
@@ -61,6 +53,32 @@ namespace DJM.Utilities.Editor.CustomGizmos
             (
                 new GUIContent(defaultPositionDepthProperty.displayName), 
                 CustomGizmosSettings.Default2dDepth, 
+                EditorStyles.numberField
+            );
+            
+            
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField(new GUIContent("Rects and Cubes"), EditorStyles.boldLabel);
+            
+            var defaultPivotProperty = serializedObject.FindProperty("defaultPivot");
+            CustomGizmosSettings.DefaultPivot = (RectPivot)EditorGUILayout.EnumPopup
+            (
+                new GUIContent(defaultPivotProperty.displayName), 
+                CustomGizmosSettings.DefaultPivot, 
+                EditorStyles.popup
+            );
+            
+
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField(new GUIContent("Bezier Curves"), EditorStyles.boldLabel);
+            
+            var defaultBezierCurveSegmentResolutionProperty = serializedObject.FindProperty("defaultBezierCurveSegmentResolution");
+            CustomGizmosSettings.DefaultBezierCurveSegmentResolution = EditorGUILayout.IntField
+            (
+                new GUIContent(defaultBezierCurveSegmentResolutionProperty.displayName), 
+                CustomGizmosSettings.DefaultBezierCurveSegmentResolution, 
                 EditorStyles.numberField
             );
         }
