@@ -28,34 +28,41 @@ namespace DJM.Utilities.Gizmos
             );
         }
         
-        public static void DrawCircle(Vector3 center, float radius)
+        public static void DrawEclipse(Vector3 center, Vector2 axisRadii)
         {
-            if(radius <= math.EPSILON) return;
+            if(axisRadii == Vector2.zero) return;
             UnityEngine.Gizmos.DrawMesh
             (
                 CircleMesh, 
                 center, 
                 Quaternion.identity, 
-                (Vector2.one * radius).XYO()
+                axisRadii.XYO()
             );
         }
         
-        public static void DrawCircleOutline(Vector3 center, float radius)
+        public static void DrawCircle(Vector3 center, float radius)
         {
-            if(radius <= Mathf.Epsilon) return;
-            
-            var xOffSet = Vector3.right * radius;
-            var yOffSet = Vector3.up * radius;
+            DrawEclipse(center, new Vector2(radius, radius));
+        }
+        
+        public static void DrawEclipseOutline(Vector3 center, Vector2 axisRadii)
+        {
+            if(axisRadii == Vector2.zero) return;
             
             for (var i = 0; i < CirclePointCount; i++)
             {
                 var angle = i * CircleRadiansPerPoint;
-                var x = Mathf.Cos(angle);
-                var y = Mathf.Sin(angle);
-                PointBuffer[i] = center + x * xOffSet + y * yOffSet;
+                MathUtils.GetDirection(angle, out var direction);
+                var radius = MathUtils.GetEclipseRadius(direction, axisRadii);
+                PointBuffer[i] = center + (direction * radius).XYO().AsVector();
             }
             
             UnityEngine.Gizmos.DrawLineStrip(new ReadOnlySpan<Vector3>(PointBuffer), true);
+        }
+        
+        public static void DrawCircleOutline(Vector3 center, float radius)
+        {
+            DrawEclipseOutline(center, new Vector2(radius, radius));
         }
     }
 }

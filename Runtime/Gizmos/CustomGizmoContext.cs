@@ -214,22 +214,24 @@ namespace DJM.Utilities.Gizmos
         
         public IGizmoContext DrawEclipse(Vector3 position, Vector2? axisRadii = null)
         {
+            CircleCustomGizmoUtils.DrawEclipse(position, GetSize(axisRadii));
             return this;
         }
 
         public IGizmoContext DrawEclipse(Vector2 position, Vector2? axisRadii = null)
         {
-            return this;
+            return DrawEclipse(Get3DPosition(position), axisRadii);
         }
 
         public IGizmoContext DrawEclipseOutline(Vector3 position, Vector2? axisRadii = null)
         {
+            CircleCustomGizmoUtils.DrawEclipseOutline(position, GetSize(axisRadii));
             return this;
         }
 
         public IGizmoContext DrawEclipseOutline(Vector2 position, Vector2? axisRadii = null)
         {
-            return this;
+            return DrawEclipseOutline(Get3DPosition(position), axisRadii);
         }
 
 
