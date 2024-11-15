@@ -19,43 +19,21 @@ namespace DJM.Utilities.Gizmos
             RectMesh = PrimitiveMeshUtils.GenerateRectMesh(1f, math.right(), math.up());
         }
         
-        public static void DrawRect(Vector3 position, Vector2 size, Vector3 right, Vector3 up, RectPivot pivot)
+        public static void DrawRect(Vector3 position, Vector2 size, RectPivot pivot)
         {
             if(size == Vector2.zero) return;
-            
-            MathUtils.GetNormalizedAxes
-            (
-                right, 
-                up, 
-                out var validRight, 
-                out var validUp, 
-                out var validForward
-            );
-            
-            var rotation = Quaternion.LookRotation(validForward, validUp);
-            position = pivot == RectPivot.Origin 
-                ? position + validRight.AsVector() * size.x * 0.5f + validUp.AsVector() * size.y * 0.5f 
-                : position;
-            UnityEngine.Gizmos.DrawMesh(RectMesh, position, rotation, size.XYO());
+            var offset = pivot == RectPivot.Center ? Vector3.zero : (size * 0.5f).XYO();
+            UnityEngine.Gizmos.DrawMesh(RectMesh, position + offset, Quaternion.identity, size.XYO());
         }
         
-        public static void DrawRectOutline(Vector3 position, Vector2 size, Vector3 right, Vector3 up, RectPivot pivot)
+        public static void DrawRectOutline(Vector3 position, Vector2 size, RectPivot pivot)
         {
             if(size == Vector2.zero) return;
             
-            MathUtils.GetNormalizedAxes
-            (
-                right, 
-                up, 
-                out var validRight, 
-                out var validUp, 
-                out _
-            );
+            var xOffset = Vector3.right * size.x;
+            var yOffset = Vector3.up * size.y;
             
-            var xOffset = validRight.AsVector() * size.x;
-            var yOffset = validUp.AsVector() * size.y;
-            
-            var origin = pivot == RectPivot.Origin ? position : position - xOffset * 0.5f - yOffset * 0.5f;
+            var origin = pivot == RectPivot.Origin ? position : position - (size * 0.5f).XYO();
             
             PointBuffer[0] = origin;
             PointBuffer[1] = origin + yOffset;

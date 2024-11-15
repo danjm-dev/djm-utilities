@@ -4,14 +4,22 @@ namespace DJM.Utilities.Gizmos
 {
     public static class CustomGizmos
     {
-        public static readonly IGizmoContext Instance;
+        private static readonly IGizmoContext Instance;
         
+        public static IGizmoContext GetContext()
+        {
+            Instance.Dispose();
+            return Instance;
+        }
+
+
+
         static CustomGizmos()
         {
 #if UNITY_EDITOR
             Instance = new CustomGizmoContext();
 #else
-            Instance = new DefaultGizmoContext();
+            _instance = new DefaultGizmoContext();
 #endif
         }
 
