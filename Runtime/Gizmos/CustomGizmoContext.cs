@@ -316,6 +316,9 @@ namespace DJM.Utilities.Gizmos
             RectPivot? pivot = null
         )
         {
+            
+            var originPosition = GetRectOriginPosition(position, Vector3.Scale(gridResolution, cellSize), pivot);
+            GridCustomGizmoUtils.DrawGridLines(originPosition, gridResolution, cellSize);
             return this;
         }
 
@@ -351,6 +354,8 @@ namespace DJM.Utilities.Gizmos
             RectPivot? pivot = null
         )
         {
+            var originPosition = GetRectOriginPosition(position, Vector3.Scale(gridResolution, cellSize), pivot);
+            GridCustomGizmoUtils.DrawGridNodes(originPosition, gridResolution, cellSize);
             return this;
         }
 
