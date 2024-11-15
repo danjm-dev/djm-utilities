@@ -13,11 +13,14 @@ namespace DJM.Utilities.Gizmos
         public IGizmoContext SetDefaultMatrix(Vector3 originPosition = default);
         public IGizmoContext SetWorldSpaceMatrix(Vector3 originPosition = default);
         public IGizmoContext SetPivot(RectPivot pivot);
-        public IGizmoContext Set2DDepth(float depth);
+        public IGizmoContext SetDefaultPivot();
+        public IGizmoContext Set2dDepth(float depth);
+        public IGizmoContext SetDefault2dDepth();
         
         public IGizmoContext SetSize(float size);
         public IGizmoContext SetSize(Vector2 size);
         public IGizmoContext SetSize(Vector3 size);
+        public IGizmoContext SetDefaultSize();
         
         public IGizmoContext DrawLine(Vector3 from, Vector3 to);
         public IGizmoContext DrawLine(Vector2 from, Vector2 to);

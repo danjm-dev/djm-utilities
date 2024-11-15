@@ -12,7 +12,7 @@ namespace DJM.Utilities.Gizmos
     {
         [SerializeField] private SignedAxis defaultRightAxis = SignedAxis.PositiveX;
         [SerializeField] private SignedAxis defaultUpAxis = SignedAxis.PositiveY;
-        [SerializeField] private float defaultForwardDepth = 0f;
+        [SerializeField] private float default2dDepth = 0f;
         [SerializeField] private RectPivot defaultPivot = RectPivot.Center;
         
         public static SignedAxis DefaultRightAxis
@@ -62,13 +62,13 @@ namespace DJM.Utilities.Gizmos
             }
         }
         
-        public static float DefaultForwardDepth
+        public static float Default2dDepth
         {
-            get => instance.defaultForwardDepth;
+            get => instance.default2dDepth;
             set
             {
-                if(Mathf.Approximately(instance.defaultForwardDepth, value)) return;
-                instance.defaultForwardDepth = value;
+                if(Mathf.Approximately(instance.default2dDepth, value)) return;
+                instance.default2dDepth = value;
                 instance.Save(true);
             }
         }

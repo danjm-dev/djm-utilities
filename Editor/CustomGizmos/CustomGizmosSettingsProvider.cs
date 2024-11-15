@@ -56,11 +56,11 @@ namespace DJM.Utilities.Editor.CustomGizmos
             EditorGUILayout.Space();
             EditorGUILayout.LabelField(new GUIContent("2D Gizmos"), EditorStyles.boldLabel);
             
-            var defaultPositionDepthProperty = serializedObject.FindProperty("defaultForwardDepth");
-            CustomGizmosSettings.DefaultForwardDepth = EditorGUILayout.FloatField
+            var defaultPositionDepthProperty = serializedObject.FindProperty("default2dDepth");
+            CustomGizmosSettings.Default2dDepth = EditorGUILayout.FloatField
             (
                 new GUIContent(defaultPositionDepthProperty.displayName), 
-                CustomGizmosSettings.DefaultForwardDepth, 
+                CustomGizmosSettings.Default2dDepth, 
                 EditorStyles.numberField
             );
         }

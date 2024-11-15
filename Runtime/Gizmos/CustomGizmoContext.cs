@@ -7,9 +7,7 @@ namespace DJM.Utilities.Gizmos
 {
     internal sealed class CustomGizmoContext : IGizmoContext
     {
-        private Vector3 _rightAxis;
-        private Vector3 _upAxis;
-        private float _forwardDepth;
+        private float _2dDepth;
         private Vector3 _size = Vector3.one;
         private RectPivot _pivot;
         
@@ -62,11 +60,21 @@ namespace DJM.Utilities.Gizmos
             _pivot = pivot;
             return this;
         }
-        
-        public IGizmoContext Set2DDepth(float depth)
+
+        public IGizmoContext SetDefaultPivot()
         {
-            _forwardDepth = depth;
+            return SetPivot(CustomGizmosSettings.DefaultPivot);
+        }
+        
+        public IGizmoContext Set2dDepth(float depth)
+        {
+            _2dDepth = depth;
             return this;
+        }
+        
+        public IGizmoContext SetDefault2dDepth()
+        {
+            return Set2dDepth(CustomGizmosSettings.Default2dDepth);
         }
         
         public IGizmoContext SetSize(float size)
@@ -87,7 +95,10 @@ namespace DJM.Utilities.Gizmos
             return this;
         }
         
-        
+        public IGizmoContext SetDefaultSize()
+        {
+            return SetSize(Vector3.one);
+        }
         
         public IGizmoContext DrawLine(Vector3 from, Vector3 to)
         {
@@ -341,17 +352,14 @@ namespace DJM.Utilities.Gizmos
             UnityEngine.Gizmos.color = UnityEngine.Color.white;
             SetDefaultMatrix();
             
-            _rightAxis = CustomGizmosSettings.DefaultRightAxis.GetDirection();
-            _upAxis = CustomGizmosSettings.DefaultUpAxis.GetDirection();
-            
-            _forwardDepth = CustomGizmosSettings.DefaultForwardDepth;
+            _2dDepth = CustomGizmosSettings.Default2dDepth;
             _size = Vector3.one;
             _pivot = CustomGizmosSettings.DefaultPivot;
         }
 
         private Vector3 Get3DPosition(Vector2 position2D)
         {
-            return position2D.XYO(_forwardDepth);
+            return position2D.XYO(_2dDepth);
         }
         
         private Vector3 GetRectOriginPosition(Vector3 position, Vector3 size, RectPivot? pivot)
