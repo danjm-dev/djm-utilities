@@ -19,10 +19,12 @@ namespace DJM.Utilities.Gizmos
         public IGizmoContext SetSize(Vector3 size) => this;
         
         public IGizmoContext DrawLine(Vector3 from, Vector3 to) => this;
-        public IGizmoContext DrawLine(Vector2 from, Vector2 to, float? forwardDepth = null) => this;
+        public IGizmoContext DrawLine(Vector2 from, Vector2 to) => this;
         
         public IGizmoContext DrawCube(Vector3 position, Vector3? size = null, RectPivot? pivot = null) => this;
+        public IGizmoContext DrawCube(Vector2 position, Vector3? size = null, RectPivot? pivot = null) => this;
         public IGizmoContext DrawWireCube(Vector3 position, Vector3? size = null, RectPivot? pivot = null) => this;
+        public IGizmoContext DrawWireCube(Vector2 position, Vector3? size = null, RectPivot? pivot = null) => this;
         
         public IGizmoContext DrawRect(Vector3 position, Vector2? size = null, RectPivot? pivot = null) => this;
         public IGizmoContext DrawRect(Vector2 position, Vector2? size = null, RectPivot? pivot = null) => this;
@@ -30,7 +32,9 @@ namespace DJM.Utilities.Gizmos
         public IGizmoContext DrawRectOutline(Vector2 position, Vector2? size = null, RectPivot? pivot = null) => this;
 
         public IGizmoContext DrawSphere(Vector3 position, float? radius = null) => this;
+        public IGizmoContext DrawSphere(Vector2 position, float? radius = null) => this;
         public IGizmoContext DrawWireSphere(Vector3 position, float? radius = null) => this;
+        public IGizmoContext DrawWireSphere(Vector2 position, float? radius = null) => this;
         
         public IGizmoContext DrawCircle(Vector3 position, float? radius = null) => this;
         public IGizmoContext DrawCircle(Vector2 position, float? radius = null) => this;

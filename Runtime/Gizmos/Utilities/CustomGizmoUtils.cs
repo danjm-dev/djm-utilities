@@ -37,6 +37,8 @@ namespace DJM.Utilities.Gizmos
             if(right == Vector3.zero || up == Vector3.zero) return false;
             return Mathf.Abs(Vector3.Dot(right.normalized, up.normalized)) < 0.99f;
         }
+        
+
     }
 }
 #endif

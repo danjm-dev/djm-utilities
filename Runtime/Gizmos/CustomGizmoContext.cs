@@ -10,7 +10,6 @@ namespace DJM.Utilities.Gizmos
         private Vector3 _rightAxis;
         private Vector3 _upAxis;
         private float _forwardDepth;
-        private float _radius;
         private Vector3 _size = Vector3.one;
         private RectPivot _pivot;
         
@@ -96,9 +95,9 @@ namespace DJM.Utilities.Gizmos
             return this;
         }
 
-        public IGizmoContext DrawLine(Vector2 from, Vector2 to, float? forwardDepth = null)
+        public IGizmoContext DrawLine(Vector2 from, Vector2 to)
         {
-            return DrawLine(GetPosition(from, forwardDepth), GetPosition(to, forwardDepth));
+            return DrawLine(Get3DPosition(from), Get3DPosition(to));
         }
         
         
@@ -110,6 +109,12 @@ namespace DJM.Utilities.Gizmos
             UnityEngine.Gizmos.DrawCube(position + offset, size2);
             return this;
         }
+        
+        public IGizmoContext DrawCube(Vector2 position, Vector3? size = null, RectPivot? pivot = null)
+        {
+            return DrawCube(Get3DPosition(position), size, pivot);
+        }
+
 
         public IGizmoContext DrawWireCube(Vector3 position, Vector3? size = null, RectPivot? pivot =  null)
         {
@@ -119,6 +124,10 @@ namespace DJM.Utilities.Gizmos
             return this;
         }
         
+        public IGizmoContext DrawWireCube(Vector2 position, Vector3? size = null, RectPivot? pivot = null)
+        {
+            return DrawWireCube(Get3DPosition(position), size, pivot);
+        }
         
         
         public IGizmoContext DrawRect(Vector3 position, Vector2? size = null, RectPivot? pivot = null)
@@ -129,7 +138,7 @@ namespace DJM.Utilities.Gizmos
         
         public IGizmoContext DrawRect(Vector2 position, Vector2? size = null, RectPivot? pivot = null)
         {
-            return DrawRect(GetPosition(position), size, pivot);
+            return DrawRect(Get3DPosition(position), size, pivot);
         }
         
         public IGizmoContext DrawRectOutline(Vector3 position, Vector2? size = null, RectPivot? pivot = null)
@@ -140,49 +149,54 @@ namespace DJM.Utilities.Gizmos
         
         public IGizmoContext DrawRectOutline(Vector2 position, Vector2? size = null, RectPivot? pivot = null)
         {
-            return DrawRectOutline(GetPosition(position), size, pivot);
+            return DrawRectOutline(Get3DPosition(position), size, pivot);
         }
-
+        
         
         
         public IGizmoContext DrawSphere(Vector3 position, float? radius = null)
         {
-            var radius2 = GetRadius(radius);
-            UnityEngine.Gizmos.DrawSphere(position, radius2);
+            UnityEngine.Gizmos.DrawSphere(position, GetSize(radius));
             return this;
+        }
+        
+        public IGizmoContext DrawSphere(Vector2 position, float? radius = null)
+        {
+            return DrawSphere(Get3DPosition(position), radius);
         }
 
         public IGizmoContext DrawWireSphere(Vector3 position, float? radius = null)
         {
-            var radius2 = GetRadius(radius);
-            UnityEngine.Gizmos.DrawWireSphere(position, radius2);
+            UnityEngine.Gizmos.DrawWireSphere(position, GetSize(radius));
             return this;
         }
         
+        public IGizmoContext DrawWireSphere(Vector2 position, float? radius = null)
+        {
+            return DrawWireSphere(Get3DPosition(position), radius);
+        }
         
         
         public IGizmoContext DrawCircle(Vector3 position, float? radius = null)
         {
-            var radius2 = GetRadius(radius);
-            CircleCustomGizmoUtils.DrawCircle(position, radius2, _rightAxis, _upAxis);
+            CircleCustomGizmoUtils.DrawCircle(position, GetSize(radius));
             return this;
         }
         
         public IGizmoContext DrawCircle(Vector2 position, float? radius = null)
         {
-            return DrawCircle(GetPosition(position), radius);
+            return DrawCircle(Get3DPosition(position), radius);
         }
         
         public IGizmoContext DrawCircleOutline(Vector3 position, float? radius = null)
         {
-            var radius2 = GetRadius(radius);
-            CircleCustomGizmoUtils.DrawCircleOutline(position, radius2, _rightAxis, _upAxis);
+            CircleCustomGizmoUtils.DrawCircleOutline(position, GetSize(radius));
             return this;
         }
         
         public IGizmoContext DrawCircleOutline(Vector2 position, float? radius = null)
         {
-            return DrawCircleOutline(GetPosition(position), radius);
+            return DrawCircleOutline(Get3DPosition(position), radius);
         }
 
         
@@ -259,7 +273,8 @@ namespace DJM.Utilities.Gizmos
             RectPivot? pivot = null
         )
         {
-            GridCustomGizmoUtils.DrawGridLines(position, gridResolution, cellSize, _rightAxis, _upAxis, GetPivot(pivot));
+            var originPosition = GetRectOriginPosition(position, gridResolution * cellSize, pivot);
+            GridCustomGizmoUtils.DrawGridLines(originPosition, gridResolution, cellSize);
             return this;
         }
 
@@ -271,7 +286,7 @@ namespace DJM.Utilities.Gizmos
             RectPivot? pivot = null
         )
         {
-            return DrawGridLines(GetPosition(position), gridResolution, cellSize, pivot);
+            return DrawGridLines(Get3DPosition(position), gridResolution, cellSize, pivot);
         }
 
         public IGizmoContext DrawGridLines
@@ -293,7 +308,8 @@ namespace DJM.Utilities.Gizmos
             RectPivot? pivot = null
         )
         {
-            GridCustomGizmoUtils.DrawGridNodes(position, gridResolution, cellSize, _rightAxis, _upAxis, GetPivot(pivot));
+            var originPosition = GetRectOriginPosition(position, gridResolution * cellSize, pivot);
+            GridCustomGizmoUtils.DrawGridNodes(originPosition, gridResolution, cellSize);
             return this;
         }
 
@@ -305,7 +321,7 @@ namespace DJM.Utilities.Gizmos
             RectPivot? pivot = null
         )
         {
-            return DrawGridNodes(GetPosition(position), gridResolution, cellSize, pivot);
+            return DrawGridNodes(Get3DPosition(position), gridResolution, cellSize, pivot);
         }
 
         public IGizmoContext DrawGridNodes
@@ -323,9 +339,6 @@ namespace DJM.Utilities.Gizmos
         private void SetDefaultSettings()
         {
             UnityEngine.Gizmos.color = UnityEngine.Color.white;
-            //UnityEngine.Gizmos.matrix = Matrix4x4.identity;
-
-
             SetDefaultMatrix();
             
             _rightAxis = CustomGizmosSettings.DefaultRightAxis.GetDirection();
@@ -336,22 +349,26 @@ namespace DJM.Utilities.Gizmos
             _pivot = CustomGizmosSettings.DefaultPivot;
         }
 
-        private Vector3 GetPosition(Vector2 position2D, float? forwardDepthOverride = null) // make this not have defaulut
+        private Vector3 Get3DPosition(Vector2 position2D)
         {
-            return position2D.XYO(forwardDepthOverride ?? _forwardDepth);
-            
-            // return CustomGizmoUtils.Get3DPosition
-            // (
-            //     position2D, 
-            //     _forwardDepth, 
-            //     _rightAxis, 
-            //     _upAxis
-            // );
+            return position2D.XYO(_forwardDepth);
         }
-
-        private float GetRadius(float? overrideValue)
+        
+        private Vector3 GetRectOriginPosition(Vector3 position, Vector3 size, RectPivot? pivot)
         {
-            return overrideValue.HasValue ? Mathf.Max(overrideValue.Value, 0f) : _radius;
+            return (pivot ?? _pivot) == RectPivot.Origin 
+                ? position 
+                : position - size * 0.5f;
+        }
+        
+        private Vector3 GetRectOriginPosition(Vector3 position, Vector2 size, RectPivot? pivot)
+        {
+            return GetRectOriginPosition(position, size.XYO(), pivot);
+        }
+        
+        private float GetSize(float? overrideValue)
+        {
+            return overrideValue.HasValue ? Mathf.Max(overrideValue.Value, 0f) : _size.x;
         }
         
         private Vector2 GetSize(Vector2? overrideValue)

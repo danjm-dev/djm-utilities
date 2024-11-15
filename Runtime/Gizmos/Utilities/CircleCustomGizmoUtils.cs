@@ -28,50 +28,24 @@ namespace DJM.Utilities.Gizmos
             );
         }
         
-        public static void DrawCircle
-        (
-            Vector3 center,
-            float radius,
-            Vector3 right,
-            Vector3 up
-        )
+        public static void DrawCircle(Vector3 center, float radius)
         {
             if(radius <= math.EPSILON) return;
-            
-            MathUtils.GetNormalizedAxes
+            UnityEngine.Gizmos.DrawMesh
             (
-                right, 
-                up, 
-                out _, 
-                out var validUp, 
-                out var validForward
+                CircleMesh, 
+                center, 
+                Quaternion.identity, 
+                (Vector2.one * radius).XYO()
             );
-            
-            var rotation = Quaternion.LookRotation(validForward, validUp);
-            UnityEngine.Gizmos.DrawMesh(CircleMesh, center, rotation, Vector3.one.WithZ(0) * radius);
         }
         
-        public static void DrawCircleOutline
-        (
-            Vector3 center, 
-            float radius,
-            Vector3 right,
-            Vector3 up
-        )
+        public static void DrawCircleOutline(Vector3 center, float radius)
         {
             if(radius <= Mathf.Epsilon) return;
             
-            MathUtils.GetNormalizedAxes
-            (
-                right, 
-                up, 
-                out var validRight, 
-                out var validUp, 
-                out _
-            );
-            
-            var xOffSet = (validRight * radius).AsVector();
-            var yOffSet = (validUp * radius).AsVector();
+            var xOffSet = Vector3.right * radius;
+            var yOffSet = Vector3.up * radius;
             
             for (var i = 0; i < CirclePointCount; i++)
             {
