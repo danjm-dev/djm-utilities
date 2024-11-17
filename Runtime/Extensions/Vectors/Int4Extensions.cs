@@ -7,6 +7,8 @@ namespace DJM.Utilities
     public static class Int4Extensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int4 With(this int4 v, int? x = null, int? y = null, int? z = null, int? w = null) => new(x ?? v.x, y ?? v.y, z ?? v.z, w ?? v.w);
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int4 WithX(this int4 v, int x) => new(x, v.y, v.z, v.w);
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]

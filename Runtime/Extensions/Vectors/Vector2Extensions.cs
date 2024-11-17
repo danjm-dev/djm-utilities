@@ -8,30 +8,22 @@ namespace DJM.Utilities
 {
     public static class Vector2Extensions
     {
-        [Obsolete("Use XOY instead")]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)] 
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)] [Obsolete("Use XOY instead")]
         public static Vector3 X0Y(this Vector2 current, float y = 0f) => new(current.x, y, current.y);
-        [Obsolete("Use XYO instead")]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)] 
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)] [Obsolete("Use XYO instead")]
         public static Vector3 XY0(this Vector2 current, float z = 0f) => new(current.x, current.y, z);
-        
-        [Obsolete]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
         public static float2 XXAsFloat(this Vector2 v) => new(v.x, v.x);
-        [Obsolete]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
         public static float2 YXAsFloat(this Vector2 v) => new(v.y, v.x);
-        [Obsolete]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
         public static float2 YYAsFloat(this Vector2 v) => new(v.y, v.y);
-        
-        [Obsolete]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
         public static float3 X0YAsFloat(this Vector2 current, float y = 0f) => new(current.x, y, current.y);
-        [Obsolete]
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
         public static float3 XY0AsFloat(this Vector2 current, float z = 0f) => new(current.x, current.y, z);
-        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
+        public static float2 AsFloat(this Vector2 v) => new(v.x, v.y);
         
         
         
@@ -253,13 +245,13 @@ namespace DJM.Utilities
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 OY(this Vector2 current, float x = 0f) => new(x, current.y);
         
+
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float2 AsFloat2(this Vector2 v) => new(v.x, v.y);
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 AsFloat(this Vector2 v) => new(v.x, v.y);
-        
-        
-        
+        public static Vector2 With(this Vector2 v, float? x = null, float? y = null) => new(x ?? v.x, y ?? v.y);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 WithX(this Vector2 v, float x) => new(x, v.y);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]

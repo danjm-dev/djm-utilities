@@ -13,8 +13,13 @@ namespace DJM.Utilities
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
         public static int3 XY0(this int2 v, int z = 0) => new(v.x, v.y, z);
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
+        public static Vector3Int X0YAsVector(this int2 v, int y = 0) => new(v.x, y, v.y);
         
-        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
+        public static Vector3Int XY0AsVector(this int2 v, int z = 0) => new(v.x, v.y, z);
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
+        public static Vector2Int AsVector(this int2 v) => new(v.x, v.y);
         
         
         
@@ -181,16 +186,11 @@ namespace DJM.Utilities
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2Int AsVector(this int2 v) => new(v.x, v.y);
+        public static Vector2Int AsVector2Int(this int2 v) => new(v.x, v.y);
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3Int X0YAsVector(this int2 v, int y = 0) => new(v.x, y, v.y);
-        
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3Int XY0AsVector(this int2 v, int z = 0) => new(v.x, v.y, z);
-        
-        
+        public static int2 With(this int2 v, int? x = null, int? y = null) => new(x ?? v.x, y ?? v.y);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int2 WithX(this int2 v, int x) => new(x, v.y);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]

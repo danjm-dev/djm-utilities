@@ -8,9 +8,13 @@ namespace DJM.Utilities
     public static class Float4Extensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 AsVector(this float4 v) => new(v.x, v.y, v.z, v.w);
+        public static Vector4 AsVector4(this float4 v) => new(v.x, v.y, v.z, v.w);
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static UnityEngine.Color AsColor(this float4 v) => new(v.x, v.y, v.z, v.w);
         
         
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 With(this float4 v, float? x = null, float? y = null, float? z = null, float? w = null) => new(x ?? v.x, y ?? v.y, z ?? v.z, w ?? v.w);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 WithX(this float4 v, float x) => new(x, v.y, v.z, v.w);
         
