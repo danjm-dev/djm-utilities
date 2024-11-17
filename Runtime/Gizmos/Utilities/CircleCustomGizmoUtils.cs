@@ -54,7 +54,7 @@ namespace DJM.Utilities.Gizmos
                 var angle = i * CircleRadiansPerPoint;
                 MathUtils.GetDirection(angle, out var direction);
                 var radius = MathUtils.GetEclipseRadius(direction, axisRadii);
-                PointBuffer[i] = center + (direction * radius).XYO().AsVector();
+                PointBuffer[i] = center + (direction * radius).XYO().AsVector3();
             }
             
             UnityEngine.Gizmos.DrawLineStrip(new ReadOnlySpan<Vector3>(PointBuffer), true);

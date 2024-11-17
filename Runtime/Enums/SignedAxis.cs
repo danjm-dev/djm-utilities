@@ -86,7 +86,7 @@ namespace DJM.Utilities
         public static Vector3 GetDirection(this SignedAxis axis)
         {
             GetDirection(axis, out var direction);
-            return direction.AsVector();
+            return direction.AsVector3();
         }
     }
 }

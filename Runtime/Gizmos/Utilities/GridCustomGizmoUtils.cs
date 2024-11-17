@@ -116,9 +116,9 @@ namespace DJM.Utilities.Gizmos
             
             for (var i = 0; i < resolution.x * resolution.y; i++)
             {
-                CoordinateUtils.IndexToCoordinates(i, resolution.AsInt(), out var coordinates);
+                CoordinateUtils.IndexToCoordinates(i, resolution.AsInt2(), out var coordinates);
                 CoordinateUtils.CoordinatesToCenterPosition(coordinates, cellSize, out var position);
-                CircleCustomGizmoUtils.DrawCircle(originPosition + position.XYO().AsVector(), nodeCircleRadius);
+                CircleCustomGizmoUtils.DrawCircle(originPosition + position.XYO().AsVector3(), nodeCircleRadius);
             }
         }
         
@@ -137,9 +137,9 @@ namespace DJM.Utilities.Gizmos
             
             for (var i = 0; i < resolution.x * resolution.y * resolution.z; i++)
             {
-                CoordinateUtils.IndexToCoordinates(i, resolution.AsInt(), out var coordinates);
+                CoordinateUtils.IndexToCoordinates(i, resolution.AsInt3(), out var coordinates);
                 CoordinateUtils.CoordinatesToCenterPosition(coordinates, cellSize, out var position);
-                UnityEngine.Gizmos.DrawSphere(originPosition + position.AsVector(), nodeRadius);
+                UnityEngine.Gizmos.DrawSphere(originPosition + position.AsVector3(), nodeRadius);
             }
         }
     }

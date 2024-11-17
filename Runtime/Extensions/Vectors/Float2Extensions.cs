@@ -20,7 +20,8 @@ namespace DJM.Utilities
         public static Vector2 AsVector(this float2 v) => new(v.x, v.y);
 
 
-        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 XXXX(this float2 current, float w = 0f) => new(current.x, current.x, current.x, current.x);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 XXXO(this float2 current, float w = 0f) => new(current.x, current.x, current.x, w);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]

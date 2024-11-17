@@ -50,7 +50,7 @@ namespace DJM.Utilities
         public static Vector3 GetDirection(this Axis axis)
         {
             GetDirection(axis, out var direction);
-            return direction.AsVector();
+            return direction.AsVector3();
         }
     }
 }
