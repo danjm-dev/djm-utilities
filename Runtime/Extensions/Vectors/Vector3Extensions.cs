@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
@@ -8,82 +7,6 @@ namespace DJM.Utilities
 {
     public static class Vector3Extensions
     {
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XXXAsFloat(this Vector3 v) => new(v.x, v.x, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XXYAsFloat(this Vector3 v) => new(v.x, v.x, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XXZAsFloat(this Vector3 v) => new(v.x, v.x, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XYXAsFloat(this Vector3 v) => new(v.x, v.y, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XYYAsFloat(this Vector3 v) => new(v.x, v.y, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XZXAsFloat(this Vector3 v) => new(v.x, v.z, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XZYAsFloat(this Vector3 v) => new(v.x, v.z, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XZZAsFloat(this Vector3 v) => new(v.x, v.z, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YXXAsFloat(this Vector3 v) => new(v.y, v.x, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YXYAsFloat(this Vector3 v) => new(v.y, v.x, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YXZAsFloat(this Vector3 v) => new(v.y, v.x, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YYXAsFloat(this Vector3 v) => new(v.y, v.y, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YYYAsFloat(this Vector3 v) => new(v.y, v.y, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YYZAsFloat(this Vector3 v) => new(v.y, v.y, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YZXAsFloat(this Vector3 v) => new(v.y, v.z, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YZYAsFloat(this Vector3 v) => new(v.y, v.z, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 YZZAsFloat(this Vector3 v) => new(v.y, v.z, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZXXAsFloat(this Vector3 v) => new(v.z, v.x, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZXYAsFloat(this Vector3 v) => new(v.z, v.x, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZXZAsFloat(this Vector3 v) => new(v.z, v.x, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZYXAsFloat(this Vector3 v) => new(v.z, v.y, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZYYAsFloat(this Vector3 v) => new(v.z, v.y, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZYZAsFloat(this Vector3 v) => new(v.z, v.y, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZZXAsFloat(this Vector3 v) => new(v.z, v.z, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZZYAsFloat(this Vector3 v) => new(v.z, v.z, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 ZZZAsFloat(this Vector3 v) => new(v.z, v.z, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 XXAsFloat(this Vector3 v) => new(v.x, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 XYAsFloat(this Vector3 v) => new(v.x, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 XZAsFloat(this Vector3 v) => new(v.x, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 YXAsFloat(this Vector3 v) => new(v.y, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 YYAsFloat(this Vector3 v) => new(v.y, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 YZAsFloat(this Vector3 v) => new(v.y, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 ZXAsFloat(this Vector3 v) => new(v.z, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 ZYAsFloat(this Vector3 v) => new(v.z, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 ZZAsFloat(this Vector3 v) => new(v.z, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 AsFloat(this Vector3 v) => new(v.x, v.y, v.z);
-        
-
-        
-        
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 AsFloat3(this Vector3 v) => new(v.x, v.y, v.z);
         

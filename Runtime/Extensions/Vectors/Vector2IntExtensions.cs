@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-
+﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
@@ -9,30 +7,6 @@ namespace DJM.Utilities
 {
     public static class Vector2IntExtensions
     {
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static Vector3Int X0Y(this Vector2Int current, int y = 0) => new(current.x, y, current.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static Vector3Int XY0(this Vector2Int current, int z = 0) => new(current.x, current.y, z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static Vector2Int XXAsInt(this Vector2Int v) => new(v.x, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static Vector2Int YXAsInt(this Vector2Int v) => new(v.y, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static Vector2Int YYAsInt(this Vector2Int v) => new(v.y, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static Vector3Int X0YAsInt(this Vector2Int current, int y = 0) => new(current.x, y, current.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static Vector3Int XY0AsInt(this Vector2Int current, int z = 0) => new(current.x, current.y, z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static int2 AsInt(this Vector2Int v) => new(v.x, v.y);
-        
-        
-        
-        
-        
-
-        
-        
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int2 AsInt2(this Vector2Int v) => new(v.x, v.y);
         

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
@@ -8,29 +7,6 @@ namespace DJM.Utilities
 {
     public static class Vector2Extensions
     {
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)] [Obsolete("Use XOY instead")]
-        public static Vector3 X0Y(this Vector2 current, float y = 0f) => new(current.x, y, current.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)] [Obsolete("Use XYO instead")]
-        public static Vector3 XY0(this Vector2 current, float z = 0f) => new(current.x, current.y, z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 XXAsFloat(this Vector2 v) => new(v.x, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 YXAsFloat(this Vector2 v) => new(v.y, v.x);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 YYAsFloat(this Vector2 v) => new(v.y, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 X0YAsFloat(this Vector2 current, float y = 0f) => new(current.x, y, current.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float3 XY0AsFloat(this Vector2 current, float z = 0f) => new(current.x, current.y, z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)][Obsolete]
-        public static float2 AsFloat(this Vector2 v) => new(v.x, v.y);
-        
-        
-        
-        
-
-        
-
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 AsFloat2(this Vector2 v) => new(v.x, v.y);
         
