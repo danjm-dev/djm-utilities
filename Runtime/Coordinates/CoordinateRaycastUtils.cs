@@ -129,6 +129,21 @@ namespace DJM.Utilities.Coordinates
         }
 
         [BurstCompile]
+        public static void GetIntersectingCoordinates
+        (
+            in float2 from, 
+            in float2 to,
+            in float2 coordinateUnitSize,
+            in NativeList<int2> results
+        )
+        {
+            var offset = to - from;
+            var distance = math.length(offset);
+            var direction = math.normalizesafe(offset, Direction2D.Right);
+            GetIntersectingCoordinates(from, direction, distance, coordinateUnitSize, results);
+        }
+        
+        [BurstCompile]
         private static void CalculateUnitStepSize(in float2 unitSize, in float2 rayDirection, out float2 unitStepSize)
         {
             unitStepSize = new float2
