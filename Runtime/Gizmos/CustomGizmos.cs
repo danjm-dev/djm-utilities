@@ -19,7 +19,7 @@ namespace DJM.Utilities.Gizmos
 #if UNITY_EDITOR
             Instance = new CustomGizmoContext();
 #else
-            _instance = new DefaultGizmoContext();
+            Instance = new DefaultGizmoContext();
 #endif
         }
 
