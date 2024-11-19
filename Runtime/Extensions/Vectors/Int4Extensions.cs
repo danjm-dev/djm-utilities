@@ -1,11 +1,18 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace DJM.Utilities
 {
     public static class Int4Extensions
     {
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector4 AsVector4(this int4 v) => new(v.x, v.y, v.z, v.w);
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float4 AsFloat4(this int4 v) => new(v.x, v.y, v.z, v.w);
+        
+        
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int4 With(this int4 v, int? x = null, int? y = null, int? z = null, int? w = null) => new(x ?? v.x, y ?? v.y, z ?? v.z, w ?? v.w);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
