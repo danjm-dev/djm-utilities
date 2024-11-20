@@ -1,16 +1,14 @@
-﻿using Unity.Mathematics;
+﻿using System;
+using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.Internal;
 
 namespace DJM.Utilities
 {
     public static class Texture2DExtensions
     {
-        public static int2 Resolution(this Texture2D texture2D)
-        {
-            return new int2(texture2D.width, texture2D.height);
-        }
-        
         public static UnityEngine.Color GetPixel(this Texture2D texture2D, Vector2Int coordinates)
         {
             return texture2D.GetPixel(coordinates.x, coordinates.y);
@@ -51,11 +49,56 @@ namespace DJM.Utilities
             texture2D.SetPixel(coordinates.x, coordinates.y, color, mipLevel);
         }
 
+        public static void Reinitialize(this Texture2D texture2D, int2 resolution)
+        {
+            texture2D.Reinitialize(resolution.x, resolution.y);
+        }
+        
+        public static void Reinitialize(this Texture2D texture2D, int2 resolution, GraphicsFormat graphicsFormat, bool hasMipMap)
+        {
+            texture2D.Reinitialize(resolution.x, resolution.y, graphicsFormat, hasMipMap);
+        }
+        
+        public static void Reinitialize(this Texture2D texture2D, int2 resolution, TextureFormat textureFormat, bool hasMipMap)
+        {
+            texture2D.Reinitialize(resolution.x, resolution.y, textureFormat, hasMipMap);
+        }
+        
+        public static void Reinitialize(this Texture2D texture2D, Vector2Int resolution)
+        {
+            texture2D.Reinitialize(resolution.x, resolution.y);
+        }
+        
+        public static void Reinitialize(this Texture2D texture2D, Vector2Int resolution, GraphicsFormat graphicsFormat, bool hasMipMap)
+        {
+            texture2D.Reinitialize(resolution.x, resolution.y, graphicsFormat, hasMipMap);
+        }
+        
+        public static void Reinitialize(this Texture2D texture2D, Vector2Int resolution, TextureFormat textureFormat, bool hasMipMap)
+        {
+            texture2D.Reinitialize(resolution.x, resolution.y, textureFormat, hasMipMap);
+        }
+        
+        [Obsolete]
         public static void SetAll(this Texture2D texture2D, UnityEngine.Color color)
         {
             var pixels = new UnityEngine.Color[texture2D.width * texture2D.height];
             for (var i = 0; i < pixels.Length; i++) pixels[i] = color;
             texture2D.SetPixels(pixels);
+        }
+        
+        public static void SetAll<T>(this Texture2D texture2D, T value, int mipLevel = 0) where T : unmanaged
+        {
+            var pixelCount = texture2D.width * texture2D.height;
+            var data = new NativeArray<T>(pixelCount, Allocator.Temp);
+            for (var i = 0; i < data.Length; i++) data[i] = value;
+            texture2D.SetPixelData(data, mipLevel);
+            data.Dispose();
+        }
+        
+        public static void SetAll(this Texture2D texture2D, UnityEngine.Color32 color, int mipLevel = 0)
+        {
+            SetAll<UnityEngine.Color32>(texture2D, color, mipLevel);
         }
     }
 }

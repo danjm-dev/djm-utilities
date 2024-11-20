@@ -3,7 +3,7 @@ using DJM.Utilities.Settings;
 using UnityEditor;
 using UnityEngine;
 
-namespace DJM.Utilities.Editor.CustomGizmos
+namespace DJM.Utilities.Editor.Internal.CustomGizmos
 {
     internal sealed class CustomGizmosSettingsProvider : SettingsProvider
     {

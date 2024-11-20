@@ -8,9 +8,9 @@ namespace DJM.Utilities
     public static class Int4Extensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 AsVector4(this int4 v) => new(v.x, v.y, v.z, v.w);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 AsFloat4(this int4 v) => new(v.x, v.y, v.z, v.w);
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector4 AsVector4(this int4 v) => new(v.x, v.y, v.z, v.w);
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]

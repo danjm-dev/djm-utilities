@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace DJM.Utilities.Editor.ValueTypes
+namespace DJM.Utilities.Editor.Internal.ValueTypes
 {
     [CustomPropertyDrawer(typeof(RandomOffsetFloat))]
     public class RandomOffsetFloatPropertyDrawer : PropertyDrawer

@@ -8,11 +8,11 @@ namespace DJM.Utilities
     public static class Vector3IntExtensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 AsVector3(this Vector3Int v) => new(v.x, v.y, v.z);
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int3 AsInt3(this Vector3Int v) => new(v.x, v.y, v.z);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 AsFloat3(this Vector3Int v) => new(v.x, v.y, v.z);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3 AsVector3(this Vector3Int v) => new(v.x, v.y, v.z);
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]

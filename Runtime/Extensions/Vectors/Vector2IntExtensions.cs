@@ -8,11 +8,11 @@ namespace DJM.Utilities
     public static class Vector2IntExtensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 AsVector2(this Vector2Int v) => new(v.x, v.y);
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int2 AsInt2(this Vector2Int v) => new(v.x, v.y);
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 AsFloat2(this Vector2Int v) => new(v.x, v.y);
-        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 AsVector2(this Vector2Int v) => new(v.x, v.y);
         
         
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
