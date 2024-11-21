@@ -1,13 +1,13 @@
 ﻿#if UNITY_EDITOR
 using System;
 using DJM.Utilities.Debugging;
-using DJM.Utilities.Settings;
+using DJM.Utilities.Internal;
 using UnityEditor;
 using UnityEngine;
 
 namespace DJM.Utilities.Gizmos
 {
-    [FilePath(PathUtils.AssetPathProjectSettings + nameof(CustomGizmosSettings), FilePathAttribute.Location.ProjectFolder)]
+    [FilePath(PathUtils.ProjectSettingsAssetPathRoot + nameof(CustomGizmosSettings) + PathUtils.AssetExtension, FilePathAttribute.Location.ProjectFolder)]
     internal sealed class CustomGizmosSettings : ScriptableSingleton<CustomGizmosSettings>
     {
         [SerializeField] private SignedAxis defaultRightAxis = SignedAxis.PositiveX;

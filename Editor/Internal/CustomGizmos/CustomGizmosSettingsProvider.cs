@@ -1,5 +1,5 @@
 ﻿using DJM.Utilities.Gizmos;
-using DJM.Utilities.Settings;
+using DJM.Utilities.Internal;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace DJM.Utilities.Editor.Internal.CustomGizmos
 {
     internal sealed class CustomGizmosSettingsProvider : SettingsProvider
     {
-        private const string Path = PathUtils.ProjectSettingsHierarchyPathRoot + "Custom Gizmos";
+        private const string Path = PathUtils.ProjectSettingsMenuPathRoot + "Custom Gizmos";
 
         private CustomGizmosSettingsProvider(string path, SettingsScope scopes) : base(path, scopes) { }
         
