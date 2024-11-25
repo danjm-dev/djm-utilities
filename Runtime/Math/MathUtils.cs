@@ -149,5 +149,52 @@ namespace DJM.Utilities.Math
             result.y = matrix.c0.y * vector.x + matrix.c1.y * vector.y + matrix.c2.y * vector.z;
             result.z = matrix.c0.z * vector.x + matrix.c1.z * vector.y + matrix.c2.z * vector.z;
         }
+        
+        [BurstCompile]
+        public static void MultipleOfFloor(int value, int multiple, out int result)
+        {
+            result = value - value % multiple;
+        }
+        
+        [BurstCompile]
+        public static void MultipleOfFloor(int2 value, int multiple, out int2 result)
+        {
+            result = value - value % multiple;
+        }
+        
+        [BurstCompile]
+        public static void MultipleOfFloor(int3 value, int multiple, out int3 result)
+        {
+            result = value - value % multiple;
+        }
+        
+        [BurstCompile]
+        public static void MultipleOfFloor(int4 value, int multiple, out int4 result)
+        {
+            result = value - value % multiple;
+        }
+        
+        [BurstCompile]
+        public static void MultipleOfCeil(int value, int multiple, out int result)
+        {
+            result = value + (multiple - value % multiple) % multiple;
+        }
+        
+        [BurstCompile]
+        public static void MultipleOfCeil(int2 value, int multiple, out int2 result)
+        {
+            result = value + (multiple - value % multiple) % multiple;
+        }
+        
+        [BurstCompile]
+        public static void MultipleOfCeil(int3 value, int multiple, out int3 result)
+        {
+            result = value + (multiple - value % multiple) % multiple;
+        }
+        [BurstCompile]
+        public static void MultipleOfCeil(int4 value, int multiple, out int4 result)
+        {
+            result = value + (multiple - value % multiple) % multiple;
+        }
     }
 }
