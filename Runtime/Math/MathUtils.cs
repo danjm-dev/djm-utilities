@@ -151,48 +151,48 @@ namespace DJM.Utilities.Math
         }
         
         [BurstCompile]
-        public static void MultipleOfFloor(int value, int multiple, out int result)
+        public static void MultipleOfFloor(int value, in int multiple, out int result)
         {
             result = value - value % multiple;
         }
         
         [BurstCompile]
-        public static void MultipleOfFloor(int2 value, int multiple, out int2 result)
+        public static void MultipleOfFloor(in int2 value, in int multiple, out int2 result)
         {
             result = value - value % multiple;
         }
         
         [BurstCompile]
-        public static void MultipleOfFloor(int3 value, int multiple, out int3 result)
+        public static void MultipleOfFloor(in int3 value, in int multiple, out int3 result)
         {
             result = value - value % multiple;
         }
         
         [BurstCompile]
-        public static void MultipleOfFloor(int4 value, int multiple, out int4 result)
+        public static void MultipleOfFloor(in int4 value, in int multiple, out int4 result)
         {
             result = value - value % multiple;
         }
         
         [BurstCompile]
-        public static void MultipleOfCeil(int value, int multiple, out int result)
+        public static void MultipleOfCeil(in int value, in int multiple, out int result)
         {
             result = value + (multiple - value % multiple) % multiple;
         }
         
         [BurstCompile]
-        public static void MultipleOfCeil(int2 value, int multiple, out int2 result)
+        public static void MultipleOfCeil(in int2 value, in int multiple, out int2 result)
         {
             result = value + (multiple - value % multiple) % multiple;
         }
         
         [BurstCompile]
-        public static void MultipleOfCeil(int3 value, int multiple, out int3 result)
+        public static void MultipleOfCeil(in int3 value, in int multiple, out int3 result)
         {
             result = value + (multiple - value % multiple) % multiple;
         }
         [BurstCompile]
-        public static void MultipleOfCeil(int4 value, int multiple, out int4 result)
+        public static void MultipleOfCeil(in int4 value, in int multiple, out int4 result)
         {
             result = value + (multiple - value % multiple) % multiple;
         }
