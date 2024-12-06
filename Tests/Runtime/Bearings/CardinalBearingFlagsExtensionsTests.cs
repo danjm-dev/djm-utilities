@@ -1,5 +1,8 @@
-﻿using DJM.Utilities.Bearings;
+﻿using DJM.Utilities.Math;
+using DJM.Utilities.Math.Geometry;
 using NUnit.Framework;
+using Bearing = DJM.Utilities.Math.Geometry.Bearing;
+using BearingFlags = DJM.Utilities.Math.Geometry.BearingFlags;
 
 namespace DJM.Utilities.Tests.Bearings
 {

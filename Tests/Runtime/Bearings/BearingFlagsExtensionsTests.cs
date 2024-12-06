@@ -1,4 +1,5 @@
-﻿using DJM.Utilities.Bearings;
+﻿using DJM.Utilities.Math;
+using DJM.Utilities.Math.Geometry;
 using NUnit.Framework;
 
 namespace DJM.Utilities.Tests.Bearings

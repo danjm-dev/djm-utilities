@@ -1,5 +1,6 @@
-﻿using DJM.Utilities.Gizmos;
+﻿using DJM.Utilities.EditorTools.Gizmos;
 using DJM.Utilities.Internal;
+using DJM.Utilities.Math;
 using UnityEditor;
 using UnityEngine;
 

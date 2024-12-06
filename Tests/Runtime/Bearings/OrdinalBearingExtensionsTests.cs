@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using DJM.Utilities.Bearings;
 using DJM.Utilities.Math;
+using DJM.Utilities.Math.Geometry;
 using NUnit.Framework;
 using Unity.Mathematics;
 
