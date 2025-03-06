@@ -9,6 +9,33 @@ namespace DJM.Utilities
     public static class ColorExtensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void GetHSV(this UnityEngine.Color color, out float hue, out float saturation, out float value)
+        {
+            UnityEngine.Color.RGBToHSV(color, out hue, out saturation, out value);
+        }
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float GetHue(this UnityEngine.Color color)
+        {
+            UnityEngine.Color.RGBToHSV(color, out var hue, out _, out _);
+            return hue;
+        }
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float GetSaturation(this UnityEngine.Color color)
+        {
+            UnityEngine.Color.RGBToHSV(color, out _, out var saturation, out _);
+            return saturation;
+        }
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float GetValue(this UnityEngine.Color color)
+        {
+            UnityEngine.Color.RGBToHSV(color, out _, out _, out var value);
+            return value;
+        }
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UnityEngine.Color WithRed(this UnityEngine.Color color, float red)
         {
             return new UnityEngine.Color(red, color.g, color.b, color.a);
