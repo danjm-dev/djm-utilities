@@ -12,10 +12,10 @@ namespace DJM.Utilities
             return rect.Contains(other.min) && rect.Contains(other.max);
         }
 
-        public static Rect WithPadding(this Rect rect, float padding)
+        public static Rect WithPadding(this Rect rect, Vector2 padding)
         {
-            var clampedPaddingX = Mathf.Clamp(padding, 0f, rect.width * 0.5f);
-            var clampedPaddingY = Mathf.Clamp(padding, 0f, rect.height * 0.5f);
+            var clampedPaddingX = Mathf.Clamp(padding.x, 0f, rect.width * 0.5f);
+            var clampedPaddingY = Mathf.Clamp(padding.y, 0f, rect.height * 0.5f);
             
             return new Rect
             (
@@ -26,5 +26,9 @@ namespace DJM.Utilities
             );
         }
         
+        public static Rect WithPadding(this Rect rect, float padding)
+        {
+            return WithPadding(rect, new Vector2(padding, padding));
+        }
     }
 }

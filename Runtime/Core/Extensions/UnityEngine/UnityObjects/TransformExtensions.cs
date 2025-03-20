@@ -59,8 +59,12 @@ namespace DJM.Utilities
         /// <param name="parent">The Transform whose child game objects are to be immediately destroyed.</param>
         public static void ContextualDestroyChildren(this Transform parent)
         {
+#if UNITY_EDITOR
             if(Application.isPlaying) parent.DestroyChildren();
             else parent.DestroyChildrenImmediate();
+#else
+            parent.DestroyChildren();
+#endif
         }
 
         /// <summary>
