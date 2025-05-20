@@ -113,7 +113,7 @@ namespace DJM.Utilities.Math
         }
         
         [BurstDiscard]
-        public static Vector2 ProjectOnPlane(this Vector2 v, Vector2 planeNormal)
+        public static Vector2 ProjectOnPlane(Vector2 v, Vector2 planeNormal)
         {
             float num1 = Vector2.Dot(planeNormal, planeNormal);
             if ((double) num1 < (double) Mathf.Epsilon) return v;
