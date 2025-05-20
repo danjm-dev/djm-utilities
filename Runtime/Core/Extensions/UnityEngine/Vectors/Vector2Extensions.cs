@@ -8,6 +8,15 @@ namespace DJM.Utilities
     public static class Vector2Extensions
     {
         [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 ProjectOnPlane(this Vector2 v, Vector2 planeNormal)
+        {
+            float num1 = Vector2.Dot(planeNormal, planeNormal);
+            if ((double) num1 < (double) Mathf.Epsilon) return v;
+            float num2 = Vector2.Dot(v, planeNormal);
+            return new Vector2(v.x - planeNormal.x * num2 / num1, v.y - planeNormal.y * num2 / num1);
+        }
+        
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 AsFloat2(this Vector2 v) => new(v.x, v.y);
         
         
