@@ -113,6 +113,15 @@ namespace DJM.Utilities.Math
         }
         
         [BurstDiscard]
+        public static Vector2 ProjectOnPlane(this Vector2 v, Vector2 planeNormal)
+        {
+            float num1 = Vector2.Dot(planeNormal, planeNormal);
+            if ((double) num1 < (double) Mathf.Epsilon) return v;
+            float num2 = Vector2.Dot(v, planeNormal);
+            return new Vector2(v.x - planeNormal.x * num2 / num1, v.y - planeNormal.y * num2 / num1);
+        }
+        
+        [BurstDiscard]
         public static Vector4 Abs(in Vector4 v)
         {
             return math.abs(v);
