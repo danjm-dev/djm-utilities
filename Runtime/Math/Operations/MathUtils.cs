@@ -96,6 +96,32 @@ namespace DJM.Utilities.Math
             var angleInRadians = GetAngleInRadians(angle, angleUnit);
             direction = new float2(math.cos(angleInRadians), math.sin(angleInRadians));
         }
+
+        [BurstCompile]
+        public static void PerpendicularLeft(in float2 input, out float2 output)
+        {
+            output = new float2(-input.y, input.x);
+        }
+        
+        [BurstCompile]
+        public static void PerpendicularRight(in float2 input, out float2 output)
+        {
+            output = new float2(input.y, -input.x);
+        }
+        
+        [BurstDiscard]
+        public static Vector2 PerpendicularLeft(in Vector2 input)
+        {
+            PerpendicularLeft(input, out var output);
+            return output;
+        }
+        
+        [BurstDiscard]
+        public static Vector2 PerpendicularRight(in Vector2 input)
+        {
+            PerpendicularRight(input, out var output);
+            return output;
+        }
         
         [BurstCompile]
         public static void GetNormalizedAxes
