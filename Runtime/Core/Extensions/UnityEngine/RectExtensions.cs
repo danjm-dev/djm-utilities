@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using DJM.Utilities.Math.Geometry.Primitives;
 using UnityEngine;
 
 namespace DJM.Utilities
@@ -29,6 +30,15 @@ namespace DJM.Utilities
         public static Rect WithPadding(this Rect rect, float padding)
         {
             return WithPadding(rect, new Vector2(padding, padding));
+        }
+        
+        public static Rect WithPadding(this Rect rect, RectPadding padding)
+        {
+            var minX = rect.xMin - padding.Left;
+            var minY = rect.yMin - padding.Bottom;
+            var maxX = rect.xMax + padding.Right;
+            var maxY = rect.yMax + padding.Top;
+            return Rect.MinMaxRect(minX, minY, maxX, maxY);
         }
     }
 }
