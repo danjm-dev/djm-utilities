@@ -9,14 +9,14 @@ namespace DJM.Utilities
 {
     public static class Texture2DExtensions
     {
-        public static byte[] Encode(this Texture2D texture, ImageFormat format)
+        public static byte[] Encode(this Texture2D texture, ImageFormat format, int jpegQuality = 75, Texture2D.EXRFlags exrFlags = Texture2D.EXRFlags.None)
         {
             return format switch
             {
                 ImageFormat.PNG => texture.EncodeToPNG(),
-                ImageFormat.JPEG => texture.EncodeToJPG(),
+                ImageFormat.JPEG => texture.EncodeToJPG(Mathf.Clamp(jpegQuality, 1, 100)),
                 ImageFormat.TGA => texture.EncodeToTGA(),
-                ImageFormat.EXR => texture.EncodeToEXR(),
+                ImageFormat.EXR => texture.EncodeToEXR(exrFlags),
                 _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
             };
         }
