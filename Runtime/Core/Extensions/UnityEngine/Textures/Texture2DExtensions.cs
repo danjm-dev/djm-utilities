@@ -9,6 +9,18 @@ namespace DJM.Utilities
 {
     public static class Texture2DExtensions
     {
+        public static byte[] Encode(this Texture2D texture, ImageFormat format)
+        {
+            return format switch
+            {
+                ImageFormat.PNG => texture.EncodeToPNG(),
+                ImageFormat.JPEG => texture.EncodeToJPG(),
+                ImageFormat.TGA => texture.EncodeToTGA(),
+                ImageFormat.EXR => texture.EncodeToEXR(),
+                _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
+            };
+        }
+        
         public static UnityEngine.Color GetPixel(this Texture2D texture2D, Vector2Int coordinates)
         {
             return texture2D.GetPixel(coordinates.x, coordinates.y);
